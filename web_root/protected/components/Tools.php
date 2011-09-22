@@ -92,11 +92,4 @@ class Tools
 
 	}
 
-    public static function get_content_type($html){
-        if(empty($html)){
-            return false;
-        }
-        self::cutContent($html, '');
-    }
-	
 }

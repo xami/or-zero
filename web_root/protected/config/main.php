@@ -79,6 +79,9 @@ return array(
 				*/
 			),
 		),
+        'CURL' =>array(
+			'class' => 'application.extensions.Curl',
+		),
 	),
 
 	// application-level parameters that can be accessed
