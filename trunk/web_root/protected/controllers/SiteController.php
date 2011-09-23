@@ -20,6 +20,13 @@ class SiteController extends Controller
 			),
 		);
 	}
+    public function actionTest()
+    {
+        $mysqlite = new OZMysqlite();
+        $mysqlite->config=array('xx'=>'xx','bb'=>'ss');
+//        pr($mysqlite->config);
+//        $mysqlite->getDb();
+    }
 
 	/**
 	 * This is the default 'index' action that is invoked

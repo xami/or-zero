@@ -1,5 +1,14 @@
 <?php
-
+function pr($data=array(), $stop=false)
+{
+	print_r($data);
+	if($stop) die;
+}
+function pd($data=array(), $stop=true)
+{
+	print_r($data);
+	if($stop) die;
+}
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 
