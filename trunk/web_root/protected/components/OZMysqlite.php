@@ -41,18 +41,17 @@ class OZMysqlite extends CActiveRecord
 
 	public function getDb()
 	{
-        self::$_config['connectionString']='x';
+        
+        self::$_config['connectionString']='sqlite:'.  DIRECTORY_SEPARATOR . 'orzero.sqlite';
         $component=Yii::createComponent(self::$_config);
         $component->init();
-        pr($component->dbPath);
 
         return $component;
 	}
 
-	public function createCacheTable($tableName='p')
+	public static function createCacheTable($tableName='p')
 	{
-		$db=self::getDbConnection();
-		$db->setActive(true);
+		self::$ozdb->setActive(true);
 		if($tableName=='p'){
 			$sql=<<<EOD
 CREATE  TABLE  IF NOT EXISTS "p"
@@ -82,9 +81,9 @@ EOD;
 		}
 
 		if(!empty($sql))
-			$db->createCommand($sql)->execute();
+			self::$ozdb->createCommand($sql)->execute();
 
-		$db->setActive(false);
+		self::$ozdb->setActive(false);
 	}
 
 }

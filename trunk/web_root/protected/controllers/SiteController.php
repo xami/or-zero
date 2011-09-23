@@ -22,8 +22,25 @@ class SiteController extends Controller
 	}
     public function actionTest()
     {
-        $mysqlite = new OZMysqlite();
-        $mysqlite->config=array('xx'=>'xx','bb'=>'ss');
+//        $mysqlite = new OZMysqlite();
+        try{
+			$_page =new P();
+			$_content =new C();
+		}catch(Exception $e){
+			OZMysqlite::createCacheTable('p');
+			OZMysqlite::createCacheTable('c');
+			OZMysqlite::createCacheTable('i');
+//			$this->_article->pcount=0;
+//			$this->_article->cto=0;
+//			$this->_article->save();
+//			if($pr){
+//				die(json_encode(-1));
+//			}
+
+		}
+        $_page->save();
+        $p=$_page->findByPk(1);
+        pr($_page);
 //        pr($mysqlite->config);
 //        $mysqlite->getDb();
     }
