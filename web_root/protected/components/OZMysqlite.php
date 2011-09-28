@@ -7,51 +7,65 @@
  * To change this template use File | Settings | File Templates.
  */
  
-class OZMysqlite extends CActiveRecord
+abstract class OZMysqlite extends CActiveRecord
 {
-    private static $_config=array('class'=>'CDbConnection');
-    public static $ozdb;
+    private static $_config=array('class'=>'CDbConnection', 'connectionString'=>'');
+    private static $_path;
+    public static $_ozdb;
 
-    public function getConfig()
-	{
-		return self::$_config;
-	}
 
-    public static function setConfig($config)
-	{
-		if(self::$_config===null || $config===null)
-			self::$_config=$config;
-		else
-			throw new CException(Yii::t('oz','OZDB application can only be created once.'));
-	}
+//    public function getConfig()
+//	{
+//		return self::$_config;
+//	}
+//
+//    public static function setConfig($config)
+//	{
+//		if(self::$_config===null || $config===null)
+//			self::$_config=$config;
+//		else
+//			throw new CException(Yii::t('oz','OZDB application can only be created once.'));
+//	}
     
     public function getDbConnection()
 	{
-		if(self::$ozdb!==null)
-			return self::$ozdb;
+		if(self::$_ozdb!==null)
+			return self::$_ozdb;
 		else
 		{
-			self::$ozdb=$this->getDb();
-			if(self::$ozdb instanceof CDbConnection)
-				return self::$ozdb;
+			self::$_ozdb=$this->getDb();
+			if(self::$_ozdb instanceof CDbConnection)
+				return self::$_ozdb;
 			else
 				throw new CDbException(Yii::t('yii','Active Record requires a "db" CDbConnection application component.'));
 		}
 	}
 
+    public function setDbPath($path){
+        self::$_path=(string)$path;
+        self::$_config['connectionString']='sqlite:'.self::$_path. DIRECTORY_SEPARATOR . 'orzero.sqlite';
+        try{
+            if(!is_dir(self::$_path))
+				mkdir(self::$_path,0777,true);
+        }catch(Exception $e){
+            throw new CException(Yii::t('oz','OZDB can not create the dbpath.'));
+        }
+    }
+
 	public function getDb()
 	{
-        
-        self::$_config['connectionString']='sqlite:'.  DIRECTORY_SEPARATOR . 'orzero.sqlite';
-        $component=Yii::createComponent(self::$_config);
-        $component->init();
-
-        return $component;
+        if(!empty(self::$_config['connectionString'])){
+            $component=Yii::createComponent(self::$_config);
+            $component->init();
+            return $component;
+        }else{
+            throw new CException(Yii::t('oz','OZDB set the dbpath first.'));
+        }
 	}
 
 	public static function createCacheTable($tableName='p')
 	{
-		self::$ozdb->setActive(true);
+		self::$_ozdb->setActive(true);
 		if($tableName=='p'){
 			$sql=<<<EOD
 CREATE  TABLE  IF NOT EXISTS "p"
@@ -76,14 +90,15 @@ CREATE  TABLE IF NOT EXISTS "c"
 "uptime" INTEGER NOT NULL  DEFAULT 0);
 CREATE INDEX "pos" ON "c" ("pos" ASC);
 EOD;
-		}else if($tableName=='i'){
-			$sql='CREATE INDEX "pos" ON "c" ("pos" ASC);';
 		}
+//        else if($tableName=='i'){
+//			$sql='CREATE INDEX "pos" ON "c" ("pos" ASC);';
+//		}
 
 		if(!empty($sql))
-			self::$ozdb->createCommand($sql)->execute();
+			self::$_ozdb->createCommand($sql)->execute();
 
-		self::$ozdb->setActive(false);
+//		self::$_ozdb->setActive(false);
 	}
 
 }

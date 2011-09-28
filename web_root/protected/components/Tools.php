@@ -1,6 +1,55 @@
 <?php
 class Tools
 {
+    private static $_snoopy;
+    private $result;
+    
+    public function OZSnoopy($URI='', $formvars="", $referer='', $expire=1)
+	{
+		if(self::$_snoopy == null){
+			self::$_snoopy = new Snoopy();
+			self::$_snoopy->agent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)";
+			self::$_snoopy->rawheaders["Pragma"] = "no-cache";
+		}
+
+		if(empty($URI)){
+			return self::$_snoopy;
+		}
+
+		if(self::is_url($URI)===false){
+			return false;
+		}
+        
+        if(!empty($referer)&&self::is_url($referer)){
+		    self::$_snoopy->referer = $referer;
+        }else{
+            self::$_snoopy->referer = $URI;
+        }
+
+		$cache = Yii::app()->cache;		//默认缓存30秒远程数据
+		if(is_array($formvars) && !empty($formvars)){
+			$key = md5(md5($URI).md5(serialize($formvars)));
+			if((self::$_snoopy->results=$cache->get($key))!==false){
+                return self::$_snoopy->results;
+            }
+
+			if(self::$_snoopy->submit($URI,$formvars)!==false){
+				$cache->set($key, self::$_snoopy->results, $expire);
+				return self::$_snoopy->results;
+			}
+		}else{
+			$key = md5($URI);
+			if((self::$_snoopy->results=$cache->get($key))!==false)
+				return self::$_snoopy->results;
+			if(self::$_snoopy->fetch($URI)!==false){
+				$cache->set($key, self::$_snoopy->results, $expire);
+				return self::$_snoopy->results;
+			}
+		}
+        
+		return false;
+	}
+
 	public static function OZCurl($src, $expire=60, $show=false)
 	{
 
