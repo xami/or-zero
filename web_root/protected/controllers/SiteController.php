@@ -58,6 +58,60 @@ class SiteController extends Controller
 //		$this->render('index');
 	}
 
+    public function actionChannel()
+	{
+		$id=($id=intval($_REQUEST['id']))>0 ? $id : 0;
+//		$item=new Item;
+		if($id==0){
+			$channels=Channel::model()->with('items')->findAll('t.status=1');
+		}else{
+			$channels=Channel::model()->with('items')->findAll('t.status=1 AND t.id=:id',array(':id'=>$id));
+		}
+		//print_r($item);
+//		$_item = $item->findAll('cid='.$_REQUEST['id'].' AND status=1');
+//		$data[item] = $_item;
+//
+//		$_channel=$channel->findByPk($_REQUEST['id']);
+		$data[html]='';
+		$data[html]=Yii::app()->cache->get('site::channel::'.$id);
+		if(empty($data[html])){
+			foreach($channels as $channel){
+				$data[html].='<div class="item_c">';
+				if(!empty($channel->items)){
+					foreach($channel->items as $item){
+						$data[html].='<div class="bt_e">'.
+						CHtml::link(str_replace('天涯', '或零', CHtml::encode($item->name)).'('.$item->count.')', '/ero/'.$item->id.'/').
+						'</div>';
+					}
+				}
+				$data[html].='</div>';
+			}
+
+			Yii::app()->cache->set('site::channel::'.$id, $data[html], 3600);
+		}
+
+		if($id>0)
+			$data[channel] = $channels[0];
+
+
+
+		Yii::app()->clientScript->registerLinkTag(
+	    'alternate',
+	    'application/rss+xml',
+	    'http://www.orzero.com/sitemap.xml');
+		Yii::app()->clientScript->registerLinkTag(
+	    'alternate',
+	    'application/rss+xml',
+	    'http://www.orzero.com/rss.xml');
+		Yii::app()->clientScript->registerLinkTag(
+	    'alternate',
+	    'application/rss+xml',
+	    'http://www.orzero.com/atom.xml');
+
+		$this->layout='//layouts/column4';
+		$this->render('channels', $data);
+	}
+
 	/**
 	 * This is the action to handle external exceptions.
 	 */

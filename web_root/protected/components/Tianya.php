@@ -18,33 +18,33 @@ class Tianya{
         $id=intval($id);
         $data['channel']=Channel::model()->with('items')->find('t.status=1 AND t.id=:id',array(':id'=>$id));
 
-        $this->render('channel', $data);
+        return $data;
     }
 
     function getItems(){
         $data['items']=Item::model()->findAll('`status`=1');
 
-        $this->render('channel', $data);
+        return $data;
     }
 
     function getItem($id){
         $id=intval($id);
         $data['item']=Item::model()->find('`id`='.$id.' AND `status`=1');
 
-        $this->render('channel', $data);
+        return $data;
     }
 
     function getArticles(){
         $data['Articles']=Article::model()->findAll('`status`=1');
 
-        $this->render('channel', $data);
+        return $data;
     }
 
     function getArticle($id){
         $id=intval($id);
         $data['Article']=Article::model()->find('`id`='.$id.' AND `status`=1');
 
-        $this->render('channel', $data);
+        return $data;
     }
 
     function setArticle(){
