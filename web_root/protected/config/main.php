@@ -17,6 +17,7 @@ function pd($data=array(), $stop=true)
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'My Web Application',
+    'language'=>'zh_cn',
 
 	// preloading 'log' component
 	'preload'=>array('log'),

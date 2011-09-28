@@ -938,3 +938,71 @@ Stack trace:
 REQUEST_URI=/index.php?r=site/channel
 in D:\google_code\or-zero\web_root\protected\controllers\SiteController.php (66)
 in D:\google_code\or-zero\web_root\index.php (13)
+2011/09/28 11:24:56 [error] [php] Trying to get property of non-object (D:\google_code\or-zero\web_root\protected\controllers\SiteController.php:66)
+Stack trace:
+#0 D:\google_code\framework\web\CController.php(278): SiteController->runAction()
+#1 D:\google_code\framework\web\CController.php(257): SiteController->runActionWithFilters()
+#2 D:\google_code\framework\web\CWebApplication.php(277): SiteController->run()
+#3 D:\google_code\framework\web\CWebApplication.php(136): CWebApplication->runController()
+#4 D:\google_code\framework\base\CApplication.php(158): CWebApplication->processRequest()
+#5 D:\google_code\or-zero\web_root\index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php?r=site/channel
+in D:\google_code\or-zero\web_root\protected\controllers\SiteController.php (66)
+in D:\google_code\or-zero\web_root\index.php (13)
+2011/09/28 11:25:03 [error] [php] Trying to get property of non-object (D:\google_code\or-zero\web_root\protected\controllers\SiteController.php:66)
+Stack trace:
+#0 D:\google_code\framework\web\CController.php(278): SiteController->runAction()
+#1 D:\google_code\framework\web\CController.php(257): SiteController->runActionWithFilters()
+#2 D:\google_code\framework\web\CWebApplication.php(277): SiteController->run()
+#3 D:\google_code\framework\web\CWebApplication.php(136): CWebApplication->runController()
+#4 D:\google_code\framework\base\CApplication.php(158): CWebApplication->processRequest()
+#5 D:\google_code\or-zero\web_root\index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php?r=site/channel
+in D:\google_code\or-zero\web_root\protected\controllers\SiteController.php (66)
+in D:\google_code\or-zero\web_root\index.php (13)
+2011/09/28 11:25:03 [error] [php] Trying to get property of non-object (D:\google_code\or-zero\web_root\protected\controllers\SiteController.php:66)
+Stack trace:
+#0 D:\google_code\framework\web\CController.php(278): SiteController->runAction()
+#1 D:\google_code\framework\web\CController.php(257): SiteController->runActionWithFilters()
+#2 D:\google_code\framework\web\CWebApplication.php(277): SiteController->run()
+#3 D:\google_code\framework\web\CWebApplication.php(136): CWebApplication->runController()
+#4 D:\google_code\framework\base\CApplication.php(158): CWebApplication->processRequest()
+#5 D:\google_code\or-zero\web_root\index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php?r=site/channel
+in D:\google_code\or-zero\web_root\protected\controllers\SiteController.php (66)
+in D:\google_code\or-zero\web_root\index.php (13)
+2011/09/28 11:25:39 [error] [php] Trying to get property of non-object (D:\google_code\or-zero\web_root\protected\controllers\SiteController.php:66)
+Stack trace:
+#0 D:\google_code\framework\web\CController.php(278): SiteController->runAction()
+#1 D:\google_code\framework\web\CController.php(257): SiteController->runActionWithFilters()
+#2 D:\google_code\framework\web\CWebApplication.php(277): SiteController->run()
+#3 D:\google_code\framework\web\CWebApplication.php(136): CWebApplication->runController()
+#4 D:\google_code\framework\base\CApplication.php(158): CWebApplication->processRequest()
+#5 D:\google_code\or-zero\web_root\index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php?r=site/channel
+in D:\google_code\or-zero\web_root\protected\controllers\SiteController.php (66)
+in D:\google_code\or-zero\web_root\index.php (13)
+2011/09/28 11:26:06 [error] [exception.CException] exception 'CException' with message 'Property "Channel.data" is not defined.' in D:\google_code\framework\base\CComponent.php:131
+Stack trace:
+#0 D:\google_code\framework\db\ar\CActiveRecord.php(129): CComponent->__get('data')
+#1 D:\google_code\or-zero\web_root\protected\controllers\SiteController.php(66): CActiveRecord->__get('data')
+#2 D:\google_code\framework\web\actions\CInlineAction.php(50): SiteController->actionChannel()
+#3 D:\google_code\framework\web\CController.php(300): CInlineAction->runWithParams(Array)
+#4 D:\google_code\framework\web\CController.php(278): CController->runAction(Object(CInlineAction))
+#5 D:\google_code\framework\web\CController.php(257): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 D:\google_code\framework\web\CWebApplication.php(277): CController->run('channel')
+#7 D:\google_code\framework\web\CWebApplication.php(136): CWebApplication->runController('site/channel')
+#8 D:\google_code\framework\base\CApplication.php(158): CWebApplication->processRequest()
+#9 D:\google_code\or-zero\web_root\index.php(13): CApplication->run()
+#10 {main} REQUEST_URI=/index.php?r=site/channel
+2011/09/28 11:26:16 [error] [php] Object of class Channel could not be converted to string (D:\google_code\or-zero\web_root\protected\controllers\SiteController.php:66)
+Stack trace:
+#0 D:\google_code\framework\web\CController.php(278): SiteController->runAction()
+#1 D:\google_code\framework\web\CController.php(257): SiteController->runActionWithFilters()
+#2 D:\google_code\framework\web\CWebApplication.php(277): SiteController->run()
+#3 D:\google_code\framework\web\CWebApplication.php(136): CWebApplication->runController()
+#4 D:\google_code\framework\base\CApplication.php(158): CWebApplication->processRequest()
+#5 D:\google_code\or-zero\web_root\index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php?r=site/channel
+in D:\google_code\or-zero\web_root\protected\controllers\SiteController.php (66)
+in D:\google_code\or-zero\web_root\index.php (13)

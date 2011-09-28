@@ -58,4 +58,8 @@ class Tianya{
     function setChannel(){
         
     }
+
+    public static function t($str='',$params=array(),$dic='tianya') {
+		return Yii::t($dic, $str, $params);
+	}
 }
