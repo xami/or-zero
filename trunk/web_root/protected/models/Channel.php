@@ -57,7 +57,7 @@ class Channel extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'articles'=>array(self::HAS_MANY, 'Article', 'cid'),
-			'items'=>array(self::HAS_MANY, 'Item', 'cid', 'condition'=>'`items`.`status`=1'),
+			'items'=>array(self::HAS_MANY, 'Item', 'cid', array('condition'=>'`items`.`status`=1', 'limit'=>7)),
 		);
 	}
 
@@ -75,6 +75,14 @@ class Channel extends CActiveRecord
 			'uptime' => 'Uptime',
 		);
 	}
+
+    public function scopes(){
+        return array(
+            'hot'=>array(
+                'order'=>'t.key ASC',
+	        ),
+        );
+    }
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
