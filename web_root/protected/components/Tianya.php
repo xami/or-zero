@@ -11,7 +11,7 @@ class Tianya{
     function getChannels(){
         $data['channels']=Channel::model()->with('items')->findAll('t.status=1');
 
-        $this->render('channels', $data);
+        return $data;
     }
 
     function getChannel($id){
