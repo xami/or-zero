@@ -62,28 +62,13 @@ class SiteController extends Controller
 	{
         $tianya=new Tianya();
 		$data=$tianya->getChannels();
-foreach($data as $channel){
-    pd($channel);
-    echo $channel."\r\n";
+//test
+//foreach($data['channels'] as $channel){
+//    echo $channel->name."\r\n";
 //    foreach($channel->items as $item){
-//        echo "\t".$item."\r\n";
+//        echo "\t".$item->name."\r\n";
 //    }
-}die;
-
-
-
-		Yii::app()->clientScript->registerLinkTag(
-	    'alternate',
-	    'application/rss+xml',
-	    'http://www.orzero.com/sitemap.xml');
-		Yii::app()->clientScript->registerLinkTag(
-	    'alternate',
-	    'application/rss+xml',
-	    'http://www.orzero.com/rss.xml');
-		Yii::app()->clientScript->registerLinkTag(
-	    'alternate',
-	    'application/rss+xml',
-	    'http://www.orzero.com/atom.xml');
+//}
 
 		$this->layout='//layouts/column4';
 		$this->render('channels', $data);
