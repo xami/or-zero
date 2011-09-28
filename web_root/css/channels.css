@@ -1,0 +1,27 @@
+.channels_content .dl_left{
+border-bottom: 1px solid #EEEEEE;
+height: 64px;
+float: left;
+overflow: hidden;
+margin: 0;
+padding: 0;
+width: 45%;
+}
+.channels_content .dl_right{
+border-bottom: 1px solid #EEEEEE;
+height: 64px;
+float: right;
+overflow: hidden;
+margin: 0;
+padding: 0;
+width: 45%;
+}
+.channels_content dl dd{
+    padding-bottom: 10px;
+}
+.channels_content dl dt a.title {
+    color: #333333;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 160%;
+}

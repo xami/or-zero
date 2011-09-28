@@ -26,30 +26,30 @@ Yii::app()->clientScript->registerLinkTag(
 </div>
 <div id="ad2">
 </div>
-<!-- JiaThis Button BEGIN -->
-<div style="float:left;clear:both;">
-<div id="jiathis_style_32x32">
-<a class="jiathis_button_qzone"></a>
-<a class="jiathis_button_tieba"></a>
-<a class="jiathis_button_renren"></a>
-<a class="jiathis_button_fanfou"></a>
-<a class="jiathis_button_tsohu"></a>
-<a class="jiathis_button_tsina"></a>
-<a class="jiathis_button_xiaoyou"></a>
-<a class="jiathis_button_yahoo"></a>
-<a class="jiathis_button_douban"></a>
-<a class="jiathis_button_xianguo"></a>
-<a class="jiathis_button_tqq"></a>
-<a class="jiathis_button_zhuaxia"></a>
-<a class="jiathis_button_fav"></a>
-<a class="jiathis_button_email"></a>
-<a class="jiathis_button_tianya"></a>
-</div>
-</div>
-<!-- JiaThis Button END -->
 </div>
 
-<?php //echo $html;?>
+<div class="channels_content">
+<?php
+Yii::app()->clientScript->registerCssFile($baseUrl.'/css/channels.css');
+$i=1;
+foreach($channels as $channel){
+    $dl_class=($i%2==1)?'dl_left':'dl_right';
+    echo '  <dl class="'.$dl_class.'">';
+    echo '      <dt><a class="title" href="'.Yii::app()->request->baseUrl.'/channel/'.$channel->id.'">'.$channel->name.'</a></dt>';
+    echo '      <dd class="item_sort">';
+    $j=1;
+    foreach($channel->items as $item){
+        echo '          <a href="'.Yii::app()->request->baseUrl.'/item/'.$item->id.'">'.$item->name.'</a>';
+        if($j++ > 7){
+            break;
+        }
+    }
+    echo '      </dd>';
+    echo '  </dl>'."\r\n";
+    $i++;
+}
+?>
+</div>
 
 <div id="ad_footer">
 <div id="ad1" style="width:180px;">

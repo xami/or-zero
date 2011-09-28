@@ -9,7 +9,7 @@
  
 class Tianya{
     function getChannels(){
-        $data['channels']=Channel::model()->with('items')->findAll('t.status=1');
+        $data['channels']=Channel::model()->with('items')->hot()->findAll('t.status=1');
 
         return $data;
     }
