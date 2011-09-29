@@ -94,10 +94,11 @@ class SiteController extends Controller
 
     public function actionArticle()
 	{
+        //6822
         $id=Yii::app()->request->getParam('id', 0);
         $article=Article::model()->find('`id`='.$id.' AND `status`=1');
 		if(empty($article)){
-			$this->render('items', array());
+			$this->render('error', array('msg'=>'当前文章不存在或者已经被删除'));
             return;
 		}
         $dbPath=Yii::getPathOfAlias(
@@ -109,10 +110,10 @@ class SiteController extends Controller
 
         OZMysqlite::setDbPath($dbPath);
         try{
-			$page =new P();
+			$page =new C();
 		}catch(Exception $e){
-			OZMysqlite::createCacheTable('p');
-            $page =new P();
+			OZMysqlite::createCacheTable('c');
+            $page =new C();
 		}
         
 //		$criteria=new CDbCriteria;
@@ -124,13 +125,8 @@ class SiteController extends Controller
 		        'pageSize'=>10,
 		    ),
 		));
-        
-        $this->layout='//layouts/column4';
-        $tianya=new Tianya();
 
-        $data=$tianya->getItems($cid, $tid, $page_size);
-
-        $this->render('items', $data);
+        $this->render('article', $data);
 	}
 
 	/**
