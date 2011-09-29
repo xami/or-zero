@@ -41,7 +41,7 @@ abstract class OZMysqlite extends CActiveRecord
 		}
 	}
 
-    public function setDbPath($path){
+    public static function setDbPath($path){
         self::$_path=(string)$path;
         self::$_config['connectionString']='sqlite:'.self::$_path. DIRECTORY_SEPARATOR . 'orzero.sqlite';
         try{

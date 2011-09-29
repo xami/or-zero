@@ -28,34 +28,12 @@ Yii::app()->clientScript->registerLinkTag(
 </div>
 </div>
 
-<div class="channels_content">
-<?php
-$baseUrl=YII::app()->request->hostInfo;
-if($cid==0){
-    Yii::app()->clientScript->registerCssFile($baseUrl.'/css/channels.css');
-}else{
-    Yii::app()->clientScript->registerCssFile($baseUrl.'/css/channel.css');
-}
-$i=1;
-foreach($channels as $channel){
-    $dl_class=($i%2==1)?'dl_left':'dl_right';
-    echo '  <dl class="'.$dl_class.'">';
-    echo '      <dt><a class="title" href="'.$baseUrl.'/channel/'.$channel->id.'">'.$channel->name.'</a></dt>';
-    echo '      <dd class="item_sort">';
-    $j=1;
-    foreach($channel->items as $item){
-        echo '          <a href="'.$baseUrl.'/item/'.$item->id.'">'.$item->name.'</a>';
-        if($cid==0){
-            if($j++ > 7){
-                break;
-            }
-        }
-    }
-    echo '      </dd>';
-    echo '  </dl>'."\r\n";
-    $i++;
-}
-?>
+<div class="items_content">
+<?php $this->widget('zii.widgets.CListView', array(
+	'dataProvider'=>$dataProvider,
+	'itemView'=>'item_view',
+	'ajaxUpdate'=>false,
+)); ?>
 </div>
 
 <div id="ad_footer">

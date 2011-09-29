@@ -8,34 +8,54 @@
  */
  
 class Tianya{
-    function getChannels(){
-        $data['channels']=Channel::model()->with('items')->hot()->findAll('t.status=1');
-
-        return $data;
-    }
-
-    function getChannel($id){
+    function getChannels($id=0){
         $id=intval($id);
-        $data['channel']=Channel::model()->with('items')->find('t.status=1 AND t.id=:id',array(':id'=>$id));
-
+        if($id>0){
+            $data['channels']=Channel::model()->with('items')->findAll('t.status=1 AND t.id=:id',array(':id'=>$id));
+        }else{
+            $data['channels']=Channel::model()->with('items')->findAll('t.status=1');
+        }
         return $data;
     }
 
-    function getItems(){
-        $data['items']=Item::model()->findAll('`status`=1');
 
-        return $data;
-    }
+    function getItems($cid=0, $tid=0, $page_size=10){
+        $cid=intval($cid);
+        $tid=intval($tid);
+        $criteria=new CDbCriteria;
+        if($tid>0){
+            $criteria->condition='`status`=1 AND `t`.`tid`=:tid';
+		    $criteria->params=array(':tid'=>$tid);
+        }else if($cid>0){
+            $criteria->condition='`status`=1 AND `t`.`cid`=:cid';
+		    $criteria->params=array(':cid'=>$cid);
+        }else{
+            $criteria->condition='`status`=1';
+		    $criteria->params=array(':cid'=>$cid);
+        }
 
-    function getItem($id){
-        $id=intval($id);
-        $data['item']=Item::model()->find('`id`='.$id.' AND `status`=1');
+		//$_article = Article::model()->find($criteria);
+		//$data[article] = $_article;
+		$sort=new CSort('Article');
+		$sort->multiSort=false;
+		$sort->defaultOrder="t.uptime DESC";
+		$sort->sortVar='Article_sort';
+		$sort->attributes = array(
+            'page' => 't.page',		//原帖页数
+			'pcount' => 't.pcount',	//整理条数
+            'reach' => 't.reach',	//原帖访问量
+			'reply' => 't.reply',	//原帖回复数
+            'hot' => 't.hot',		//本站访问量
+			'uptime' => 't.uptime',	//最后更新
+        );
 
-        return $data;
-    }
-
-    function getArticles(){
-        $data['Articles']=Article::model()->findAll('`status`=1');
+        $data['dataProvider']=new CActiveDataProvider('Article',array(
+		    'criteria'=>$criteria,
+			'sort'=>$sort,
+		    'pagination'=>array(
+		        'pageSize'=>$page_size,
+		    ),
+		));
 
         return $data;
     }
