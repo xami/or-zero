@@ -36,7 +36,6 @@ class SiteController extends Controller
 //			if($pr){
 //				die(json_encode(-1));
 //			}
-
 		}
         $_page->save();
         $p=$_page->findByPk(1);
@@ -60,8 +59,13 @@ class SiteController extends Controller
 
     public function actionChannel()
 	{
+        $id=Yii::app()->request->getParam('id', 0);
+
+
+
         $tianya=new Tianya();
-		$data=$tianya->getChannels();
+		$data=$tianya->getChannels($id);
+        $data['cid']=$id;
 //test
 //foreach($data['channels'] as $channel){
 //    echo $channel->name."\r\n";
@@ -72,6 +76,61 @@ class SiteController extends Controller
 
 		$this->layout='//layouts/column4';
 		$this->render('channels', $data);
+	}
+
+    public function actionItem()
+	{
+        $page_size=Yii::app()->request->getParam('page_size', 10);
+        $cid=Yii::app()->request->getParam('cid', 0);
+        $tid=Yii::app()->request->getParam('tid', 0);
+        
+        $this->layout='//layouts/column4';
+        $tianya=new Tianya();
+        
+        $data=$tianya->getItems($cid, $tid, $page_size);
+
+        $this->render('items', $data);
+	}
+
+    public function actionArticle()
+	{
+        $id=Yii::app()->request->getParam('id', 0);
+        $article=Article::model()->find('`id`='.$id.' AND `status`=1');
+		if(empty($article)){
+			$this->render('items', array());
+            return;
+		}
+        $dbPath=Yii::getPathOfAlias(
+            'application.data.tianya.'.
+            $article->cid.'.'.
+            $article->tid.'.'.
+            $article->aid.'.db'
+        );
+
+        OZMysqlite::setDbPath($dbPath);
+        try{
+			$page =new P();
+		}catch(Exception $e){
+			OZMysqlite::createCacheTable('p');
+            $page =new P();
+		}
+        
+//		$criteria=new CDbCriteria;
+//		$criteria->condition='status=1';
+//		$criteria->order='pos ASC';
+		$data['dataProvider']=new CActiveDataProvider('C',array(
+//		    'criteria'=>$criteria,
+		    'pagination'=>array(
+		        'pageSize'=>10,
+		    ),
+		));
+        
+        $this->layout='//layouts/column4';
+        $tianya=new Tianya();
+
+        $data=$tianya->getItems($cid, $tid, $page_size);
+
+        $this->render('items', $data);
 	}
 
 	/**
