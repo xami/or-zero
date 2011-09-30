@@ -65,9 +65,9 @@ a.orzero_link{color:#ffffff;}
 
 </div>
 </div>
-<h1><?php echo CHtml::link(str_replace('天涯', '或零', CHtml::encode($article->title)), '/或零/'.$article->id.'/', array(name=>"link")); ?></h1>
+<!--<h1>--><?php //echo CHtml::link(str_replace('天涯', '或零', CHtml::encode($article->title)), '/或零/'.$article->id.'/', array(name=>"link")); ?><!--</h1>-->
 
-<h2 style="float:left;margin-bottom:5px;display:inline-block;">[作者:<?php echo CHtml::link($article->un, 
+<h2 style="float:left;margin-bottom:5px;display:inline-block;">[作者:<?php /*echo CHtml::link($article->un,
 '/search?cx=partner-pub-4726192443658314:lofclyqlq8w&cof=FORID:11&ie=UTF-8&q='.$article->un.'&author='.$article->un, 
 array('target'=>'_blank',
 'author'=> CHtml::encode($article->un),
@@ -77,7 +77,8 @@ array('title'=>'或零整理,'.CHtml::encode($article->title),
 'author'=>'www.orzero.com',
 'title'=>CHtml::encode($article->title).'或零,或零整理,脱水整理,易读整理,只看楼主,天涯热帖',
 'rev'=>'index',
-));?>]&nbsp;[<?php
+));*/?>]&nbsp;[<?php
+/*
 if (is_numeric($article->item->key)) {
 	$src='http://www.tianya.cn/techforum/content/'.$article->item->key.'/1/'.$article->aid.'.shtml';
 } else {
@@ -88,23 +89,26 @@ $ensrc='http://www.orzero.com/f/a?href='.rawurlencode(MCrypy::encrypt('a='.base6
 echo CHtml::link('源帖',
 $ensrc,
 array('target'=>'_blank','title'=>CHtml::encode($article->title)));
-?>]</h2>
 
-<?php $this->widget('zii.widgets.CListView', array(
+*/?>]</h2>
+
+<?php
+$this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_article',
 	'ajaxUpdate'=>false,
-)); 
-Yii::app()->clientScript->registerMetaTag($article->title.','.implode(',', Orzero::$key).','.
-str_replace('天涯', '或零', $article->item->name).','.
-str_replace('天涯', '或零', $article->channel->name).',或零整理,或零小说,或零阅读,ORZERO', 'keywords');
+));
+//Yii::app()->clientScript->registerMetaTag($article->title.','.implode(',', Orzero::$key).','.
+//str_replace('天涯', '或零', $article->item->name).','.
+//str_replace('天涯', '或零', $article->channel->name).',或零整理,或零小说,或零阅读,ORZERO', 'keywords');
 ?>
 
 <?php
-$this->widget('application.components.AjaxBuild', array(
-	'type' => 'article',
-	'fid' => $article->id,
-)); ?>
+//$this->widget('application.components.AjaxBuild', array(
+//	'type' => 'article',
+//	'fid' => $article->id,
+//));
+?>
 
 <script type="text/javascript"><!--
 $(function() {

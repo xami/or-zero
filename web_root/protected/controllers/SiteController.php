@@ -52,7 +52,8 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-        
+        $c = Tools::OZCurl('http://www.baidu.com');
+        pd($c);
         
 //		$this->render('index');
 	}
@@ -108,8 +109,8 @@ class SiteController extends Controller
             $article->aid.'.db'
         );
 
-        OZMysqlite::setDbPath($dbPath);
         try{
+            OZMysqlite::setDbPath($dbPath);
 			$page =new C();
 		}catch(Exception $e){
 			OZMysqlite::createCacheTable('c');

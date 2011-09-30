@@ -4,7 +4,7 @@ class Tools
     private static $_snoopy;
     private $result;
     
-    public function OZSnoopy($URI='', $formvars="", $referer='', $expire=1)
+    public function OZSnoopy($URI='', $formvars="", $referer='', $expire=60)
 	{
 		if(self::$_snoopy == null){
 			self::$_snoopy = new Snoopy();

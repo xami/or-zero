@@ -2,9 +2,11 @@
 
 class ApiController extends Controller
 {
-	public function actionIndex()
+    public $tianya;
+
+	public function actions()
 	{
-		$this->render('index');
+		$this->tianya=new Tianya();
 	}
 
     
@@ -35,4 +37,22 @@ class ApiController extends Controller
 		);
 	}
 	*/
+    public function actionArticle()
+	{
+        $id=Yii::app()->request->getParam('id', 0);
+        $this->tianya->setArticle($id);
+    }
+
+    public function actionItem()
+	{
+        $id=Yii::app()->request->getParam('id', 0);
+        $this->tianya->setItem($id);
+    }
+
+    public function actionChannel()
+	{
+        $id=Yii::app()->request->getParam('id', 0);
+        $this->tianya->setChannel($id);
+    }
+    
 }
