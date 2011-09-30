@@ -40,6 +40,9 @@ class ApiController extends Controller
     public function actionArticle()
 	{
         $id=Yii::app()->request->getParam('id', 0);
+
+        
+        
         $this->tianya->setArticle($id);
     }
 
