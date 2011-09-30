@@ -97,7 +97,7 @@ class Tianya{
         try{
 			$_P =new P();
 		}catch(Exception $e){
-			OZMysqlite::createCacheTable('c');
+			OZMysqlite::createCacheTable('p');
             $_P =new P();
             $article->pcount=0;
 			$article->cto=0;
@@ -143,6 +143,9 @@ class Tianya{
 			    return -5;
 			}
 		}
+
+        $find=$this->getSrc($page->link);
+        pd($find);
 
 
         $next_page=$this->_page->findByPk($_article->cto+1);
@@ -262,7 +265,7 @@ class Tianya{
 		}
 
 		//帖子列表
-		$find=self::find_author_post($this->cutContent($html, '<div class="p3">', '<form  action="artgo.jsp"  method="get">'));
+		$find=self::find_author_post(Tools::cutContent($html, '<div class="p3">', '<form  action="artgo.jsp"  method="get">'));
 //		pr($find);
 		$page_cut_1=Tools::cutContent($footer, '(', '页)');
 		if(!empty($page_cut_1)){
@@ -276,6 +279,7 @@ class Tianya{
 			$find['page']=0;
 		}
 
+        return $find;
     }
 
     function setItem(){
@@ -322,8 +326,8 @@ class Tianya{
 //				pr($head);echo "\r\n";
 //				pr($body);echo "\r\n";
 				if(strpos($head, '楼主:')===0){	//匹配顶楼
-					$match['reach']=intval($this->cutContent($head, '访问:', '回复:'));
-					$match['reply']=intval($this->cutContent($head, '回复:', '<br/>'));
+					$match['reach']=intval(Tools::cutContent($head, '访问:', '回复:'));
+					$match['reply']=intval(Tools::cutContent($head, '回复:', '<br/>'));
 					unset($body_info);
 					preg_match_all("'(.*?)(<br\/>[\s\W]{4,6})*?<a\shref=\"?rep\.jsp\?'isx",$body,$body_info);
 					$match['post'][$j]['body']=$body_info[1][0];
@@ -339,7 +343,7 @@ class Tianya{
 				}else{
 					continue;
 				}
-				$match['un']=$this->cutContent($head, '">', '</a><br/>');
+				$match['un']=Tools::cutContent($head, '">', '</a><br/>');
 			}
 	    }
 

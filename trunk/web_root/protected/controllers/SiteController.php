@@ -52,8 +52,11 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-        $c = Tools::OZCurl('http://www.baidu.com');
-        pd($c);
+//        $c = Tools::OZCurl('http://www.baidu.com');
+//        pd($c);
+
+        $tianya=new Tianya();
+        $tianya->setArticle(56);
         
 //		$this->render('index');
 	}
