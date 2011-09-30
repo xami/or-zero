@@ -52,7 +52,7 @@ abstract class OZMysqlite extends CActiveRecord
         }
     }
 
-	public function getDb()
+	public static function getDb()
 	{
         if(!empty(self::$_config['connectionString'])){
             $component=Yii::createComponent(self::$_config);
@@ -65,7 +65,7 @@ abstract class OZMysqlite extends CActiveRecord
 
 	public static function createCacheTable($tableName='p')
 	{
-		self::$_ozdb->setActive(true);
+//		self::$_ozdb->setActive(true);
 		if($tableName=='p'){
 			$sql=<<<EOD
 CREATE  TABLE  IF NOT EXISTS "p"

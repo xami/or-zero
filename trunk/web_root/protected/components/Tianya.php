@@ -92,25 +92,33 @@ class Tianya{
                 $article->aid.'.db'
             )
         );
+        OZMysqlite::$_ozdb=OZMysqlite::getDb();
 
+        
         //文章信息表
         try{
 			$_P =new P();
+            $_C =new C();
 		}catch(Exception $e){
+            OZMysqlite::createCacheTable('c');
 			OZMysqlite::createCacheTable('p');
-            $_P =new P();
-            $article->pcount=0;
-			$article->cto=0;
-			$article->save();
+//          $article->pcount=0;
+//			$article->cto=0;
+//			$article->save();
 		}
 
         //文章内容表
-        try{
-			$_C =new C();
-		}catch(Exception $e){
-			OZMysqlite::createCacheTable('c');
-            $_C =new C();
-		}
+//        try{
+//			$_P =new P();
+//            $_C =new C();
+//		}catch(Exception $e){
+//			OZMysqlite::createCacheTable('c');
+//			OZMysqlite::createCacheTable('p');
+//		}
+        
+        $_P =new P();
+        $_C =new C();
+
 
         $time=time();
 //        $prev_page_id=$article->cto-1;

@@ -48,15 +48,35 @@ class SiteController extends Controller
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
 	 */
-	public function actionIndex()
+	public function actionIndex($id=88)
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
 //        $c = Tools::OZCurl('http://www.baidu.com');
 //        pd($c);
+        $article=Article::model()->find('`id`='.$id.' AND `status`=1');
+        //设置数据库
+        OZMysqlite::setDbPath(
+            Yii::getPathOfAlias(
+                'application.data.tianya.'.
+                $article->cid.'.'.
+                $article->tid.'.'.
+                $article->aid.'.db'
+            )
+        );
+        OZMysqlite::$_ozdb=OZMysqlite::getDb();
+
+        //文章信息表
+        try{
+			$_P =new P();
+            $_C =new C();
+		}catch(Exception $e){
+            OZMysqlite::createCacheTable('c');
+			OZMysqlite::createCacheTable('p');
+		}
 
         $tianya=new Tianya();
-        $tianya->setArticle(56);
+        $tianya->setArticle($id);
         
 //		$this->render('index');
 	}
