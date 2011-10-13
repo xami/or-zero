@@ -69,7 +69,7 @@ class Tianya{
 
     function setArticle($id){
         $article=Article::model()->find('`id`='.$id.' AND `status`=1');
-        
+
         if(empty($article)){
             Yii::log(__FILE__.'::'.__LINE__.'::empty($article)', 'warning', 'Tianya');
             return -1;
@@ -92,8 +92,7 @@ class Tianya{
                 $article->aid.'.db'
             )
         );
-        OZMysqlite::$_ozdb=OZMysqlite::getDb();
-
+        OZMysqlite::getDb();
         
         //文章信息表
         try{
@@ -153,49 +152,52 @@ class Tianya{
 		}
 
         $find=$this->getSrc($page->link);
-        pd($find);
-
-
-        $next_page=$this->_page->findByPk($_article->cto+1);
+        $next_page=$_P->findByPk($article->cto+1);
 		if(empty($next_page)){
-			$next_page=clone $this->_page;
-			$next_page->id=$_article->cto+1;
+			$next_page=clone $_P;
+			$next_page->id=$article->cto+1;
 		}
-		$next_page->link=$next_link;
+        if(!isset($find['next_link'])||empty($find['next_link'])){
+            Yii::log(__FILE__.'::'.__LINE__.'::empty($find[\'next_link\'])', 'warning', 'Tianya');
+			return -6;
+        }
+		$next_page->link=$find['next_link'];
 		$next_page->count=0;
 		$next_page->info='';
 		$next_page->status=-1;
 		$next_page->mktime=$time;
 		$next_page->uptime=$time;
-		$_article->title=$title;
-		$_article->tag=$tag;
-		//$_article->key=$key;
-		$_article->page=$find['page'];
+		$article->title=$find['title'];
+		$article->tag=$find['tag'];
+		//$article->key=$key;
+		$article->page=$find['page'];
 		//作者保持固定不变,除非为空的情况
-		(isset($find['un']) && !empty($find['un']) && !empty($_article->un)) && $_article->un=$find['un'];
+		(isset($find['un']) && !empty($find['un']) && !empty($article->un)) && $article->un=$find['un'];
 
 		//$_article->pcount+=count($find['post']);
-		$_article->uptime=time();
-		($page->id==1) && $_article->reach=intval($find['reach']);
-		($page->id==1) && $_article->reply=intval($find['reply']);
+		$article->uptime=time();
+		($page->id==1) && $article->reach=intval($find['reach']);
+		($page->id==1) && $article->reply=intval($find['reply']);
 
 		$page->count=count($find['post']);
 		$page->status=1;
 
 
 		if($page->save()===false){
-			if($pr==true) echo(json_encode($_err--.'j'));
+			Yii::log(__FILE__.'::'.__LINE__.'::$page->save()===false', 'warning', 'Tianya');
+			return -7;
 		}
 
 		if($next_page->save()===false){
-			if($pr==true) echo(json_encode($_err--.'k'));
+			Yii::log(__FILE__.'::'.__LINE__.'::$next_page->save()===false', 'warning', 'Tianya');
+			return -8;
 		}
 
 //		pr($find);
 		if(isset($find['post']) && !empty($find['post'])) foreach($find['post'] as $post){
-			$content = $this->_content->find('pos=:pos',array(':pos'=>$post['pos']));
+			$content = $_C->find('pos=:pos',array(':pos'=>$post['pos']));
 			if(empty($content)){
-				$content=clone $this->_content;
+				$content=clone $_C;
 			}
 			$content->pid=$page->id;
 			$content->pos=$post['pos'];
@@ -206,31 +208,34 @@ class Tianya{
 			$content->uptime=$time;
 
 			if($content->save()===false){
-				if($pr==true) echo(json_encode($_err.'_'.$content->pos.'l'));
+				Yii::log(__FILE__.'::'.__LINE__.'::$content->save()===false', 'warning', 'Tianya');
+			    return -9;
 			}
 
 		}
-		$_err--;
 
-		$_article->pcount=$this->_content->count();
+		$article->pcount=$_C->count();
 		if(($next_page->id<=$find['page']) && ($next_page->link!==false))
-			$_article->cto=$next_page->id;
+			$article->cto=$next_page->id;
 
-//		pr($_article);
-		if($_article->save()===false){
-			if($pr==true) echo(json_encode($_err--.'m'));
+//		pr($article);
+		if($article->save()===false){
+			Yii::log(__FILE__.'::'.__LINE__.'::$article->save()===false', 'warning', 'Tianya');
+			return -10;
 		}
 
-		if($_article->page>$_article->cto+1){
-			if($pr==true)
-				echo(json_encode(1));	//继续循环
+		if($article->page>$article->cto+1){
+			Yii::log(__FILE__.'::'.__LINE__.'::success', 'warning', 'Tianya');
+//            echo(json_encode(1));	//继续循环
+			return true;
 		}else{
-			if($pr==true) echo(json_encode($_err--.'n'));
+			Yii::log(__FILE__.'::'.__LINE__.'::!$article->page>$article->cto+1', 'warning', 'Tianya');
+			return -12;
 		}
-        
     }
 
     public function getSrc($link){
+        $link=htmlspecialchars_decode($link);
         //取得uri数据
         $c=Tools::OZCurl($link, 30);
 		if(!isset($c['Info']['http_code'])||$c['Info']['http_code']!=200){
@@ -239,10 +244,10 @@ class Tianya{
 		}else{
             $html=$c['Result'];
         }
-		//pr($this->_url);
 
 		//校验页面是否下载完成
 		$nav=Tools::cutContent($html, '<div class="p3">', '</div>');
+
 		if(strpos($nav, '只看楼主')===false || strpos($nav, '最新回帖')===false || strpos($nav, '去底部')===false){
 			Yii::log(__FILE__.'::'.__LINE__.'::$nav error', 'warning', 'Tianya');
 			return -2;
@@ -258,8 +263,10 @@ class Tianya{
 			$title=$fulltitle;
 		}
 
-
 		$footer=Tools::cutContent($html, '<form  action="artgo.jsp"  method="get">', '</form>');
+        if(empty($footer)){
+            $footer=Tools::cutContent($html, '<form  action="art.jsp"  method="get">', '</form>');
+        }
 		if(strpos($footer, 'name="item"')===false || strpos($footer, 'name="id"')===false) {
 			Yii::log(__FILE__.'::'.__LINE__.'$footer error', 'warning', 'Tianya');
 			return -3;
@@ -274,7 +281,9 @@ class Tianya{
 
 		//帖子列表
 		$find=self::find_author_post(Tools::cutContent($html, '<div class="p3">', '<form  action="artgo.jsp"  method="get">'));
-//		pr($find);
+		if(empty($find)){
+            $find=self::find_author_post(Tools::cutContent($html, '<div class="p3">', '<form  action="art.jsp"  method="get">'));
+        }
 		$page_cut_1=Tools::cutContent($footer, '(', '页)');
 		if(!empty($page_cut_1)){
 			$page_cut_2=explode('/', $page_cut_1);
@@ -287,6 +296,9 @@ class Tianya{
 			$find['page']=0;
 		}
 
+        $find['title']=$title;
+        $find['tag']=$tag;
+        $find['next_link']=$next_link;
         return $find;
     }
 
@@ -331,7 +343,7 @@ class Tianya{
 			for($i=0;$i<$count;$i++){
 				$head=$cut[1][$i];
 				$body=$cut[2][$i];
-//				pr($head);echo "\r\n";
+//				pr($head);echo "\r\n\r\n";
 //				pr($body);echo "\r\n";
 				if(strpos($head, '楼主:')===0){	//匹配顶楼
 					$match['reach']=intval(Tools::cutContent($head, '访问:', '回复:'));
@@ -351,7 +363,11 @@ class Tianya{
 				}else{
 					continue;
 				}
-				$match['un']=Tools::cutContent($head, '">', '</a><br/>');
+                $un=Tools::cutContent($head, '">', '</a><br/>');
+                if(!empty($un)){
+                    $match['un']=$un;
+                }
+
 			}
 	    }
 
