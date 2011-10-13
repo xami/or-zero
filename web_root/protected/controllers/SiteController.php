@@ -22,8 +22,11 @@ class SiteController extends Controller
 	}
     public function actionTest($id=2)
     {
+//        $tianya=new Tianya();
+//        $st=$tianya->setItem($id, '');
+//        pd($st);
         $tianya=new Tianya();
-        $st=$tianya->setItem($id);
+        $st=$tianya->setChannel($id);
         pd($st);
     }
 

@@ -131,11 +131,14 @@ class Tools
             return $e_end[0][0];
         }else{
             $e_start=explode($start, $content);
-            if(!isset($e_start[1]))
+            if(!isset($e_start[1])){
                 return false;
+            }
             $e_end=explode($end, $e_start[1]);
-            if(!isset($e_end[1]))
+            if(!isset($e_end[1])){
                 return false;
+            }
+
             return $e_end[0];
         }
 
