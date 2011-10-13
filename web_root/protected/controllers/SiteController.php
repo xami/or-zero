@@ -77,6 +77,10 @@ class SiteController extends Controller
 
         $tianya=new Tianya();
         $st=$tianya->setArticle($id);
+
+        //-6数据库文件被破坏,需要回归
+        //true可以继续更新
+        //-12已经更新到最后
         var_dump($st);
 //		$this->render('index');
 	}

@@ -86,10 +86,7 @@ class Tianya{
         //设置数据库
         OZMysqlite::setDbPath(
             Yii::getPathOfAlias(
-                'application.data.tianya.'.
-                $article->cid.'.'.
-                $article->tid.'.'.
-                $article->aid.'.db'
+                'application.data.tianya.'.$article->cid.'.'.$article->tid.'.'.$article->aid.'.db'
             )
         );
         OZMysqlite::getDb();
@@ -99,24 +96,11 @@ class Tianya{
 			$_P =new P();
             $_C =new C();
 		}catch(Exception $e){
-            OZMysqlite::createCacheTable('c');
-			OZMysqlite::createCacheTable('p');
-//          $article->pcount=0;
-//			$article->cto=0;
-//			$article->save();
-		}
-
-        //文章内容表
-//        try{
-//			$_P =new P();
-//            $_C =new C();
-//		}catch(Exception $e){
-//			OZMysqlite::createCacheTable('c');
+//          OZMysqlite::createCacheTable('c');
 //			OZMysqlite::createCacheTable('p');
-//		}
-        
-        $_P =new P();
-        $_C =new C();
+            Yii::log(__FILE__.'::'.__LINE__.'::get $_P $_C', 'warning', 'Tianya');
+			return -4;
+		}
 
 
         $time=time();
@@ -138,7 +122,7 @@ class Tianya{
 			$page->uptime=$time;
 			if(!$page->save()){
 				Yii::log(__FILE__.'::'.__LINE__.'::!$page->save()', 'warning', 'Tianya');
-			    return -4;
+			    return -5;
 			}
 
 		}else{
@@ -147,7 +131,7 @@ class Tianya{
 				$article->cto=0;
 				$article->save();
 				Yii::log(__FILE__.'::'.__LINE__.'::empty($page->id)', 'warning', 'Tianya');
-			    return -5;
+			    return -6;
 			}
 		}
 
@@ -159,7 +143,7 @@ class Tianya{
 		}
         if(!isset($find['next_link'])||empty($find['next_link'])){
             Yii::log(__FILE__.'::'.__LINE__.'::empty($find[\'next_link\'])', 'warning', 'Tianya');
-			return -6;
+			return -7;
         }
 		$next_page->link=$find['next_link'];
 		$next_page->count=0;
@@ -185,12 +169,12 @@ class Tianya{
 
 		if($page->save()===false){
 			Yii::log(__FILE__.'::'.__LINE__.'::$page->save()===false', 'warning', 'Tianya');
-			return -7;
+			return -8;
 		}
 
 		if($next_page->save()===false){
 			Yii::log(__FILE__.'::'.__LINE__.'::$next_page->save()===false', 'warning', 'Tianya');
-			return -8;
+			return -9;
 		}
 
 //		pr($find);
@@ -209,7 +193,7 @@ class Tianya{
 
 			if($content->save()===false){
 				Yii::log(__FILE__.'::'.__LINE__.'::$content->save()===false', 'warning', 'Tianya');
-			    return -9;
+			    return -10;
 			}
 
 		}
@@ -221,7 +205,7 @@ class Tianya{
 //		pr($article);
 		if($article->save()===false){
 			Yii::log(__FILE__.'::'.__LINE__.'::$article->save()===false', 'warning', 'Tianya');
-			return -10;
+			return -11;
 		}
 
 		if($article->page>$article->cto+1){
