@@ -29,7 +29,7 @@ class SiteController extends Controller
 		}catch(Exception $e){
 			OZMysqlite::createCacheTable('p');
 			OZMysqlite::createCacheTable('c');
-			OZMysqlite::createCacheTable('i');
+//			OZMysqlite::createCacheTable('i');
 //			$this->_article->pcount=0;
 //			$this->_article->cto=0;
 //			$this->_article->save();
@@ -76,8 +76,8 @@ class SiteController extends Controller
 		}
 
         $tianya=new Tianya();
-        $tianya->setArticle($id);
-        
+        $st=$tianya->setArticle($id);
+        var_dump($st);
 //		$this->render('index');
 	}
 

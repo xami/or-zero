@@ -47,6 +47,9 @@ abstract class OZMysqlite extends CActiveRecord
         try{
             if(!is_dir(self::$_path))
 				mkdir(self::$_path,0777,true);
+            if(!is_file(self::$_path. DIRECTORY_SEPARATOR . 'orzero.sqlite')){
+                copy ( Yii::getPathOfAlias('application.data'). DIRECTORY_SEPARATOR . 'orzero.sqlite' , self::$_path. DIRECTORY_SEPARATOR . 'orzero.sqlite');
+            }
         }catch(Exception $e){
             throw new CException(Yii::t('oz','OZDB can not create the dbpath.'));
         }
@@ -57,6 +60,7 @@ abstract class OZMysqlite extends CActiveRecord
         if(!empty(self::$_config['connectionString'])){
             $component=Yii::createComponent(self::$_config);
             $component->init();
+            self::$_ozdb=$component;
             return $component;
         }else{
             throw new CException(Yii::t('oz','OZDB set the dbpath first.'));
