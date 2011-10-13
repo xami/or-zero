@@ -286,7 +286,7 @@ class Tianya{
         return $find;
     }
 
-    function setItem($id,$next_src){
+    function setItem($id,$next_src=''){
 		$tid=intval($id);
 		$_item=Item::model()->findByPk($tid);
 		if(empty($_item)){
@@ -340,8 +340,8 @@ class Tianya{
 					continue;
 				if(!isset($find['reply'][$i]) || $find['reply'][$i]<1000)	//没有10000回复
 					continue;
-                pr($find['link'][$i],"\r\n");
-                pr($find['reach'][$i],"\r\n");
+//                pr($find['link'][$i],"\r\n");
+//                pr($find['reach'][$i],"\r\n");
 				//有100000访问量 或者 有10000回复继续整理
 //				if((!isset($find['reach'][$i]) || $find['reach'][$i]<100000) && (!isset($find['reply'][$i]) || $find['reply'][$i]<1000))
 //					continue;
@@ -418,15 +418,113 @@ class Tianya{
 
         
         if($j>0){
-            return true;
+            preg_match("'href=\"(.*?)\">下一页</a>'isx", $footer, $matches);
+            if(!empty($matches[1])){
+                return 'http://3g.tianya.cn/bbs/'.$matches[1];
+            }else{
+                return true;
+            }
+
         }else{
             return -6;
         }
 
     }
 
-    function setChannel(){
-        
+    function setChannel($id){
+		$key=intval($id);
+		//配置轮询的范围
+		if($key<0 || $key>19){
+			Yii::log(__FILE__.'::'.__LINE__.'::$key<0 || $key>19', 'warning', 'Channel');
+			return -1;
+		}
+
+		$_url='http://3g.tianya.cn/nav/more.jsp?chl='.$key;
+		//缓存一周
+		$c=Tools::OZCurl($_url, 3600*24*7);
+		if(!isset($c['Info']['http_code'])||$c['Info']['http_code']!=200){
+			Yii::log(__FILE__.'::'.__LINE__.'::!isset($c[\'Info\'][\'http_code\'])||$c[\'Info\'][\'http_code\']!=200', 'warning', 'Channel');
+			return -2;
+		}else{
+            $html=$c['Result'];
+        }
+
+		//校验页面是否下载完成
+		$title=Tools::cutContent($html, '<title>天涯导航_', '</title>');
+		if(strlen($title)<2){
+			Yii::log(__FILE__.'::'.__LINE__.'::strlen($title)<2', 'warning', 'Channel');
+			return -3;
+		}
+		$footer=Tools::cutContent($html, '<div class="f" id="bottom">', '</div>');
+		if(strpos($footer, '天涯首页')===false){
+			Yii::log(__FILE__.'::'.__LINE__.'::strpos($footer, \'天涯首页\')===false', 'warning', 'Channel');
+			return -4;
+		}
+
+		$channel = new Channel();
+		$_channel = $channel->find('`key` LIKE :key', array(':key'=>$key));
+
+		//更新频道的item列表
+		$content=Tools::cutContent($html, '<div class="p">', '</div>');
+		$find=self::find_item_info($content);
+//		pd($find);
+
+		if(isset($find['key']) && isset($find['name'])){
+			if(empty($find['key']) || (($count = count($find['key'])) !== count($find['name']))){
+                Yii::log(__FILE__.'::'.__LINE__.'::empty($find[\'key\']) || (($count = count($find[\'key\'])) !== count($find[\'name\'])', 'warning', 'Channel');
+                return -5;
+            }
+
+			//保存频道
+			if(isset($_channel->id) && $_channel->id>0){
+				if($_channel->status!=1)
+					//die(json_encode(++$key));	//控制js进入下一个channel查询
+				{
+					Yii::log(__FILE__.'::'.__LINE__.'::$_channel->status!=1', 'warning', 'Channel');
+                    return -6;
+				}
+
+				if(($title != $_channel->name) || ($count != $_channel->count)){
+					$_channel->name = trim($title);
+					$_channel->count = $count;
+					$_channel->save();
+				}
+			}else{
+				$_channel = clone $channel;
+				$_channel->key = $key;
+				$_channel->name = trim($title);
+				$_channel->count = $count;
+				$_channel->status = 1;
+				$_channel->uptime = time();
+				$_channel->type = 'tianya';
+				$_channel->save();
+			}
+			$item=new Item();
+			$_item=array();
+			for($i=0;$i<$count;$i++){
+				$_item[$i] = $item->find('`cid`=:cid AND `key` LIKE :key',
+					array(':cid'=>$_channel->id,':key'=>$find['key'][$i]));
+
+				if(isset($_item[$i]->id) && $_item[$i]->id>0){
+					//不更新item跳过
+					if($_item[$i]->status!=1) continue;
+					if($_item[$i]->name != $find['name'][$i]){
+						$_item[$i]->name = $find['name'][$i];
+						$_item[$i]->save();
+					}
+				}else{
+					$_item[$i] = clone $item;
+					$_item[$i]->cid=$_channel->id;
+					$_item[$i]->key=$find['key'][$i];
+					$_item[$i]->name=$find['name'][$i];
+					$_item[$i]->count=0;
+					$_item[$i]->status=1;
+					$_item[$i]->save();
+				}
+			}
+		}
+
+        return ++$key;
     }
 
 
