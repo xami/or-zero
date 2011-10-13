@@ -1,12 +1,14 @@
 <?php
-function pr($data=array(), $stop=false)
+function pr($data=array(), $end='', $stop=false)
 {
 	print_r($data);
+    echo $end;
 	if($stop) die;
 }
-function pd($data=array(), $stop=true)
+function pd($data=array(), $end='', $stop=true)
 {
 	print_r($data);
+    echo $end;
 	if($stop) die;
 }
 // uncomment the following to define a path alias

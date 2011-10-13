@@ -71,15 +71,15 @@ class Tianya{
         $article=Article::model()->find('`id`='.$id.' AND `status`=1');
 
         if(empty($article)){
-            Yii::log(__FILE__.'::'.__LINE__.'::empty($article)', 'warning', 'Tianya');
+            Yii::log(__FILE__.'::'.__LINE__.'::empty($article)', 'warning', 'Article');
             return -1;
         }
         if(empty($article->src)){
-            Yii::log(__FILE__.'::'.__LINE__.'::empty($article->src)', 'warning', 'Tianya');
+            Yii::log(__FILE__.'::'.__LINE__.'::empty($article->src)', 'warning', 'Article');
 			return -2;
 		}
         if(empty($article->item)||empty($article->channel)) {
-			Yii::log(__FILE__.'::'.__LINE__.'::empty($article->item)||empty($article->channel)', 'warning', 'Tianya');
+			Yii::log(__FILE__.'::'.__LINE__.'::empty($article->item)||empty($article->channel)', 'warning', 'Article');
 			return -3;
 		}
 
@@ -98,7 +98,7 @@ class Tianya{
 		}catch(Exception $e){
 //          OZMysqlite::createCacheTable('c');
 //			OZMysqlite::createCacheTable('p');
-            Yii::log(__FILE__.'::'.__LINE__.'::get $_P $_C', 'warning', 'Tianya');
+            Yii::log(__FILE__.'::'.__LINE__.'::get $_P $_C', 'warning', 'Article');
 			return -4;
 		}
 
@@ -121,7 +121,7 @@ class Tianya{
 			$page->mktime=$time;
 			$page->uptime=$time;
 			if(!$page->save()){
-				Yii::log(__FILE__.'::'.__LINE__.'::!$page->save()', 'warning', 'Tianya');
+				Yii::log(__FILE__.'::'.__LINE__.'::!$page->save()', 'warning', 'Article');
 			    return -5;
 			}
 
@@ -130,7 +130,7 @@ class Tianya{
 			if(empty($page->id)){
 				$article->cto=0;
 				$article->save();
-				Yii::log(__FILE__.'::'.__LINE__.'::empty($page->id)', 'warning', 'Tianya');
+				Yii::log(__FILE__.'::'.__LINE__.'::empty($page->id)', 'warning', 'Article');
 			    return -6;
 			}
 		}
@@ -142,7 +142,7 @@ class Tianya{
 			$next_page->id=$article->cto+1;
 		}
         if(!isset($find['next_link'])||empty($find['next_link'])){
-            Yii::log(__FILE__.'::'.__LINE__.'::empty($find[\'next_link\'])', 'warning', 'Tianya');
+            Yii::log(__FILE__.'::'.__LINE__.'::empty($find[\'next_link\'])', 'warning', 'Article');
 			return -7;
         }
 		$next_page->link=$find['next_link'];
@@ -168,12 +168,12 @@ class Tianya{
 
 
 		if($page->save()===false){
-			Yii::log(__FILE__.'::'.__LINE__.'::$page->save()===false', 'warning', 'Tianya');
+			Yii::log(__FILE__.'::'.__LINE__.'::$page->save()===false', 'warning', 'Article');
 			return -8;
 		}
 
 		if($next_page->save()===false){
-			Yii::log(__FILE__.'::'.__LINE__.'::$next_page->save()===false', 'warning', 'Tianya');
+			Yii::log(__FILE__.'::'.__LINE__.'::$next_page->save()===false', 'warning', 'Article');
 			return -9;
 		}
 
@@ -192,7 +192,7 @@ class Tianya{
 			$content->uptime=$time;
 
 			if($content->save()===false){
-				Yii::log(__FILE__.'::'.__LINE__.'::$content->save()===false', 'warning', 'Tianya');
+				Yii::log(__FILE__.'::'.__LINE__.'::$content->save()===false', 'warning', 'Article');
 			    return -10;
 			}
 
@@ -204,7 +204,7 @@ class Tianya{
 
 //		pr($article);
 		if($article->save()===false){
-			Yii::log(__FILE__.'::'.__LINE__.'::$article->save()===false', 'warning', 'Tianya');
+			Yii::log(__FILE__.'::'.__LINE__.'::$article->save()===false', 'warning', 'Article');
 			return -11;
 		}
 
@@ -213,7 +213,7 @@ class Tianya{
 //            echo(json_encode(1));	//继续循环
 			return true;
 		}else{
-			Yii::log(__FILE__.'::'.__LINE__.'::!$article->page>$article->cto+1', 'warning', 'Tianya');
+			Yii::log(__FILE__.'::'.__LINE__.'::!$article->page>$article->cto+1', 'warning', 'Article');
 			return -12;
 		}
     }
@@ -223,7 +223,7 @@ class Tianya{
         //取得uri数据
         $c=Tools::OZCurl($link, 30);
 		if(!isset($c['Info']['http_code'])||$c['Info']['http_code']!=200){
-			Yii::log(__FILE__.'::'.__LINE__.'::!isset($c[\'Info\'][\'http_code\'])||$c[\'Info\'][\'http_code\']!=200', 'warning', 'Tianya');
+			Yii::log(__FILE__.'::'.__LINE__.'::!isset($c[\'Info\'][\'http_code\'])||$c[\'Info\'][\'http_code\']!=200', 'warning', 'Article');
 			return -1;
 		}else{
             $html=$c['Result'];
@@ -233,7 +233,7 @@ class Tianya{
 		$nav=Tools::cutContent($html, '<div class="p3">', '</div>');
 
 		if(strpos($nav, '只看楼主')===false || strpos($nav, '最新回帖')===false || strpos($nav, '去底部')===false){
-			Yii::log(__FILE__.'::'.__LINE__.'::$nav error', 'warning', 'Tianya');
+			Yii::log(__FILE__.'::'.__LINE__.'::$nav error', 'warning', 'Article');
 			return -2;
 		}
 
@@ -252,14 +252,14 @@ class Tianya{
             $footer=Tools::cutContent($html, '<form  action="art.jsp"  method="get">', '</form>');
         }
 		if(strpos($footer, 'name="item"')===false || strpos($footer, 'name="id"')===false) {
-			Yii::log(__FILE__.'::'.__LINE__.'$footer error', 'warning', 'Tianya');
+			Yii::log(__FILE__.'::'.__LINE__.'$footer error', 'warning', 'Article');
 			return -3;
 		}
 
 		$page_content=Tools::cutContent($html, '<div class="pg">', '</div>');
 		$next_link=self::find_next_link($page_content);
 		if(!Tools::is_url($next_link)){
-			Yii::log(__FILE__.'::'.__LINE__.'$next_link error', 'warning', 'Tianya');
+			Yii::log(__FILE__.'::'.__LINE__.'$next_link error', 'warning', 'Article');
 			return -4;
 		}
 
@@ -286,8 +286,143 @@ class Tianya{
         return $find;
     }
 
-    function setItem(){
+    function setItem($id,$next_src){
+		$tid=intval($id);
+		$_item=Item::model()->findByPk($tid);
+		if(empty($_item)){
+            Yii::log(__FILE__.'::'.__LINE__.'::!$article->page>$article->cto+1', 'warning', 'Item');
+			return -1;
+        }
+
+//		$page=intval($page)<0 ? 0 : intval($page);	//当前板块页码
+//		if($page>100){   //更新前20页
+//            return -2;
+//        }
+
+		//$this->_setting['expire']=3600;
+		$_url='http://3g.tianya.cn/bbs/list.jsp?item='.$_item->key;
+        if(!empty($next_src)){
+            $_url=htmlspecialchars_decode($next_src);
+        }
+		$c=Tools::OZCurl($_url, 300);
+		if(!isset($c['Info']['http_code'])||$c['Info']['http_code']!=200){
+			Yii::log(__FILE__.'::'.__LINE__.'::!isset($c[\'Info\'][\'http_code\'])||$c[\'Info\'][\'http_code\']!=200', 'warning', 'Item');
+			return -3;
+		}else{
+            $html=$c['Result'];
+        }
+
+		$title=Tools::cutContent($html, '<br/>'."\r\n".'论坛-', "\r\n".'</div>');
+		//校验页面是否下载完成
+		$footer=Tools::cutContent($html, '<div class="lk">', '<br/>');
+		if(empty($title) || strpos($footer, '下一页')===false || strpos($footer, $_item->key)===false){
+            Yii::log(__FILE__.'::'.__LINE__.'::get item src error', 'warning', 'Item');
+			return -4;
+        }
+        $_item->name=$title;
         
+		//帖子列表
+		$content=Tools::cutContent($html, '<div class="p">', '</div>');
+		$find=self::find_article_info($content);
+
+		if(isset($find['link']) && isset($find['content'])){
+			if(empty($find['link']) || empty($find['content']) || (($count = count($find['link'])) !== count($find['content']))){
+				Yii::log(__FILE__.'::'.__LINE__.'::get item src error', 'warning', 'Item');
+			    return -5;
+			}
+
+			$article= new Article();
+			$criteria=new CDbCriteria;
+
+			$_article=array();
+			for($i=0,$j=0;$i<$count;$i++){
+				if(!isset($find['reach'][$i]) || $find['reach'][$i]<50000)	//没有100000访问量
+					continue;
+				if(!isset($find['reply'][$i]) || $find['reply'][$i]<1000)	//没有10000回复
+					continue;
+                pr($find['link'][$i],"\r\n");
+                pr($find['reach'][$i],"\r\n");
+				//有100000访问量 或者 有10000回复继续整理
+//				if((!isset($find['reach'][$i]) || $find['reach'][$i]<100000) && (!isset($find['reply'][$i]) || $find['reply'][$i]<1000))
+//					continue;
+
+				//pr($find['content'][$i]);
+				$aid=intval(Tools::cutContent($find['link'][$i], '&id=', '&idwriter=0&key=0&chk='));
+				if($aid<0){
+                    Yii::log(__FILE__.'::'.__LINE__.'::$aid<0', 'warning', 'Item');
+                    continue;
+                }
+				if(strpos($find['content'][$i], '[')===0 && $cut=strpos($find['content'][$i], ']')!==false){
+					$tag=Tools::cutContent($find['content'][$i], '[', ']');
+					$title_cut=explode(']', $find['content'][$i]);
+					$title=array_pop($title_cut);
+				}else{
+					$tag='';
+					$title=$find['content'][$i];
+				}
+				$un=$find['author'][$i];
+				$time=time();
+				$src='http://3g.tianya.cn/bbs/'.$find['link'][$i];
+
+				$criteria->condition='`tid`=:tid AND `aid`=:aid';
+				$criteria->params=array(':tid'=>$tid, ':aid'=>$aid);
+				$_article[$i] = $article->find($criteria);
+				//pr($find['content'][$i]);
+
+				if(isset($_article[$i]->id) && $_article[$i]->id>0){
+					//不更新状态，跳过
+					if($_article[$i]->status!=1) continue;
+					if($_article[$i]->title != $title || $_article[$i]->tag != $tag || $_article[$i]->un != $un){
+						$_article[$i]->title = $title;
+						$_article[$i]->tag = $tag;
+						!empty($un) && $_article[$i]->un = $un;
+						$_article[$i]->reach = $find['reach'];
+						$_article[$i]->reply = $find['reply'];
+						$_article[$i]->save();
+					}
+				}else{
+					$_article[$i] = clone $article;
+					$_article[$i]->cid=$_item->cid;
+					$_article[$i]->tid=$tid;
+					$_article[$i]->aid=$aid;
+					$_article[$i]->title=$title;
+					$_article[$i]->tag=$tag;
+					$_article[$i]->key='';
+					$_article[$i]->page=0;
+					$_article[$i]->un=$un;
+					$_article[$i]->cto=0;
+					$_article[$i]->pcount=0;
+					$_article[$i]->mktime=$time;
+					$_article[$i]->uptime=$time;
+					$_article[$i]->src=urldecode($src);
+					$_article[$i]->status=1;
+					$_article[$i]->reach = $find['reach'][$i];
+					$_article[$i]->reply = $find['reply'][$i];
+					$_article[$i]->hot = 0;
+					$_article[$i]->save();
+				}
+			}
+            $j++;
+		}
+
+		//更新统计
+		$total=Yii::app()->db->createCommand()
+				->select('count(*) as count')
+				->from('{{article}}')
+				->where('tid=:tid AND cid=:cid', array(':tid'=>$_item->id, ':cid'=>$_item->cid))
+				->queryRow();
+		//pr($count);
+		$_item->uptime=time();
+		$_item->count=$total['count'];
+		$_item->save();
+
+        
+        if($j>0){
+            return true;
+        }else{
+            return -6;
+        }
+
     }
 
     function setChannel(){
@@ -361,14 +496,15 @@ class Tianya{
 
 
 	public static function find_article_info($document) {
-	    preg_match_all("'<\s*a\s.*?href\s*=\s*([\"\'])?(?(1)(.*?)\\1|([^\s\>]+))[^>]*>?(.*?)</a>'isx",$document,$links);
+	    preg_match_all("'<\s*a\s.*?href\s*=\s*([\"\'])?art(?(1)(.*?)\\1|([^\s\>]+))[^>]*>?(.*?)</a>'isx",$document,$links);
+
 	    while(list($key,$val) = each($links[2])) {
 	        if(!empty($val))
-	            $match['link'][] = html_entity_decode($val);
+	            $match['link'][] = html_entity_decode('art'.$val);
 	    }
 	    while(list($key,$val) = each($links[3])) {
 	        if(!empty($val))
-	            $match['link'][] = html_entity_decode($val);
+	            $match['link'][] = html_entity_decode('art'.$val);
 	    }
 	    while(list($key,$val) = each($links[4])) {
 	        if(!empty($val))
@@ -386,14 +522,20 @@ class Tianya{
 		while(list($key,$val) = each($info[2])) {
 	        if(!empty($val))
 	            $match['reach'][] = $val;
+            else
+                $match['reach'][] = 0;
 	    }
 		while(list($key,$val) = each($info[3])) {
 	        if(!empty($val))
 	            $match['reply'][] = $val;
+            else
+                $match['reply'][] = 0;
 	    }
 		while(list($key,$val) = each($info[4])) {
 	        if(!empty($val))
 	            $match['author'][] = $val;
+            else
+                $match['author'][] = '';
 	    }
 
 	    return $match;
