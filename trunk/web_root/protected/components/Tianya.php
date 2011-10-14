@@ -421,14 +421,10 @@ class Tianya{
             preg_match("'href=\"(.*?)\">下一页</a>'isx", $footer, $matches);
             if(!empty($matches[1])){
                 return 'http://3g.tianya.cn/bbs/'.$matches[1];
-            }else{
-                return true;
             }
-
-        }else{
-            return -6;
         }
-
+        
+        return true;
     }
 
     function setChannel($id){
