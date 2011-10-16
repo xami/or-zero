@@ -131,11 +131,13 @@ class Tianya{
 				$article->cto=0;
 				$article->save();
 				Yii::log(__FILE__.'::'.__LINE__.'::empty($page->id)', 'warning', 'Article');
-			    return -6;
+			    return true;
 			}
 		}
 
         $find=$this->getSrc($page->link);
+//        pd($find);
+        
         $next_page=$_P->findByPk($article->cto+1);
 		if(empty($next_page)){
 			$next_page=clone $_P;

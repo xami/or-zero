@@ -115,20 +115,13 @@ class SiteController extends Controller
 			$this->render('error', array('msg'=>'当前文章不存在或者已经被删除'));
             return;
 		}
-        $dbPath=Yii::getPathOfAlias(
-            'application.data.tianya.'.
-            $article->cid.'.'.
-            $article->tid.'.'.
-            $article->aid.'.db'
-        );
 
-        try{
-            OZMysqlite::setDbPath($dbPath);
-			$page =new C();
-		}catch(Exception $e){
-			OZMysqlite::createCacheTable('c');
-            $page =new C();
-		}
+        OZMysqlite::setDbPath(
+            Yii::getPathOfAlias(
+                'application.data.tianya.'.$article->cid.'.'.$article->tid.'.'.$article->aid.'.db'
+            )
+        );
+        OZMysqlite::getDb();
         
 //		$criteria=new CDbCriteria;
 //		$criteria->condition='status=1';
