@@ -28,21 +28,6 @@ google_ad_height = 600;
 <script type="text/javascript"
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
-
-<div style="clear:both;"></div>
-
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 160x90, orzero 11-4-5 */
-google_ad_slot = "2519502491";
-google_ad_width = 160;
-google_ad_height = 90;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-
 <div style="clear:both;"></div>
 
 

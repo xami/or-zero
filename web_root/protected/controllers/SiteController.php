@@ -112,7 +112,7 @@ class SiteController extends Controller
         $id=Yii::app()->request->getParam('id', 0);
         $article=Article::model()->find('`id`='.$id.' AND `status`=1');
 		if(empty($article)){
-			$this->render('error', array('msg'=>'当前文章不存在或者已经被删除'));
+			$this->render('error', array('code'=>'404','message'=>'当前文章不存在或者已经被删除'));
             return;
 		}
 
@@ -132,7 +132,9 @@ class SiteController extends Controller
 		        'pageSize'=>10,
 		    ),
 		));
+        $data['article']=$article;
 
+        $this->layout='//layouts/column4';
         $this->render('article', $data);
 	}
 
