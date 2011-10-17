@@ -18,7 +18,7 @@ function pd($data=array(), $end='', $stop=true)
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
+	'name'=>'M天涯',
     'language'=>'zh_cn',
 
 	// preloading 'log' component

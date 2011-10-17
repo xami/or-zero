@@ -68,6 +68,7 @@ class Tianya{
     }
 
     function setArticle($id){
+        $id=intval($id);
         $article=Article::model()->find('`id`='.$id.' AND `status`=1');
 
         if(empty($article)){

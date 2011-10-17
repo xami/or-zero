@@ -2,11 +2,9 @@
 
 class ApiController extends Controller
 {
-    public $tianya;
 
 	public function actions()
 	{
-		$this->tianya=new Tianya();
 	}
 
     
@@ -40,20 +38,25 @@ class ApiController extends Controller
     public function actionArticle()
 	{
         $id=Yii::app()->request->getParam('id', 0);
-        $st=$this->tianya->setArticle($id);
+        $tianya=new Tianya();
+        $st=$tianya->setArticle($id);
         pd($st);
     }
 
     public function actionItem()
 	{
         $id=Yii::app()->request->getParam('id', 0);
-        $this->tianya->setItem($id);
+        $tianya=new Tianya();
+        $st=$tianya->setItem($id);
+        pd($st);
     }
 
     public function actionChannel()
 	{
         $id=Yii::app()->request->getParam('id', 0);
-        $this->tianya->setChannel($id);
+        $tianya=new Tianya();
+        $st=$tianya->setChannel($id);
+        pd($st);
     }
     
 }

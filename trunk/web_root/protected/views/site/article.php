@@ -1,12 +1,12 @@
 <?php 
-$this->pageTitle=((isset($_REQUEST['C_page']) && $_REQUEST['C_page']>0) ? '[第'.$_REQUEST['C_page'].'页]' : '[或零]').
-//str_replace('天涯', '或零', $article->title).'::'.str_replace('天涯', '或零', $article->item->name).'::'.
-Yii::app()->name.',网路热帖同步整理'; 
-//$this->breadcrumbs=array(
-//	str_replace('天涯', '或零', $article->channel->name)=>'/or/'.$article->channel->id.'/',
-//	str_replace('天涯', '或零', $article->item->name)=>'/ero/'.$article->item->id.'/',
-//	str_replace('天涯', '或零', $article->title)=>'/orzero/'.$article->id.'/',
-//);
+$this->pageTitle=
+        str_replace('天涯', Yii::app()->name, $article->title).((isset($_REQUEST['C_page']) && $_REQUEST['C_page']>0) ? '[第'.$_REQUEST['C_page'].'页]' : '['.Yii::app()->name.']').
+', '.str_replace('天涯', Yii::app()->name, $article->item->name).', '.str_replace('天涯', Yii::app()->name, $article->channel->name).', '.Yii::app()->name;
+$this->breadcrumbs=array(
+	str_replace('天涯', Yii::app()->name, $article->channel->name)=>'/or/'.$article->channel->id.'/',
+	str_replace('天涯', Yii::app()->name, $article->item->name)=>'/ero/'.$article->item->id.'/',
+	str_replace('天涯', Yii::app()->name, $article->title)=>'/orzero/'.$article->id.'/',
+);
 //Yii::app()->clientScript->registerMetaTag($article->title.','.str_replace('天涯', '或零', $article->item->name).','.str_replace('天涯', '或零', $article->channel->name).',或零整理,或零在线,或零阅读,ORZERO', 'keywords');
 //Yii::app()->clientScript->registerMetaTag('或零整理,在线阅读,'.$article->title.',脱水整理版地址:'.'http://www.orzero.com/orzero/'.$article->id.'/index.html', 'description');
 //Yii::app()->clientScript->registerMetaTag('all', 'robots');
@@ -34,40 +34,22 @@ google_ad_height = 90;
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 </div>
+
 <div id="ad2" style="width:180px;">
 
-<!-- JiaThis Button BEGIN -->
-<div id="jiathis_style_32x32">
-<a class="jiathis_button_qzone"></a>
-<a class="jiathis_button_tieba"></a>
-<a class="jiathis_button_renren"></a>
-<a class="jiathis_button_fanfou"></a>
-<a class="jiathis_button_tsohu"></a>
-<a class="jiathis_button_tsina"></a>
-<a class="jiathis_button_xiaoyou"></a>
-<a class="jiathis_button_yahoo"></a>
-<a class="jiathis_button_douban"></a>
-<a class="jiathis_button_xianguo"></a>
-<a class="jiathis_button_tqq"></a>
-<a class="jiathis_button_zhuaxia"></a>
-<a class="jiathis_button_fav"></a>
-<a class="jiathis_button_email"></a>
-<a class="jiathis_button_tianya"></a>
-</div>
-<script type="text/javascript" src="http://v1.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
 
 <style>
+#content{padding: 0 0 0 20px;}
+#sidebar{padding: 0;}
 a.orzero_link{color:#ffffff;}
 .keys,[name=keys]{display:none;}
-
 </style>
 
 </div>
 </div>
 <!--<h1>--><?php //echo CHtml::link(str_replace('天涯', '或零', CHtml::encode($article->title)), '/或零/'.$article->id.'/', array(name=>"link")); ?><!--</h1>-->
 
-<h2 style="float:left;margin-bottom:5px;display:inline-block;">[作者:<?php /*echo CHtml::link($article->un,
+<h2 style="float:left;margin-bottom:5px;display:inline-block;">[作者:<?php echo CHtml::link($article->un,
 '/search?cx=partner-pub-4726192443658314:lofclyqlq8w&cof=FORID:11&ie=UTF-8&q='.$article->un.'&author='.$article->un, 
 array('target'=>'_blank',
 'author'=> CHtml::encode($article->un),
@@ -77,8 +59,7 @@ array('title'=>'或零整理,'.CHtml::encode($article->title),
 'author'=>'www.orzero.com',
 'title'=>CHtml::encode($article->title).'或零,或零整理,脱水整理,易读整理,只看楼主,天涯热帖',
 'rev'=>'index',
-));*/?>]&nbsp;[<?php
-/*
+));?>]&nbsp;[<?php
 if (is_numeric($article->item->key)) {
 	$src='http://www.tianya.cn/techforum/content/'.$article->item->key.'/1/'.$article->aid.'.shtml';
 } else {
@@ -89,8 +70,7 @@ $ensrc='http://www.orzero.com/f/a?href='.rawurlencode(MCrypy::encrypt('a='.base6
 echo CHtml::link('源帖',
 $ensrc,
 array('target'=>'_blank','title'=>CHtml::encode($article->title)));
-
-*/?>]</h2>
+?>]</h2>
 
 <?php
 $this->widget('zii.widgets.CListView', array(
