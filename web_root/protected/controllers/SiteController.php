@@ -25,6 +25,7 @@ class SiteController extends Controller
 //        $tianya=new Tianya();
 //        $st=$tianya->setItem($id, '');
 //        pd($st);
+        pd(Yii::app()->baseUrl);
         $tianya=new Tianya();
         $st=$tianya->setChannel($id);
         pd($st);
