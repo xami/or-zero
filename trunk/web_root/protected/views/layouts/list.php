@@ -28,7 +28,7 @@
             ,	east__size:			200
             ,	useStateCookie:		true
             ,	slidable:				false		// when closed, pane can 'slide open' over other panes - closes on mouse-out
-            ,	closable:				false
+//            ,	closable:				false
             ,	resizable:				false		// when open, pane can be resized
         });
         westLayout = $('div.ui-layout-west').layout({
@@ -50,7 +50,7 @@
 </head>
 
 <body>
-<div class="ui-layout-center">
+<div class="ui-layout-center" id="ulc">
     <?php $this->widget('zii.widgets.CBreadcrumbs', array(
 		'links'=>$this->breadcrumbs,
 	)); ?><!-- breadcrumbs -->
@@ -61,18 +61,18 @@
 </div>
 
 <div class="ui-layout-west">
-	<div class="west-center">
+	<div class="west-center" id="wc">
 
     </div>
-	<div class="west-south">  West - South </div>
+	<div class="west-south" id="ws">  West - South </div>
 </div>
 
 <div class="ui-layout-east">
-	<div class="east-center">
+	<div class="east-center" id="ec">
 
 	</div>
 
-	<div class="east-south">  East - South </div>
+	<div class="east-south" id="es">  East - South </div>
 </div>
 
 </body>
