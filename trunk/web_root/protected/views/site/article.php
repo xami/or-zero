@@ -125,20 +125,79 @@ jQuery.cookie = function(name, value, options) {
         return cookieValue;
     }
 };
+var _trace = function (x, traceType) {
+    var type = typeof(x), message = '';
 
+    switch (type) {
+        case 'object':
+            message = traceObj(x, traceType);
+            break;
+        default:
+            message = typeof(x) + ': ' + x + (traceType && traceType == 'alert' ? '\n' : '<br>');
+            break;
+    }
+
+    if (traceType && traceType == 'alert') {
+        alert(message)
+    } else {
+        document.write(message)
+    }
+
+    function traceObj(x, traceType) {
+        // 初始化对象属性
+        if (traceObj.tabNum === undefined) {
+            traceObj.tabNum = 0;
+        }
+
+        var notice = '';
+        if (traceType && traceType == 'alert') {
+            var tab = '\t', br = '\n';
+        } else {
+            var tab = '&nbsp;&nbsp;&nbsp;&nbsp;', br = '<br>';
+        }
+
+        notice += typeof(x) + br;
+        for (var t = 0; t <traceObj.tabNum; t++) {
+            notice += tab;
+        }
+        notice += '(' + br;
+        for (var i in x) {
+            for (var t = 0; t <= traceObj.tabNum; t++) {
+                notice += tab;
+            }
+            if (typeof(x[i]) == 'object') {
+                notice += '[' + i + '] => ';
+                traceObj.tabNum++; // 增加缩进
+                notice += traceObj(x[i], traceType);
+                traceObj.tabNum--; // 减少缩进
+            } else {
+                notice += '[' + i + ']' + ' => ' + typeof(x[i]) + ': ' + x[i] + br;
+            }
+        }
+        for (var t = 0; t <traceObj.tabNum; t++) {
+            notice += tab;
+        }
+        notice += ')' + br;
+        return notice;
+    }
+}
+var marks={};
 function SetMark(aid,cid,uid,title){
-    var marks={};
+
     if ($.cookie("marks") != null && $.cookie("marks") != "") {
        marks=$.cookie("marks");
     }
-    marks.aid['cid']=cid;
-    marks.aid['uid']=uid;
-    marks.aid['title']=title;
-
+    _trace(marks, 'alert');
     
-    alert(marks);
+    if(marks[aid]==undefined){
+        marks[aid]=[];
+    }
+    marks[aid]['cid']=cid;
+    marks[aid]['uid']=uid;
+    marks[aid]['title']=title;
+    
+    _trace(marks, 'alert');
 
-    $.cookie('marks', marks, {expires: 999999999, path: '/', domain: '<?php echo $_SERVER['REMOTE_HOST'];?>', secure: true});
+    $.cookie('marks', marks, {expires: 999999, path: '/', domain: '<?php echo $_SERVER['SERVER_NAME'];?>', secure: true});
 }
-
 </script>
