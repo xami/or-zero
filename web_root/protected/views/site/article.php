@@ -196,7 +196,7 @@ function SetMark(aid,cid,uid,title){
     
     _trace(marks, 'alert');
 
-    $.cookie('marks', marks, {expires: 360000, path: '/', domain: '<?php echo $_SERVER['SERVER_NAME'];?>', secure: true});
+    $.cookie('marks', marks, {expires: 360000, path: '/'});
     _trace($.cookie("marks"), 'alert');
 }
 </script>
