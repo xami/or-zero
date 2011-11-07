@@ -27,7 +27,7 @@ h2{font-size: 14px;}
     margin: 0;
 }
 .topic_potion {
-    padding: 8px 4px 0;
+    margin: -15px 0 10px;
     text-align: right;
 }
 .topic_potion a {
@@ -37,11 +37,10 @@ h2{font-size: 14px;}
     padding: 0 4px;
 }
 .update_time span.floor {
-    color: #CCCCCC;
+    color: gray;
     display: block;
     float: right;
     font-size: 18px;
-    font-style: italic;
     font-weight: bold;
     margin-right: 5px;
 }
@@ -94,33 +93,50 @@ function SetMark(aid,cid,uid,title){
     }else{
         marks={};
     }
-//    marks={};
     if(marks[aid]==undefined){
         marks[aid]={};
     }
     marks[aid]={'cid':cid, 'uid':uid, 'title':title};
     $.cookie('marks', $.toJSON( marks ), { expires: 7 });
-    _trace($.evalJSON($.cookie("marks")), 'alert');
+    init();
+//    _trace($.evalJSON($.cookie("marks")), 'alert');
 }
 
-function GetMark(){
+function GetMarks(){
+    var marks={};
     if ($.cookie("marks") != null && $.cookie("marks") != "") {
         marks=$.evalJSON($.cookie("marks"));
-    }else{
-        marks={};
     }
 //    _trace(marks);
     return marks;
 }
 
 function init(){
-var cmarks=GetMark();
-var h='';
-for(i in cmarks){
-    h+='<a href="'+'/index.php/site/article?id='+i+'#'+cmarks[i].cid+'">'+cmarks[i].title+'</a>';
+    var cmarks=GetMarks();
+    var h='';
+    var l='';
+    for(aid in cmarks){
+        if (cmarks[aid] != null && cmarks[aid] != "") {
+            if(cmarks[aid].cid>0){
+                l='[#'+cmarks[aid].cid+']';
+            }else{
+                l='[顶楼]';
+            }
+            h += '<div id="cmk_'+aid+'"><a href="'+'/index.php/site/article?id='+aid+'#'+cmarks[aid].cid+'">'+cmarks[aid].title+l+'</a>&nbsp;'
+              +  '<span style="color: red;padding:2px;font-size: 18px;cursor:pointer;" onclick="DelMark('+aid+');">x</span><br />';
+        }
+    }
+    //_trace(cmarks);
+    $("#ec").html(h);
 }
-//_trace(cmarks);
-$("#ec").html(h);
+
+function DelMark(aid){
+    marks=GetMarks();
+    if (marks[aid] != null && marks[aid] != "") {
+        marks[aid]=null;
+    }
+    $.cookie('marks', $.toJSON( marks ), { expires: 7 });
+    $("#cmk_"+aid).remove();
 }
 </script>
 <?php
