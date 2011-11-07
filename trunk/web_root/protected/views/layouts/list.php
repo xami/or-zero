@@ -19,6 +19,8 @@
     <script type="text/javascript" src="/js/jquery-latest.js"></script>
     <script type="text/javascript" src="/js/jquery-ui-latest.js"></script>
     <script type="text/javascript" src="/js/jquery.layout-latest.js"></script>
+    <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/js/jquery.json-2.3.js"></script>
     <script type="text/javascript">
     var outerLayout, westLayout, eastLayout;
     $(document).ready(function() {
