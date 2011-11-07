@@ -83,120 +83,47 @@ $this->widget('zii.widgets.CListView', array(
 //	'type' => 'article',
 //	'fid' => $article->id,
 //));
-$cs = Yii::app()->getClientScript();
-$cs->registerCoreScript('jquery');
+//$cs = Yii::app()->getClientScript();
+//$cs->registerCoreScript('jquery');
 ?>
 <script type="text/javascript">
-    jQuery.cookie = function (key, value, options) {
-
-        // key and at least value given, set cookie...
-        if (arguments.length > 1 && String(value) !== "[object Object]") {
-            options = jQuery.extend({}, options);
-
-            if (value === null || value === undefined) {
-                options.expires = -1;
-            }
-
-            if (typeof options.expires === 'number') {
-                var days = options.expires, t = options.expires = new Date();
-                t.setDate(t.getDate() + days);
-            }
-
-            value = String(value);
-
-            return (document.cookie = [
-                encodeURIComponent(key), '=',
-                options.raw ? value : encodeURIComponent(value),
-                options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-                options.path ? '; path=' + options.path : '',
-                options.domain ? '; domain=' + options.domain : '',
-                options.secure ? '; secure' : ''
-            ].join(''));
-        }
-
-        // key and possibly options given, get cookie...
-        options = value || {};
-        var result, decode = options.raw ? function (s) { return s; } : decodeURIComponent;
-        return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie)) ? decode(result[1]) : null;
-    };
-
-
-var _trace = function (x, traceType) {
-    var type = typeof(x), message = '';
-
-    switch (type) {
-        case 'object':
-            message = traceObj(x, traceType);
-            break;
-        default:
-            message = typeof(x) + ': ' + x + (traceType && traceType == 'alert' ? '\n' : '<br>');
-            break;
-    }
-
-    if (traceType && traceType == 'alert') {
-        alert(message)
-    } else {
-        document.write(message)
-    }
-
-    function traceObj(x, traceType) {
-        // 初始化对象属性
-        if (traceObj.tabNum === undefined) {
-            traceObj.tabNum = 0;
-        }
-
-        var notice = '';
-        if (traceType && traceType == 'alert') {
-            var tab = '\t', br = '\n';
-        } else {
-            var tab = '&nbsp;&nbsp;&nbsp;&nbsp;', br = '<br>';
-        }
-
-        notice += typeof(x) + br;
-        for (var t = 0; t <traceObj.tabNum; t++) {
-            notice += tab;
-        }
-        notice += '(' + br;
-        for (var i in x) {
-            for (var t = 0; t <= traceObj.tabNum; t++) {
-                notice += tab;
-            }
-            if (typeof(x[i]) == 'object') {
-                notice += '[' + i + '] => ';
-                traceObj.tabNum++; // 增加缩进
-                notice += traceObj(x[i], traceType);
-                traceObj.tabNum--; // 减少缩进
-            } else {
-                notice += '[' + i + ']' + ' => ' + typeof(x[i]) + ': ' + x[i] + br;
-            }
-        }
-        for (var t = 0; t <traceObj.tabNum; t++) {
-            notice += tab;
-        }
-        notice += ')' + br;
-        return notice;
-    }
-}
-var marks;
+//var marks={};
 function SetMark(aid,cid,uid,title){
-
     if ($.cookie("marks") != null && $.cookie("marks") != "") {
-       marks=$.cookie("marks");
+        marks=$.evalJSON($.cookie("marks"));
     }else{
         marks={};
     }
-    _trace(marks, 'alert');
-    
+//    marks={};
     if(marks[aid]==undefined){
-        marks[aid]=[];
+        marks[aid]={};
     }
-    marks[aid]['cid']=cid;
-    marks[aid]['uid']=uid;
-    marks[aid]['title']=title;
-    
-    _trace(marks, 'alert');
+    marks[aid]={'cid':cid, 'uid':uid, 'title':title};
+    $.cookie('marks', $.toJSON( marks ), { expires: 7 });
+    _trace($.evalJSON($.cookie("marks")), 'alert');
+}
 
-    $.cookie('marks', marks, {expires: 360000, path: '/'});
-    _trace($.cookie("marks"), 'alert');
+function GetMark(){
+    if ($.cookie("marks") != null && $.cookie("marks") != "") {
+        marks=$.evalJSON($.cookie("marks"));
+    }else{
+        marks={};
+    }
+//    _trace(marks);
+    return marks;
+}
+
+function init(){
+var cmarks=GetMark();
+var h='';
+for(i in cmarks){
+    h+='<a href="'+'/index.php/site/article?id='+i+'#'+cmarks[i].cid+'">'+cmarks[i].title+'</a>';
+}
+//_trace(cmarks);
+$("#ec").html(h);
 }
 </script>
+<?php
+$cs=Yii::app()->clientScript;
+$cs->registerScript('it',"init();");
+?>
