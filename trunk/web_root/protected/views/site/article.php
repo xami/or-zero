@@ -97,7 +97,8 @@ function SetMark(aid,cid,uid,title){
         marks[aid]={};
     }
     marks[aid]={'cid':cid, 'uid':uid, 'title':title};
-    $.cookie('marks', $.toJSON( marks ), { expires: 7 });
+//    _trace(marks, 'alert');
+    $.cookie('marks', $.toJSON( marks ));
     init();
 //    _trace($.evalJSON($.cookie("marks")), 'alert');
 }
@@ -118,7 +119,7 @@ function init(){
     for(aid in cmarks){
         if (cmarks[aid] != null && cmarks[aid] != "") {
             if(cmarks[aid].cid>0){
-                l='[#'+cmarks[aid].cid+']';
+                l='['+cmarks[aid].cid+'楼]';
             }else{
                 l='[顶楼]';
             }
@@ -135,7 +136,7 @@ function DelMark(aid){
     if (marks[aid] != null && marks[aid] != "") {
         marks[aid]=null;
     }
-    $.cookie('marks', $.toJSON( marks ), { expires: 7 });
+    $.cookie('marks', $.toJSON( marks ));
     $("#cmk_"+aid).remove();
 }
 </script>

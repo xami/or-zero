@@ -671,7 +671,62 @@ class Tianya{
         if(empty($in)){
             return false;
         }
+
+//        $js_jump="setTimeout(r,15000);function r(){if(document.domain!='www.orzero.com' && document.domain!='orzero.com'){document.location.href='".self::$link."';}}";
+//		$packer = new JavaScriptPacker($js_jump, 'Normal', true, false);
+//		$packed = $packer->pack();
+
+        $in=preg_replace_callback('/<img\s+src="(.*?)"\/><a\s+href="(.*?)">(.*?)<\/a>/i',array('self','mk_link'),$in);
+        $in=preg_replace_callback('/(<a\s+.*?href=\s*([\"\']?))([^\'^\"]*?)((?(2)\\2)[^>^\/]*?>)(.*?)(<\/a>)/isx',array('self','mk_herf'),$in);
+        
+		return $in;
     }
+
+    public function mk_herf($matches)
+	{
+		if(substr($matches[3],0,7)!=='http://'){
+			return $matches[0];
+		}
+		$t=strip_tags($matches[5]);
+		if(strlen($t)>128){
+			$t=mb_substr($t, 0, 128);
+		}
+		$src='/index.php/api/a?href='.rawurlencode(MCrypy::encrypt('a='.base64_encode($matches[3]).'&t='.base64_encode($t).'&r='.base64_encode(self::$link), Yii::app()->params['mcpass'], 128));
+		return $matches[1].$src.$matches[2].' target="_blank">'.$matches[5].$matches[6];
+	}
+
+	public function mk_link($matches)
+	{
+		if($matches[3]=='(原图)'){
+			if(($op=strrpos($matches[1],'.'))===false){
+				$ext1='';
+			}
+			$ext1=substr($matches[1], $op);
+
+			if(($op=strrpos($matches[2],'.'))===false){
+				$ext2='';
+			}
+			$ext2=substr($matches[2], $op);
+
+			$img_s='/index.php/api/f?_='.rawurlencode(MCrypy::encrypt($matches[1], Yii::app()->params['mcpass'], 128)).$ext1;
+			$img_b='/index.php/api/f?_='.rawurlencode(MCrypy::encrypt($matches[2], Yii::app()->params['mcpass'], 128)).$ext2;
+
+			return '<a class="oz" style="max-width:600px;max-height:400px;" href="'.$img_b.'"><img src="'.$img_s.'"/></a><a target="_blank" href="'.$img_b.'">(原图)</a>';
+		}else{
+			return $matches[0];
+		}
+	}
+
+    private static $_pagination;
+    public function getPagination()
+	{
+		if(self::$_pagination===null)
+		{
+			self::$_pagination=new CPagination;
+			self::$_pagination->pageVar='C_page';
+		}
+		return self::$_pagination;
+	}
 
     public static function t($str='',$params=array(),$dic='tianya') {
 		return Yii::t($dic, $str, $params);
