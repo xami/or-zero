@@ -4,7 +4,7 @@
 		<span>2011-10-18 00:59:51</span>
 		<a name="p<?php echo $data->pos;?>"></a>
 	</div>
-	<?php echo $data->text; ?>
+	<?php echo Tianya::filterPost($data->text); ?>
     <div rid="0" class="topic_potion">
         <a title="做记号，下次从这里读" onclick="SetMark(<?php echo $article->id.', '.$data->pos.', '.'0'.', \''.str_replace('\'', '', $article->title).'\''; ?>);" href="#<?php echo $data->pos;?>">Mark</a>
     </div>
