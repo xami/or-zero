@@ -667,6 +667,12 @@ class Tianya{
 	    return $match;
 	}
 
+    public function filterPost($in=''){
+        if(empty($in)){
+            return false;
+        }
+    }
+
     public static function t($str='',$params=array(),$dic='tianya') {
 		return Yii::t($dic, $str, $params);
 	}
