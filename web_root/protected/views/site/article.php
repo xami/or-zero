@@ -122,7 +122,7 @@ function init(){
             }else{
                 l='[顶楼]';
             }
-            h += '<div id="cmk_'+aid+'"><a href="'+'/index.php/site/article?id='+aid+'#'+cmarks[aid].cid+'">'+cmarks[aid].title+l+'</a>&nbsp;'
+            h += '<div id="cmk_'+aid+'"><a href="'+'/index.php/site/article?id='+aid+'#p'+cmarks[aid].cid+'">'+cmarks[aid].title+l+'</a>&nbsp;'
               +  '<span style="color: red;padding:2px;font-size: 18px;cursor:pointer;" onclick="DelMark('+aid+');">x</span><br />';
         }
     }

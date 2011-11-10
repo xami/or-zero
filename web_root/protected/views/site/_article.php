@@ -2,7 +2,7 @@
     <div class="update_time">
 		<span class="floor"><?php echo $data->pos==0?'顶楼':'<em>#</em>'.$data->pos; ?></span>
 		<span>2011-10-18 00:59:51</span>
-		<a name="in0"></a>
+		<a name="p<?php echo $data->pos;?>"></a>
 	</div>
 	<?php echo $data->text; ?>
     <div rid="0" class="topic_potion">
