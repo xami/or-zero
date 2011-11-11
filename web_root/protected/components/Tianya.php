@@ -667,7 +667,7 @@ class Tianya{
 	    return $match;
 	}
 
-    public function filterPost($in=''){
+    public static function filterPost($in=''){
         if(empty($in)){
             return false;
         }
@@ -682,7 +682,7 @@ class Tianya{
 		return $in;
     }
 
-    public function mk_herf($matches)
+    public static function mk_herf($matches)
 	{
 		if(substr($matches[3],0,7)!=='http://'){
 			return $matches[0];
@@ -691,11 +691,11 @@ class Tianya{
 		if(strlen($t)>128){
 			$t=mb_substr($t, 0, 128);
 		}
-		$src='/index.php/api/a?href='.rawurlencode(MCrypy::encrypt('a='.base64_encode($matches[3]).'&t='.base64_encode($t).'&r='.base64_encode(self::$link), Yii::app()->params['mcpass'], 128));
+		$src='/index.php/api/a?href='.rawurlencode(MCrypy::encrypt('a='.base64_encode($matches[3]).'&t='.base64_encode($t), Yii::app()->params['mcpass'], 128));
 		return $matches[1].$src.$matches[2].' target="_blank">'.$matches[5].$matches[6];
 	}
 
-	public function mk_link($matches)
+	public static function mk_link($matches)
 	{
 		if($matches[3]=='(原图)'){
 			if(($op=strrpos($matches[1],'.'))===false){
