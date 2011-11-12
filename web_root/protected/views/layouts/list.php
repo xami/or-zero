@@ -6,49 +6,48 @@
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
     <link type="text/css" rel="stylesheet" href="/css/layout-default-latest.css" />
-
-    <style type="text/css">
-    /* give outer-panes their own colors */
-    .ui-layout-center	{ background: #CEE; }
-    .ui-layout-west	 	{ background: #CCF; }
-    .ui-layout-east		{ background: #CFC; }
-    .west-center, .west-south{ background: #F0F0F0; }
-    .east-center, .east-south{ background: #F0F0F0; }
-    </style>
+    <link rel="stylesheet" href="/css/article.css"  type="text/css" />
 
     <script type="text/javascript" src="/js/jquery-latest.js"></script>
     <script type="text/javascript" src="/js/jquery-ui-latest.js"></script>
     <script type="text/javascript" src="/js/jquery.layout-latest.js"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/jquery.json-2.3.js"></script>
-    <script type="text/javascript">
-    var outerLayout, westLayout, eastLayout;
-    $(document).ready(function() {
-        outerLayout = $('body').layout({
-                minSize:			100	// ALL panes
-            ,	west__size:			200
-            ,	east__size:			200
-            ,	useStateCookie:		true
-            ,	slidable:				false		// when closed, pane can 'slide open' over other panes - closes on mouse-out
+<script type="text/javascript">
+    <?php
+$js_lay=<<<EOF
+var outerLayout, westLayout, eastLayout;
+$(document).ready(function() {
+    outerLayout = $('body').layout({
+            minSize:			100	// ALL panes
+        ,	west__size:			200
+        ,	east__size:			200
+        ,	useStateCookie:		true
+        ,	slidable:				false		// when closed, pane can 'slide open' over other panes - closes on mouse-out
 //            ,	closable:				false
-            ,	resizable:				false		// when open, pane can be resized
-        });
-        westLayout = $('div.ui-layout-west').layout({
-                minSize:				50	// ALL panes
-            ,	center__paneSelector:	".west-center"
-            ,	south__paneSelector:	".west-south"
-            ,	south__size:			300
-            ,	resizable:				false
-        });
-        eastLayout = $('div.ui-layout-east').layout({
-                minSize:				50	// ALL panes
-            ,	center__paneSelector:	".east-center"
-            ,	south__paneSelector:	".east-south"
-            ,	south__size:			80
-            ,	resizable:				false
-        });
+        ,	resizable:				false		// when open, pane can be resized
     });
-    </script>
+    westLayout = $('div.ui-layout-west').layout({
+            minSize:				50	// ALL panes
+        ,	center__paneSelector:	".west-center"
+        ,	south__paneSelector:	".west-south"
+        ,	south__size:			300
+        ,	resizable:				false
+    });
+    eastLayout = $('div.ui-layout-east').layout({
+            minSize:				50	// ALL panes
+        ,	center__paneSelector:	".east-center"
+        ,	south__paneSelector:	".east-south"
+        ,	south__size:			80
+        ,	resizable:				false
+    });
+});
+EOF;
+    
+    $packer = new JavaScriptPacker($js_lay, 'Normal', true, false);
+    echo $packer->pack();
+    ?>
+</script>
 </head>
 
 <body>

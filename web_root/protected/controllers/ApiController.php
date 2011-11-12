@@ -73,40 +73,59 @@ class ApiController extends Controller
 		if(Tools::is_url($src)===false){
 			return false;
 		}
-        
+
 		if(($op=strrpos($src,'.'))===false){
 			return false;
 		}
 		$ext=substr($src, $op);
 
-		switch ($ext) {
-			//case ".pdf": $ctype="application/pdf"; break;
-			//case ".exe": $ctype="application/octet-stream"; break;
-			//case ".zip": $ctype="application/zip"; break;
-			//case ".doc": $ctype="application/msword"; break;
-			//case ".xls": $ctype="application/vnd.ms-excel"; break;
-			//case ".ppt": $ctype="application/vnd.ms-powerpoint"; break;
-			case ".gif": $ctype="image/gif"; break;
-			case ".png": $ctype="image/png"; break;
-			case ".jpeg":
-			case ".jpg": $ctype="image/jpg"; break;
-			default: $ctype="application/force-download";
-	    }
-	    if(empty($ctype)){
-	    	return false;
-	    }
-
-        $dir=Yii::getPathOfAlias('application.data.tianya.img');
+        $key=md5($src);
+        $dir=   Yii::getPathOfAlias('application.data.tianya.img').DIRECTORY_SEPARATOR.
+                substr($key, 0, 1).DIRECTORY_SEPARATOR.
+                substr($key, 1, 1).DIRECTORY_SEPARATOR.
+                substr($key, 2, 2).DIRECTORY_SEPARATOR.
+                substr($key, 4, 4).DIRECTORY_SEPARATOR.
+                substr($key, 8, 8);
 	    if(!is_dir($dir))
 			mkdir($dir,0777,true);
-//		echo $ext;
-		$key=md5($src);
-		$file=$dir.DIRECTORY_SEPARATOR.$key.$ext;
-//		echo $dir.DIRECTORY_SEPARATOR.$key.$ext;
+		$file=$dir.DIRECTORY_SEPARATOR.substr($key, 16, 16).$ext;
+//		pd($file);
+        if(!is_file($file)){
+            $results=Tools::OZSnoopy($src);
+            @file_put_contents($file, $results);
+            
+            $size = getimagesize($file);
+            if(empty($size[2]) || $size[2]<1 || $size[2]>16){
+                return false;
+            }
+            //大于100k图片加水印
+			if(strlen($results)>60*1024){
+				//$im=imagecreatefromstring($results);
+				Yii::import('application.extensions.image.Image');
+				$image = new Image($file);
 
-		$results=Yii::app()->cache->get($key);
+				$height=$image->height;
+				$width=$image->width;
+				if($width>2880){
+					$height=intval((2880/$width)*$height);
+					$width=2880;
+				}
+				if($height>1800){
+					$width=intval((1800/$height)*$width);
+					$height=1800;
+				}
+//				$waterfile=Yii::getPathOfAlias('application.data').DIRECTORY_SEPARATOR.'';
+				$image->resize($width, $height);
+				$image->watermark("MTianYa.COM");
+				$image->save();
+			}
+        }
+
+        $results=file_get_contents($file);
+        $size = getimagesize($file);
+
+
 		if($results!==false){
-			$size=strlen($results);
 			if(headers_sent()) die('Headers Sent');
 			if(ini_get('zlib.output_compression')) ini_set('zlib.output_compression', 'Off');
 			header("Pragma: public"); // required
@@ -114,102 +133,15 @@ class ApiController extends Controller
 			header('Last-Modified:'.gmdate('D, d M Y H:i:s').'GMT');
 			header('Expires:'.gmdate('D, d M Y H:i:s', time() + '864000').'GMT');
 			header("Cache-Control: private",false); // required for certain browsers
-			header("Content-Type: $ctype");
+			header("Content-Type: ".$size['mime']);
 			header("Content-Transfer-Encoding: binary");
-		    header("Content-Length: ".$size);
-		    ob_clean();
-		    flush();
+		    header("Content-Length: ".strlen($results));
 		    echo $results;
+            flush();
+
 		    return true;
 		}
 
-
-//		$results=false;
-		if(is_file($file)){
-//		    echo $ctype;
-//	    	$s=$this->g();
-			$results=file_get_contents($file);
-			$size=strlen($results);
-		}else{
-			$this->_referer=$src;
-			if($this->g()->fetch($src)===false){
-				return false;
-			}
-
-			if(($results=Yii::app()->cache->get($src))===false){
-				$results=$this->g()->results;
-				Yii::app()->cache->set($src, $results, 300);
-			}
-
-
-
-			$size=strlen($results);
-			if(substr($results,0,1)=='<'){
-				return false;
-			}
-
-			if(file_put_contents($file, $results)!==false){
-//				echo $src;
-				$fm=new File;
-				$fm->find('`src`=:src', array(':src'=>$src));
-				$fm->aid=$aid;
-				$fm->type=substr($ext,1);
-				$fm->size=$size;
-				$fm->pnum=$page;
-				$fm->name=$key;
-				$fm->src=$src;
-				$fm->fsrc=$fsrc;
-				$fm->time=time();
-				$fm->save();
-			}else{
-				return false;
-			}
-
-			//大于100k图片加水印
-			if($size>60*1024){
-				//$im=imagecreatefromstring($results);
-				Yii::import('application.extensions.image.Image');
-				$image = new Image($file);
-
-				$height=$image->height;
-				$width=$image->width;
-				if($width>1440){
-					$height=intval((1440/$width)*$height);
-					$width=1440;
-				}
-				if($height>900){
-					$width=intval((900/$height)*$width);
-					$height=900;
-				}
-//				$waterfile=Yii::getPathOfAlias('application.data').DIRECTORY_SEPARATOR.'';
-				$image->resize($width, $height);
-				$image->watermark();
-				$image->save();
-			}
-		}
-
-		if($results===false){
-			return false;
-		}else{
-			Yii::app()->cache->set($key, $results, 300);
-		}
-
-//		pr($results);
-//		echo ($this->g()->results);die;
-		if(headers_sent()) die('Headers Sent');
-		if(ini_get('zlib.output_compression')) ini_set('zlib.output_compression', 'Off');
-		header("Pragma: public"); // required
-		header("Cache-Control: max-age=864000");//24小时
-		header('Last-Modified:'.gmdate('D, d M Y H:i:s').'GMT');
-		header('Expires:'.gmdate('D, d M Y H:i:s', time() + '864000').'GMT');
-		header("Cache-Control: private",false); // required for certain browsers
-		header("Content-Type: $ctype");
-//		header("Content-Disposition: attachment; filename=\"".basename($fullPath)."\";" );
-		header("Content-Transfer-Encoding: binary");
-	    header("Content-Length: ".$size);
-	    ob_clean();
-	    flush();
-	    echo $results;
 	}
 
 	public function actionA()
