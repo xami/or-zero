@@ -40,7 +40,7 @@ $i=1;
 foreach($channels as $channel){
     $dl_class=($i%2==1)?'dl_left':'dl_right';
     echo '  <dl class="'.$dl_class.'">';
-    echo '      <dt><a class="title" href="'.$baseUrl.'/channel/'.$channel->id.'">'.$channel->name.'</a></dt>';
+    echo '      <dt><a class="title" href="'.$baseUrl.'/channel/'.$channel->id.'/">'.$channel->name.'</a></dt>';
     echo '      <dd class="item_sort">';
     $j=1;
     foreach($channel->items as $item){

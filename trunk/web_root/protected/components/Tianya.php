@@ -730,4 +730,9 @@ class Tianya{
     public static function t($str='',$params=array(),$dic='tianya') {
 		return Yii::t($dic, $str, $params);
 	}
+
+    public static function powered()
+	{
+		return 'Powered by <a href="http://mtianya.com/" rel="external">mtianya.com</a>.';
+	}
 }
