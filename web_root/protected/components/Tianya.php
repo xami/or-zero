@@ -688,9 +688,8 @@ class Tianya{
 			return $matches[0];
 		}
 		$t=strip_tags($matches[5]);
-		if(strlen($t)>128){
-			$t=mb_substr($t, 0, 128);
-		}
+        $t=str_replace("\r\n", '', $t);
+
 		$src='/index.php/api/a?href='.rawurlencode(MCrypy::encrypt('a='.base64_encode($matches[3]).'&t='.base64_encode($t), Yii::app()->params['mcpass'], 128));
 		return $matches[1].$src.$matches[2].' target="_blank">'.$matches[5].$matches[6];
 	}
@@ -711,7 +710,7 @@ class Tianya{
 			$img_s='/index.php/api/f?_='.rawurlencode(MCrypy::encrypt($matches[1], Yii::app()->params['mcpass'], 128)).$ext1;
 			$img_b='/index.php/api/f?_='.rawurlencode(MCrypy::encrypt($matches[2], Yii::app()->params['mcpass'], 128)).$ext2;
 
-			return '<a class="oz" style="max-width:600px;max-height:400px;" href="'.$img_b.'" target="_blank"><img src="'.$img_b.'" /></a><a target="_blank" href="'.$img_b.'">(原图)</a>';
+			return '<a class="oz" style="max-width:600px;max-height:400px;" href="'.$img_b.'" target="_blank"><img src="'.$img_b.'" /></a>';
 		}else{
 			return $matches[0];
 		}
