@@ -1,8 +1,6 @@
 <?php 
 $this->pageTitle=str_replace('天涯', Yii::app()->name, $article->title)
                 .((isset($_REQUEST['C_page']) && $_REQUEST['C_page']>0) ? '(第'.$_REQUEST['C_page'].'页)' : '['.Yii::app()->name.']');
-//        .', '.str_replace('天涯', Yii::app()->name, $article->item->name)
-//        .', '.str_replace('天涯', Yii::app()->name, $article->channel->name).', '.Yii::app()->name;
 
 $this->breadcrumbs=array(
 	str_replace('天涯', Yii::app()->name, $article->channel->name)=>'/or/'.$article->channel->id.'/',
@@ -10,41 +8,7 @@ $this->breadcrumbs=array(
 	str_replace('天涯', Yii::app()->name, $article->title)=>'/orzero/'.$article->id.'/',
 );
 ?>
-<style type="text/css">
-h1{font-size: 16px;}
-h2{font-size: 14px;}
-.view{
-    border-bottom: 1px solid #004276;
-    padding: 0;
-}
-.list-view .summary {
-    border-bottom: 1px solid #004276;
-    margin: 0;
-}
-.update_time {
-    background: none repeat scroll 0 0 #DDDDDD;
-    height: 24px;
-    margin: 0;
-}
-.topic_potion {
-    margin: -15px 0 10px;
-    text-align: right;
-}
-.topic_potion a {
-    text-decoration: none;
-    border: 1px solid #004276;
-    color: #004276;
-    padding: 0 4px;
-}
-.update_time span.floor {
-    color: gray;
-    display: block;
-    float: right;
-    font-size: 18px;
-    font-weight: bold;
-    margin-right: 5px;
-}
-</style>
+
 <h2>
 [作者:<?php echo CHtml::link($article->un,
 '/search?cx=partner-pub-4726192443658314:lofclyqlq8w&cof=FORID:11&ie=UTF-8&q='.$article->un.'&author='.$article->un, 
@@ -84,8 +48,11 @@ $this->widget('zii.widgets.CListView', array(
 //));
 //$cs = Yii::app()->getClientScript();
 //$cs->registerCoreScript('jquery');
+
 ?>
 <script type="text/javascript">
+<?php
+$js_mark=<<<EOF
 //var marks={};
 function SetMark(aid,cid,uid,title){
     if ($.cookie("marks") != null && $.cookie("marks") != "") {
@@ -139,6 +106,10 @@ function DelMark(aid){
     $.cookie('marks', $.toJSON( marks ));
     $("#cmk_"+aid).remove();
 }
+EOF;
+$packer = new JavaScriptPacker($js_mark, 'Normal', true, false);
+echo $packer->pack();
+?>
 </script>
 <?php
 $cs=Yii::app()->clientScript;
