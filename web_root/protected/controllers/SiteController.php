@@ -29,14 +29,7 @@ class SiteController extends Controller
         $tianya=new Tianya();
         $st=$tianya->setChannel($id);
         pd($st);
-    }
 
-	/**
-	 * This is the default 'index' action that is invoked
-	 * when an action is not explicitly requested by users.
-	 */
-	public function actionIndex($id=88)
-	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
 //        $c = Tools::OZCurl('http://www.baidu.com');
@@ -70,6 +63,21 @@ class SiteController extends Controller
         //-12已经更新到最后
         var_dump($st);
 //		$this->render('index');
+    }
+
+	/**
+	 * This is the default 'index' action that is invoked
+	 * when an action is not explicitly requested by users.
+	 */
+	public function actionIndex()
+	{
+        $id=Yii::app()->request->getParam('id', 0);
+        $tianya=new Tianya();
+		$data=$tianya->getChannels($id);
+        $data['cid']=$id;
+
+		$this->layout='//layouts/column2';
+		$this->render('channels', $data);
 	}
 
     public function actionChannel()
@@ -89,7 +97,7 @@ class SiteController extends Controller
 //    }
 //}
 
-		$this->layout='//layouts/column4';
+		$this->layout='//layouts/column2';
 		$this->render('channels', $data);
 	}
 
@@ -99,10 +107,19 @@ class SiteController extends Controller
         $cid=Yii::app()->request->getParam('cid', 0);
         $tid=Yii::app()->request->getParam('tid', 0);
         
-        $this->layout='//layouts/column4';
+        $this->layout='//layouts/column2';
         $tianya=new Tianya();
+
+
         
         $data=$tianya->getItems($cid, $tid, $page_size);
+        if($cid>0){
+            $data['channel']=Channel::model()->findBypk($cid);
+        }
+        if($tid>0){
+            $data['item']=Item::model()->findBypk($tid);
+            $data['channel']=Channel::model()->findBypk($data['item']->cid);
+        }
 
         $this->render('items', $data);
 	}

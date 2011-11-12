@@ -11,6 +11,7 @@ function pd($data=array(), $end='', $stop=true)
     echo $end;
 	if($stop) die;
 }
+
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 
@@ -50,10 +51,23 @@ return array(
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
+                '<controller:(article)>/<id:\d+>/<C_page:\d+>'=>array('site/article', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+				'<controller:(article)>/<id:\d+>/index'=>array('site/article', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+				'<controller:(article)>/<id:\d+>/?'=>array('site/article', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+
+                '<controller:(channel)>/<cid:\d+>/<Article_page:\d+>'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+                '<controller:(channel)>/<cid:\d+>/index'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+				'<controller:(channel)>/<cid:\d+>/?'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+
+                '<controller:(item)>/<tid:\d+>/<Article_page:\d+>'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+                '<controller:(item)>/<tid:\d+>/index'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+                '<controller:(item)>/<tid:\d+>/?'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
+            'showScriptName'=>false,
 		),
 
 		'db'=>array(
@@ -97,5 +111,6 @@ return array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
         'mcpass'=>'Pj8VArQ85XxJKw2t',
+        'domain'=>'mtianya.com',
 	),
 );

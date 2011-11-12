@@ -1,5 +1,5 @@
 .channels_content .dl_left{
-border-bottom: 1px solid #EEEEEE;
+border-top: 1px solid #EEEEEE;
 height: 64px;
 float: left;
 overflow: hidden;
@@ -8,7 +8,7 @@ padding: 0;
 width: 48%;
 }
 .channels_content .dl_right{
-border-bottom: 1px solid #EEEEEE;
+border-top: 1px solid #EEEEEE;
 height: 64px;
 float: right;
 overflow: hidden;
@@ -28,3 +28,4 @@ margin-bottom: 3px;
     font-weight: bold;
     line-height: 160%;
 }
+
