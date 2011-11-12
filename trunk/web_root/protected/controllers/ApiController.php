@@ -149,10 +149,7 @@ class ApiController extends Controller
 //		$href=html_entity_decode(MCrypy::decrypt(rawurldecode(trim($_REQUEST['href'])), Yii::app()->params['mcpass'], 128));
 		parse_str(MCrypy::decrypt(rawurldecode(trim($_REQUEST['href'])), Yii::app()->params['mcpass'], 128), $_get);
 		$href=html_entity_decode(base64_decode($_get['a']));
-		$main=rawurldecode(base64_decode(MCrypy::decrypt($_REQUEST['m'], Yii::app()->params['mcpass'], 128)));
-		$title=rawurldecode($_get['t']);
-		$rehref=html_entity_decode(base64_decode($_get['r']));
-//		pr($href);
+		$title=html_entity_decode(base64_decode($_get['t']));
 
 		$validate=new CUrlValidator();
 		if($validate->validateValue($href)===false){
@@ -169,7 +166,7 @@ class ApiController extends Controller
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style>a {text-decoration: none;}</style>
-'."<title>外链转到:$title($href)</title></head><body><h1 style=\"margin-bottom:0;\"><a href='$rehref'>$title</a></h1>"
+'."<title>外链转到:$title($href)</title></head><body>"
 .'<script type="text/javascript"><!--
 google_ad_client = "pub-4726192443658314";
 /* 336x280, 创建于 11-3-10 */
@@ -194,7 +191,10 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 '."
 <script language='javascript'>$packed</script>
-<h2 style=\"margin:-5px 0 0 0;\"><a href='$href'>$title<span style=\"color:red;\">(点此跳转)</span></a></h2>".'
+<h2 style=\"margin:-5px 0 0 0;\"><a href='$href'>$title<span style=\"color:red;\">(点此跳转)</span></a></h2>".
+
+'
+<div style="float:left;">
 <script type="text/javascript"><!--
 google_ad_client = "pub-4726192443658314";
 /* 468x60, 创建于 11-3-3 */
@@ -205,19 +205,11 @@ google_ad_height = 60;
 </script>
 <script type="text/javascript"
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>'."
-<h4 style=\"margin:0;\"><a href=\"$rehref\">$title<span style=\"color:red;\">(返回继续阅读)</span></a></h4>".
-'<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 468x15, 09-8-19, link */
-google_ad_slot = "9464079913";
-google_ad_width = 468;
-google_ad_height = 15;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>'."<div style=\"width:680px;padding:10px;\">$main</div>".'
+</script></div>
+'
+
+.'
+<div style="float:left;">
 <form action="http://www.orzero.com/search" id="cse-search-box">
   <div>
     <input type="hidden" name="cx" value="partner-pub-4726192443658314:lofclyqlq8w" />
@@ -253,8 +245,10 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 })();
 var sl=document.getElementsByName("siteurl")[0];
 sl.setAttribute("value","http://www.orzero.com");
-</script>
-'."
+</script></div>
+'.
+
+"
 </body>
 </html>";
 
