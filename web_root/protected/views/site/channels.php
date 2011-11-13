@@ -68,8 +68,9 @@ foreach($channels as $channel){
 </div>
 
 <?php
-//$this->widget('application.components.AjaxBuild', array(
-//	'type' => 'channel',
-//	'fid'=>$channels->key,
-//));
+$this->widget('application.components.AjaxBuild', array(
+	'type' => 'channel',
+	'fid'=>$channel->id,
+));
+
 ?>

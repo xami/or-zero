@@ -151,7 +151,7 @@ class Tianya{
                 $cut_src['path'].'?'.$static_query;
 
         $find=$this->getSrc($statci_src);
-        pd($statci_src);
+//        pd($find);
         
         $next_page=$_P->findByPk($article->cto+1);
 		if(empty($next_page)){
@@ -180,7 +180,12 @@ class Tianya{
 		($page->id==1) && $article->reach=intval($find['reach']);
 		($page->id==1) && $article->reply=intval($find['reply']);
 
-		$page->count=count($find['post']);
+        if(!isset($find['post'])||empty($find['post'])){
+            $page->count=0;
+        }else{
+            $page->count=count($find['post']);
+        }
+
 		$page->status=1;
 
 
@@ -320,9 +325,12 @@ class Tianya{
 		$_url='http://3g.tianya.cn/bbs/list.jsp?item='.$_item->key;
         if(!empty($next_src)){
             $_url=htmlspecialchars_decode($next_src);
+            if(!Tools::is_url($_url)){
+                return -2;
+            }
         }
-		$c=Tools::OZCurl($_url, 300);
-		if(!isset($c['Info']['http_code'])||$c['Info']['http_code']!=200){
+		$c=Tools::OZCurl($_url, 20);
+		if(!isset($c['Info']['http_code'])||($c['Info']['http_code']!=200&&$c['Info']['http_code']!=0)){
 			Yii::log(__FILE__.'::'.__LINE__.'::!isset($c[\'Info\'][\'http_code\'])||$c[\'Info\'][\'http_code\']!=200', 'warning', 'Item');
 			return -3;
 		}else{
@@ -435,6 +443,7 @@ class Tianya{
 
         
         if($j>0){
+            pd($footer);
             preg_match("'href=\"(.*?)\">下一页</a>'isx", $footer, $matches);
             if(!empty($matches[1])){
                 return 'http://3g.tianya.cn/bbs/'.$matches[1];
