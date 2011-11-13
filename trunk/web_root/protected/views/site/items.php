@@ -56,6 +56,11 @@ if(isset($item->id)&&!empty($item->id)){
         'type' => 'item',
         'fid'=>$item->id,
     ));
+}else if(isset($channel->id)&&!empty($channel->id)){
+    $this->widget('application.components.AjaxBuild', array(
+        'type' => 'channel',
+        'fid'=>$channel->id,
+    ));
 }
 
 ?>
