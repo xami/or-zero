@@ -136,8 +136,22 @@ class Tianya{
 			}
 		}
 
-        $find=$this->getSrc($page->link);
-//        pd($find);
+
+        $static_key=json_decode(Yii::app()->params['key']);
+//        pd($static_key->idwriter);
+
+        $page->link=html_entity_decode($page->link);
+        $cut_src=parse_url($page->link);
+        parse_str($cut_src['query'], $cut_query);
+        $cut_query['idwriter']=$static_key->idwriter;
+        $cut_query['key']=$static_key->key;
+        $cut_query['chk']=$static_key->chk;
+        $static_query=http_build_query($cut_query);
+        $statci_src=$cut_src['scheme'].'://'.$cut_src['host'].
+                $cut_src['path'].'?'.$static_query;
+
+        $find=$this->getSrc($statci_src);
+        pd($statci_src);
         
         $next_page=$_P->findByPk($article->cto+1);
 		if(empty($next_page)){
@@ -667,7 +681,7 @@ class Tianya{
 	    return $match;
 	}
 
-    public static function filterPost($in=''){
+    public static function filterPost($in='',$desc=''){
         if(empty($in)){
             return false;
         }
@@ -676,12 +690,15 @@ class Tianya{
 //		$packer = new JavaScriptPacker($js_jump, 'Normal', true, false);
 //		$packed = $packer->pack();
 
+        self::$dm=mb_substr(strip_tags($in),0,512);
+//        self::$dm=strip_tags($in);
         $in=preg_replace_callback('/<img\s+src="(.*?)"\/><a\s+href="(.*?)">(.*?)<\/a>/i',array('self','mk_link'),$in);
         $in=preg_replace_callback('/(<a\s+.*?href=\s*([\"\']?))([^\'^\"]*?)((?(2)\\2)[^>^\/]*?>)(.*?)(<\/a>)/isx',array('self','mk_herf'),$in);
         
 		return $in;
     }
 
+    public static $dm='';
     public static function mk_herf($matches)
 	{
 		if(substr($matches[3],0,7)!=='http://'){
@@ -689,8 +706,10 @@ class Tianya{
 		}
 		$t=strip_tags($matches[5]);
         $t=str_replace("\r\n", '', $t);
-
-		$src='/index.php/api/a?href='.rawurlencode(MCrypy::encrypt('a='.base64_encode($matches[3]).'&t='.base64_encode($t), Yii::app()->params['mcpass'], 128));
+		$src='/index.php/api/a?href='.rawurlencode(base64_encode($matches[3])).
+             '&t='.rawurlencode(base64_encode($t)).
+             '&f='.rawurlencode(base64_encode($_SERVER['REQUEST_URI'])).
+             '&c='.rawurlencode(base64_encode(self::$dm));
 		return $matches[1].$src.$matches[2].' target="_blank">'.$matches[5].$matches[6];
 	}
 
@@ -733,6 +752,6 @@ class Tianya{
 
     public static function powered()
 	{
-		return 'Powered by <a href="http://mtianya.com/" rel="external">mtianya.com</a>.';
+		return 'Powered by <a href="http://mtianya.com/" rel="external">mtianya.com</a>';
 	}
 }

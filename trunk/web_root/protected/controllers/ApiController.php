@@ -146,10 +146,12 @@ class ApiController extends Controller
 
 	public function actionA()
 	{
-//		$href=html_entity_decode(MCrypy::decrypt(rawurldecode(trim($_REQUEST['href'])), Yii::app()->params['mcpass'], 128));
-		parse_str(MCrypy::decrypt(rawurldecode(trim($_REQUEST['href'])), Yii::app()->params['mcpass'], 128), $_get);
-		$href=html_entity_decode(base64_decode($_get['a']));
-		$title=html_entity_decode(base64_decode($_get['t']));
+
+		$href=!empty($_REQUEST['href'])?html_entity_decode(rawurldecode(base64_decode($_REQUEST['href']))):'';
+		$title=!empty($_REQUEST['t'])?html_entity_decode(rawurldecode(base64_decode($_REQUEST['t']))):'';
+        $content=!empty($_REQUEST['c'])?html_entity_decode(rawurldecode(base64_decode($_REQUEST['c']))):'';
+        $refer=!empty($_REQUEST['f'])?html_entity_decode(rawurldecode(base64_decode($_REQUEST['f']))):'';
+//        pd($refer);
 
 		$validate=new CUrlValidator();
 		if($validate->validateValue($href)===false){
@@ -167,7 +169,10 @@ class ApiController extends Controller
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style>a {text-decoration: none;}</style>
 '."<title>外链转到:$title($href)</title></head><body>"
-.'<script type="text/javascript"><!--
+.'
+<div style="width:700px;">
+
+<script type="text/javascript"><!--
 google_ad_client = "pub-4726192443658314";
 /* 336x280, 创建于 11-3-10 */
 google_ad_slot = "4619865687";
@@ -191,10 +196,9 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 '."
 <script language='javascript'>$packed</script>
-<h2 style=\"margin:-5px 0 0 0;\"><a href='$href'>$title<span style=\"color:red;\">(点此跳转)</span></a></h2>".
+<h1 style=\"font-size:20px;margin:-5px 0 0 0;\">$title</h1>".
 
 '
-<div style="float:left;">
 <script type="text/javascript"><!--
 google_ad_client = "pub-4726192443658314";
 /* 468x60, 创建于 11-3-3 */
@@ -205,14 +209,11 @@ google_ad_height = 60;
 </script>
 <script type="text/javascript"
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script></div>
-'
-
-.'
-<div style="float:left;">
-<form action="http://www.orzero.com/search" id="cse-search-box">
+</script><div style="clear:both;">
+'.$content.'</div>
+<form action="http://'.Yii::app()->params['domain'].'/search" id="cse-search-box">
   <div>
-    <input type="hidden" name="cx" value="partner-pub-4726192443658314:lofclyqlq8w" />
+    <input type="hidden" name="cx" value="'.Yii::app()->params['google_search_ad'].'" />
     <input type="hidden" name="cof" value="FORID:11" />
     <input type="hidden" name="ie" value="UTF-8" />
     <input type="text" name="q" size="40" />
@@ -244,14 +245,949 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
   };
 })();
 var sl=document.getElementsByName("siteurl")[0];
-sl.setAttribute("value","http://www.orzero.com");
-</script></div>
-'.
+sl.setAttribute("value","http://'.Yii::app()->params['domain'].'");
+</script>
+<div>'.
 
 "
+<a href='$href'>$title</a>
+<h2>
+<a href='$href'>$title<span style=\"color:red;\">[点此跳转]</span></a>&nbsp;&nbsp;
+<a href='$refer'><span style=\"color:green;\">[返回阅读]</span></a>
+</h2>
+</div>
+</div>
 </body>
 </html>";
 
 	}
+
+public function actionMaps()
+	{
+//		$this->google_phone_ad();
+
+		$page_size=20;
+
+
+		$_page=isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 1;
+		$_page=($_page<1) ? 1 : $_page;
+
+		$criteria=new CDbCriteria;
+		$criteria->condition='`status` = 1';
+//		$criteria->order='`id` DESC';
+		$criteria->limit=$page_size;
+		$criteria->offset=($_page-1)*$page_size;
+
+		$count=Article::model()->count($criteria);
+		if($count==0){
+			$max_page=1;
+		}else{
+			$max_page=ceil($count/$page_size);
+		}
+		$_page=($_page>$max_page)?$max_page:$_page;
+
+//		$sort=new CSort('Article');
+//		$sort->multiSort=false;
+//		$sort->defaultOrder="t.uptime DESC";
+//		$sort->sortVar='Article_sort';
+//		$sort->attributes = array(
+//            'page' => 't.page',		//原帖页数
+//			'pcount' => 't.pcount',	//整理条数
+//            'reach' => 't.reach',	//原帖访问量
+//			'reply' => 't.reply',	//原帖回复数
+//            'hot' => 't.hot',		//本站访问量
+//			'uptime' => 't.uptime',	//最后更新
+//        );
+		$sort=isset($_REQUEST['A_sort']) ? trim($_REQUEST['A_sort']) : '';
+        switch ($sort):
+		    case 'page':
+		        $criteria->order='`page` DESC';
+		        break;
+		    case 'pcount':
+		        $criteria->order='`pcount` DESC';
+		        break;
+		    case 'reach':
+		        $criteria->order='`reach` DESC';
+		        break;
+		    case 'reply':
+		        $criteria->order='`reply` DESC';
+		        break;
+		    case 'hot':
+		        $criteria->order='`hot` DESC';
+		        break;
+		    case 'uptime':
+		        $criteria->order='`uptime` DESC';
+		        break;
+		    default:
+		    	$sort='';
+		        $criteria->order='`id` DESC';
+		endswitch;
+
+		$articles=Article::model()->findAll($criteria);
+		$html='';
+
+		$html.='<div class="header"><div class="nav"><a class="home" href="http://'.Yii::app()->params['domain'].'" title="M天涯">返回首页</a>&nbsp;&raquo;&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-1.html" title="M天涯最新整理">最新整理</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-uptime-1.html" title="M天涯最近更新">最近更新</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-hot-1.html" title="M天涯访问最多">访问最多</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-pcount-1.html" title="M天涯整理最多">整理最多</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/orzero-author.html" title="M天涯作者列表">作者列表</a>&nbsp;||&nbsp;</div>'.
+'
+<div class="search">
+<form action="/search" name="t">
+<input type="hidden" name="cx" value="'.Yii::app()->params['google_search_ad'].'" />
+<input type="hidden" name="cof" value="FORID:11" />
+<input type="hidden" name="ie" value="UTF-8" />
+<input type="radio" name="un" value="or" />作者
+<input type="radio" name="un" value="zero" />标题
+<input type="text" maxlength="100" size="50" name="q" />
+<input type="submit" value="站内搜索" />
+</form>
+'.
+$this->google_phone_ad()
+.'
+</div>
+</div>
+	<div class="ad_link">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 728x15, orzero.com 11-4-5 */
+google_ad_slot = "6609878802";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<br />
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 728x15, orzero.com 11-4-5 */
+google_ad_slot = "6609878802";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<br />
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 728x15, orzero.com 11-4-5 */
+google_ad_slot = "6609878802";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+	</div>
+	<div class="ad">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 468x60, 创建于 11-3-3 */
+google_ad_slot = "7613266296";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+	</div>
+';
+
+		$html.='<div class="list">
+	<div class="ad">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 160x600, 创建于 10-5-2 */
+google_ad_slot = "6942291543";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+	</div>
+';
+		$pre=true;
+		if(!empty($articles)){
+			$j=1;
+			foreach($articles as $article){
+				$title=htmlspecialchars($article->title);
+				if($j==14){
+					$html.='
+	<div class="ad">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 336x280, 创建于 11-3-10 */
+google_ad_slot = "4619865687";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+	</div>
+					';
+				}
+				$class=$pre?' class="t"':' class="f"';
+				$html.='<div'.$class.'><a href="http://'.Yii::app()->params['domain'].'/article/'.$article->id.
+				'/index.html" target="_blank" title="'.$title.'">'.$title.
+				'</a>&nbsp;[作者:<a href="http://'.Yii::app()->params['domain'].'/search?cx='.Yii::app()->params['google_search_ad'].'&cof=FORID:11&ie=UTF-8&un=or&q='.$article->un.'">'.$article->un.'</a>]'.
+				'&nbsp;[阅读:'.$article->hot.'次]'.
+				'&nbsp;[整理:'.$article->pcount.'楼]'.
+				'<br />';
+
+				$pre=$pre?false:true;
+
+				if($article->pcount==0){
+					$page=1;
+				}else{
+					$page=ceil($article->pcount/10);
+				}
+
+				$html.='<div class="w700">';
+				for($i=1;$i<=$page;$i++){
+					$html.='<a href="http://'.Yii::app()->params['domain'].'/article/'.$article->id.
+					'/'.$i.'.html" target="_blank" title="[第'.$i.'页]'.$title.'">'.$i.'</a>&nbsp;';
+//					if(($i%50)==0){
+//						$html.='<br />';
+//					}
+					if($i>90){
+						$html.='......&nbsp;';
+						$html.='<a href="http://'.Yii::app()->params['domain'].'/article/'.$article->id.
+						'/'.($page-1).'.html" target="_blank" title="[第'.($page-1).'页]'.$title.'">'.($page-1).'</a>&nbsp;';
+						$html.='<a href="http://'.Yii::app()->params['domain'].'/article/'.$article->id.
+						'/'.$page.'.html" target="_blank" title="[第'.$page.'页]'.$title.'">'.$page.'</a>&nbsp;';
+						break;
+					}
+				}
+				$html.='&nbsp;<a href="http://'.Yii::app()->params['domain'].'/sitemap/'.$article->id.'.xml">索引</a>&nbsp;'.
+				'<a href="http://'.Yii::app()->params['domain'].'/link-'.$article->id.'.html">直达</a>&nbsp;';
+				$html.='</div>';
+
+				//$html.='[热度:'.$article->hot.']';
+				$html.='</div>';
+
+				$j++;
+			}
+		}
+		$html.='</div>';
+
+		if(strlen($sort)>0){
+			$sort=$sort.'-';
+		}
+
+		$html.='<div class="footer">';
+		for($i=1;$i<=$max_page;$i++){
+			if($i==$_page){
+				$html.='<a href="http://'.Yii::app()->params['domain'].'/list-'.$sort.
+				$i.'.html" title="[M天涯整理第'.$i.'页]"><span class="current">第'.$i.'页</span></a>&nbsp;';
+			}else{
+				$html.='<a href="http://'.Yii::app()->params['domain'].'/list-'.$sort.
+				$i.'.html" title="[M天涯整理第'.$i.'页]">第'.$i.'页</a>&nbsp;';
+			}
+
+		}
+		$html.='&nbsp;&nbsp;<a href="http://'.Yii::app()->params['domain'].'/sitemap.xml" target="_blank" style="color:green">网站地图</a>';
+		$html.='&nbsp;&nbsp;<a href="http://'.Yii::app()->params['domain'].'/sitemaps.xml" target="_blank" style="color:green">文章地图</a>';
+		$html.='</div>';
+
+
+
+		echo
+'<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>M天涯整理</title>
+<style>
+.main,form{padding:0;margin:0;}
+.nav{display:inline-block;}
+.home{color:#000000;font-family:arial,sans-serif;font-size:14px;font-weight:bold;white-space:nowrap;}
+.current{color:red;font-weight:bold;}
+.ad{float:right;}
+.ad_link{float:left;}
+.w700{width:900px;}
+.list{padding:5px;clear:both;}
+.search{float:right;clear:both;}
+.header{margin-bottom:10px;padding-bottom:2px;border-bottom:1px solid #C9D7F1;font-size:12pt;line-height:16pt;display:block;}
+.footer{margin-top:10px;padding-top:5px;border-top:1px solid #C9D7F1;font-size:12pt;line-height:16pt;display:block;}
+.t{padding-right:350px;background:none repeat scroll 0 0 #FCFCFC;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;margin:4px 0;padding:2px;/*white-space:pre-wrap;*/word-wrap:break-word;}
+.f{padding-right:350px;background:none repeat scroll 0 0 #F4F5F7;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;margin:4px 0;padding:2px;/*white-space:pre-wrap;*/word-wrap:break-word;}
+</style>
+</head>
+<body>
+
+<div class="main">
+'.$html.$this->google_phone_ad().
+'</div>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push([\'_setAccount\', \'UA-7387085-1\']);
+  _gaq.push([\'_setDomainName\', \'.'.Yii::app()->params['domain'].'\']);
+  _gaq.push([\'_trackPageview\']);
+  (function() {
+    var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
+    ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
+    var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%3F52ee3503e2a49b8134aa2f700075d417\' type=\'text/javascript\'%3E%3C/script%3E"));
+</script>
+</body>
+</html>';
+	}
+
+    public function actionUlink()
+	{
+		$expire=900;
+//		$html=Yii::app()->cache->get('orzero::author');
+		if(empty($html)){
+
+				$as = Yii::app()->db->createCommand()
+					    ->select('distinct (un)')
+					    ->from('tbl_article')
+					    ->where('status=1')
+					    ->group('un')
+					    ->order('count(un) DESC')
+					    ->queryAll();
+
+				$this->google_phone_ad();
+
+			$html='';
+			$html.='
+<div class="header"><div class="nav"><a class="home" href="http://'.Yii::app()->params['domain'].'" title="M天涯">返回首页</a>&nbsp;&raquo;&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-1.html" title="M天涯最新整理">最新整理</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-uptime-1.html" title="M天涯最近更新">最近更新</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-hot-1.html" title="M天涯访问最多">访问最多</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-pcount-1.html" title="M天涯整理最多">整理最多</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/orzero-author.html" title="M天涯作者列表">作者列表</a>&nbsp;||&nbsp;</div>'.
+'
+	<div class="search">
+	<form action="/search" name="t">
+	<input type="hidden" name="cx" value="'.Yii::app()->params['google_search_ad'].'" />
+	<input type="hidden" name="cof" value="FORID:11" />
+	<input type="hidden" name="ie" value="UTF-8" />
+	<input type="radio" name="un" value="or" />作者
+	<input type="radio" name="un" value="zero" />标题
+	<input type="text" maxlength="100" size="50" name="q" />
+	<input type="submit" value="站内搜索" />
+	</form>
+	'.
+	$this->google_phone_ad()
+	.'
+	</div>
+</div>
+';
+				$i=1;
+				foreach($as as $a){
+					$html.='<a href="/search?cx='.Yii::app()->params['google_search_ad'].'&cof=FORID%3A11&ie=UTF-8&un=or&q='.
+					$a['un'].'">'.$a['un'].'</a>&nbsp;';
+
+						if(($i%2000)==0){
+							$html.='
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 728x15, orzero.com 11-4-5 */
+google_ad_slot = "6609878802";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>';
+						}
+						if($i==700){
+							$html.='
+<div class="ad">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 728x90, M天涯 */
+google_ad_slot = "2961714380";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 728x90, M天涯 */
+google_ad_slot = "2961714380";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>';
+						}
+
+						$i++;
+					}
+
+					$html=
+'<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>作者列表</title>
+<style>
+.main,form{padding:0;margin:0;}
+.nav{display:inline-block;}
+.home{color:#000000;font-family:arial,sans-serif;font-size:14px;font-weight:bold;white-space:nowrap;}
+.current{color:red;font-weight:bold;}
+.ad{float:right;}
+.ad_h{float:left;}
+.ad_link{float:left;}
+.w700{width:940px;clear:both;}
+.list{padding:5px;clear:both;}
+.search{float:right;clear:both;}
+.header{margin-bottom:10px;padding-bottom:2px;border-bottom:1px solid #C9D7F1;font-size:12pt;line-height:16pt;display:block;}
+.footer{margin-top:10px;padding-top:5px;border-top:1px solid #C9D7F1;font-size:12pt;line-height:16pt;display:block;}
+.t{padding-right:350px;background:none repeat scroll 0 0 #FCFCFC;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;margin:4px 0;padding:2px;/*white-space:pre-wrap;*/word-wrap:break-word;}
+.f{padding-right:350px;background:none repeat scroll 0 0 #F4F5F7;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;margin:4px 0;padding:2px;/*white-space:pre-wrap;*/word-wrap:break-word;}
+</style>
+</head>
+<body>
+<div class="ad">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 160x600, 创建于 10-5-2 */
+google_ad_slot = "6942291543";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+<div class="main">
+'.$this->google_phone_ad().$html.$this->google_phone_ad().
+'</div>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push([\'_setAccount\', \'UA-7387085-1\']);
+  _gaq.push([\'_setDomainName\', \'.'.Yii::app()->params['domain'].'\']);
+  _gaq.push([\'_trackPageview\']);
+  (function() {
+    var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
+    ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
+    var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%3F52ee3503e2a49b8134aa2f700075d417\' type=\'text/javascript\'%3E%3C/script%3E"));
+</script>
+</body>
+</html>';
+			Yii::app()->cache->set('orzero::author', $html, $expire);
+		}
+
+		echo $html;
+	}
+
+    public function actionAlink()
+	{
+		$id=isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
+
+		$expire=600;
+		$baseUrl='http://'.Yii::app()->params['domain'];
+
+		if($id>0){
+			$article = Yii::app()->db->createCommand()
+			    ->select('id, pcount, uptime, title')
+			    ->from('tbl_article')
+			    ->where('status=1 AND id=:id', array(':id'=>$id))
+			    ->order('mktime DESC')
+			    ->queryRow();
+
+
+			$this->google_phone_ad();
+
+			$html='';
+			$html.='<div class="header"><div class="nav"><a class="home" href="'.$baseUrl.'" title="M天涯">返回首页</a>&nbsp;&raquo;&nbsp;||&nbsp;'.
+		'<a class="home" href="'.$baseUrl.'/list-1.html" title="M天涯最新整理">最新整理</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="'.$baseUrl.'/list-uptime-1.html" title="M天涯最近更新">最近更新</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="'.$baseUrl.'/list-hot-1.html" title="M天涯访问最多">访问最多</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="'.$baseUrl.'/list-pcount-1.html" title="M天涯整理最多">整理最多</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="'.$baseUrl.'/orzero-author.html" title="M天涯作者列表">作者列表</a>&nbsp;||&nbsp;</div>'.
+'
+<div class="search">
+<form action="/search" name="t">
+<input type="hidden" name="cx" value="'.Yii::app()->params['google_search_ad'].'" />
+<input type="hidden" name="cof" value="FORID:11" />
+<input type="hidden" name="ie" value="UTF-8" />
+<input type="radio" name="un" value="or" />作者
+<input type="radio" name="un" value="zero" />标题
+<input type="text" maxlength="100" size="50" name="q" />
+<input type="submit" value="站内搜索" />
+</form>
+'.
+$this->google_phone_ad()
+.'
+</div>
+</div>
+	<div class="ad_link">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 728x15, orzero.com 11-4-5 */
+google_ad_slot = "6609878802";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<br />
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 728x15, orzero.com 11-4-5 */
+google_ad_slot = "6609878802";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<br />
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 728x15, orzero.com 11-4-5 */
+google_ad_slot = "6609878802";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+	</div>
+	<div class="ad">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 468x60, 创建于 11-3-3 */
+google_ad_slot = "7613266296";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+	</div>
+
+';
+			if($article['pcount']==0){
+					$page=1;
+				}else{
+					$page=ceil($article['pcount']/10);
+				}
+
+				$html.='<div class="w700 f"><h1><a href="http://'.Yii::app()->params['domain'].'/article/'.$article['id'].
+					'/index.html" target="_self" title="'.$article['title'].'">'.$article['title'].'</a></h1>
+<div class="ad_h">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 468x60, 创建于 11-3-3 */
+google_ad_slot = "7613266296";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+<div class="ad_h">
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 468x60, 创建于 11-3-3 */
+google_ad_slot = "7613266296";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>';
+				for($i=1;$i<=$page;$i++){
+					$html.='<a href="http://'.Yii::app()->params['domain'].'/article/'.$article['id'].
+					'/'.$i.'.html" target="_blank" title="[第'.$i.'页]'.$article['title'].'">[第'.$i.'页]</a>&nbsp;'."\r\n";
+				}
+
+			echo
+'<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>'.$article['title'].'</title>
+<style>
+.main,form{padding:0;margin:0;}
+.nav{display:inline-block;}
+.home{color:#000000;font-family:arial,sans-serif;font-size:14px;font-weight:bold;white-space:nowrap;}
+.current{color:red;font-weight:bold;}
+.ad{float:right;}
+.ad_h{float:left;}
+.ad_link{float:left;}
+.w700{width:940px;clear:both;}
+.list{padding:5px;clear:both;}
+.search{float:right;clear:both;}
+.header{margin-bottom:10px;padding-bottom:2px;border-bottom:1px solid #C9D7F1;font-size:12pt;line-height:16pt;display:block;}
+.footer{margin-top:10px;padding-top:5px;border-top:1px solid #C9D7F1;font-size:12pt;line-height:16pt;display:block;}
+.t{padding-right:350px;background:none repeat scroll 0 0 #FCFCFC;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;margin:4px 0;padding:2px;/*white-space:pre-wrap;*/word-wrap:break-word;}
+.f{padding-right:350px;background:none repeat scroll 0 0 #F4F5F7;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;margin:4px 0;padding:2px;/*white-space:pre-wrap;*/word-wrap:break-word;}
+</style>
+</head>
+<body>
+
+<div class="main">
+'.$html.$this->google_phone_ad().
+'</div>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push([\'_setAccount\', \'UA-7387085-1\']);
+  _gaq.push([\'_setDomainName\', \'.'.Yii::app()->params['domain'].'\']);
+  _gaq.push([\'_trackPageview\']);
+  (function() {
+    var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
+    ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
+    var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%3F52ee3503e2a49b8134aa2f700075d417\' type=\'text/javascript\'%3E%3C/script%3E"));
+</script>
+</body>
+</html>';
+
+		}
+	}
+
+    public function actionSearchs()
+	{
+		$q=isset($_REQUEST['q']) ? trim($_REQUEST['q']) : '';
+		$un=isset($_REQUEST['un']) ? trim($_REQUEST['un']) : 'zero';
+		$tag=isset($_REQUEST['tag']) ? trim($_REQUEST['tag']) : '';
+
+		if(strlen($q)>0){
+			$criteria=new CDbCriteria;
+			//$criteria->with=array('item');
+			$criteria->condition='`t`.`status`=1';
+			//$criteria->order='`t`.`uptime` DESC';
+			$criteria->order='`uptime` DESC';
+
+			if($un=='or'){
+				//$criteria->compare('t.un',$q,true);
+				$criteria->compare('un',$q,true);
+			}else if($un=='zero' || empty($un)){
+				//$criteria->compare('t.title',$q,true);
+				$criteria->compare('title',$q,true);
+			}
+
+			if(strlen($tag)>0){
+				//$criteria->addSearchCondition('t.tag', $tag, true, 'OR');
+				$criteria->addSearchCondition('tag', $tag, true, 'OR');
+			}
+
+			$data['dataProvider']=new CActiveDataProvider('Article',array(
+			    'criteria'=>$criteria,
+			    'pagination'=>array(
+			        'pageSize'=>15,
+			    ),
+			));
+
+			$criteria=new CDbCriteria;
+			//$criteria->condition='`t`.`status`=1 AND `title` LIKE :ycp0';
+			$criteria->condition='`status`=1 AND `title` LIKE :ycp0';
+			$criteria->params=array(':ycp0'=>'%'.$q.'%');
+			$rcount = Article::model()->count($criteria);
+
+			$criteria=new CDbCriteria;
+			$criteria->condition='`key` LIKE :ycp0';
+			$criteria->params=array(':ycp0'=>'%'.$q.'%');
+			$_search=Searchs::model()->find($criteria);
+			$uid=intval(Yii::app()->user->id);
+			if(empty($_search)){
+				$search=new Searchs();
+				$search->key=$q;
+				$search->uid=$uid;
+				$search->mktime=time();
+				$search->uptime=0;
+				$search->ccount=1;
+				$search->rcount=$rcount;
+				$search->save();
+			}else{
+				$_search->uid=$uid;
+				$_search->uptime=time();
+				$_search->ccount++;
+				$_search->rcount=$rcount;
+				$_search->save();
+			}
+
+		}else{
+			$criteria=new CDbCriteria;
+			//$criteria->with=array('item');
+			//$criteria->condition='`t`.`status`=1';
+			$criteria->condition='`status`=1';
+			//$criteria->order='`t`.`uptime` DESC';
+			$criteria->order='`uptime` DESC';
+			$data['dataProvider']=new CActiveDataProvider('Article',array(
+			    'criteria'=>$criteria,
+			    'pagination'=>array(
+			        'pageSize'=>15,
+			    ),
+			));
+		}
+
+        $this->layout='//layouts/column2';
+		$this->render('search',$data);
+	}
+
+	public function actionSitemap()
+	{
+		$id=isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
+
+//		$criteria=new CDbCriteria;
+//		$criteria->limit=4000;
+		$expire=600;
+		$baseUrl=Yii::app()->params['domain'];
+
+		if($id>0){
+			$article=Yii::app()->cache->get('xml::article'.$id);
+			if(empty($article)){
+//				$criteria->condition='status=1 AND id='.$id;
+//				$article=Article::model()->find($criteria);
+				$article = Yii::app()->db->createCommand()
+				    ->select('id, pcount, uptime')
+				    ->from('tbl_article')
+				    ->where('status=1 AND id=:id', array(':id'=>$id))
+				    ->order('mktime DESC')
+				    ->queryRow();
+				Yii::app()->cache->set('xml::article'.$id, $article, $expire);
+			}
+
+			$xml="<?xml version='1.0' encoding='UTF-8'?>"."\r\n".
+				'<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'."\r\n".
+				'         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"'."\r\n".
+				'         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\r\n";
+			if(!empty($article['pcount'])){
+				$count=ceil($article['pcount']/10);
+				for($i=1;$i<=$count;$i++){
+					if($i==$count){
+						$prio=1;
+					}else{
+						$prio=0.5;
+					}
+					$xml_item="\t".'<url>'."\r\n"
+							."\t\t".'<loc>http://'.$baseUrl.'/article/'.$article['id'].'/'.$i.'.html'.'</loc>'."\r\n"
+							."\t\t".'<lastmod>'.date(DateTime::W3C, $article['uptime']).'</lastmod>'."\r\n"
+							."\t\t".'<changefreq>hourly</changefreq>'."\r\n"
+							."\t\t".'<priority>'.$prio.'</priority>'."\r\n"
+							."\t".'</url>'."\r\n";
+					$xml.=$xml_item;
+				}
+			}else{
+                $xml_item="\t".'<url>'."\r\n"
+                        ."\t\t".'<loc>http://'.$baseUrl.'/article/'.$article['id'].'/1.html'.'</loc>'."\r\n"
+                        ."\t\t".'<lastmod>'.date(DateTime::W3C, time()).'</lastmod>'."\r\n"
+                        ."\t\t".'<changefreq>hourly</changefreq>'."\r\n"
+                        ."\t\t".'<priority>0.8</priority>'."\r\n"
+                        ."\t".'</url>'."\r\n";
+                $xml.=$xml_item;
+            }
+			$xml.='</urlset>';
+			header('Content-Type: text/xml');
+			echo $xml;
+		}else{
+
+			$xml=Yii::app()->cache->get('xml::index');
+			if(empty($xml)){
+
+				$article=Yii::app()->cache->get('xml::article');
+				if(empty($article)){
+	//				$criteria->condition='status=1';
+	//				$criteria->order='mktime DESC';
+	//				$article=Article::model()->findAll($criteria);
+					$article = Yii::app()->db->createCommand()
+					    ->select('id, uptime')
+					    ->from('tbl_article')
+					    ->where('status=1')
+					    ->order('mktime DESC')
+					    ->queryAll();
+					Yii::app()->cache->set('xml::article', $article, $expire);
+				}
+
+				$item=Yii::app()->cache->get('xml::item');
+				if(empty($item)){
+	//				$criteria->condition='status=1';
+	//				$criteria->order='count DESC';
+	//				$item=Item::model()->findAll($criteria);
+					$item = Yii::app()->db->createCommand()
+					    ->select('id')
+					    ->from('tbl_item')
+					    ->where('status=1')
+					    ->queryAll();
+					Yii::app()->cache->set('xml::item', $item, $expire*10);
+				}
+
+				$channel=Yii::app()->cache->get('xml::channel');
+				if(empty($channel)){
+	//				$criteria->condition='status=1';
+	//				$criteria->order='count DESC';
+	//				$channel=Channel::model()->findAll($criteria);
+					$channel = Yii::app()->db->createCommand()
+					    ->select('id')
+					    ->from('tbl_channel')
+					    ->where('status=1')
+					    ->queryAll();
+					Yii::app()->cache->set('xml::channel', $channel, $expire*100);
+				}
+
+
+
+				$xml="<?xml version='1.0' encoding='UTF-8'?>"."\r\n".
+					'<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'."\r\n".
+					'         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"'."\r\n".
+					'         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\r\n";
+
+				if(!empty($article)){
+					foreach($article as $a){
+//						!isset($max_cto) && $max_cto=$a->cto;
+						$xml_item="\t".'<url>'."\r\n"
+								."\t\t".'<loc>http://'.$baseUrl.'/article/'.$a['id'].'/index.html'.'</loc>'."\r\n"
+								."\t\t".'<lastmod>'.date(DateTime::W3C, $a['uptime']).'</lastmod>'."\r\n"
+								."\t\t".'<changefreq>hourly</changefreq>'."\r\n"
+								."\t\t".'<priority>0.7</priority>'."\r\n"
+								."\t".'</url>'."\r\n";
+
+//								"\t".'<url>'."\r\n"
+//								."\t\t".'<loc>'.$baseUrl.'/sitemap/'.$a->id.'.xml'.'</loc>'."\r\n"
+//								."\t\t".'<lastmod>'.date(DateTime::W3C, $a->uptime).'</lastmod>'."\r\n"
+//								."\t\t".'<changefreq>hourly</changefreq>'."\r\n"
+//								."\t\t".'<priority>0.9</priority>'."\r\n"
+//								."\t".'</url>'."\r\n";
+						$xml.=$xml_item;
+					}
+				}
+
+				if(!empty($item)){
+					foreach($item as $i){
+//						!isset($max_item_count) && $max_item_count=$i->count;
+						$xml_item="\t".'<url>'."\r\n"
+								."\t\t".'<loc>http://'.$baseUrl.'/item/'.$i['id'].'/</loc>'."\r\n"
+								."\t\t".'<changefreq>daily</changefreq>'."\r\n"
+								."\t\t".'<priority>0.6</priority>'."\r\n"
+								."\t".'</url>'."\r\n";
+						$xml.=$xml_item;
+					}
+				}
+
+				if(!empty($channel)){
+					foreach($channel as $c){
+//						!isset($max_channel_count) && $max_channel_count=$c->count;
+						$xml_item="\t".'<url>'."\r\n"
+								."\t\t".'<loc>http://'.$baseUrl.'/channel/'.$c['id'].'/</loc>'."\r\n"
+								."\t\t".'<changefreq>weekly</changefreq>'."\r\n"
+								."\t\t".'<priority>0.5</priority>'."\r\n"
+								."\t".'</url>'."\r\n";
+						$xml.=$xml_item;
+					}
+				}
+
+				$xml.='</urlset>';
+
+				Yii::app()->cache->set('xml::index', $xml, $expire);
+				if($baseUrl=='http://'.Yii::app()->params['domain']){
+					@file_put_contents(dirname(Yii::app()->BasePath).DIRECTORY_SEPARATOR.'sitemap.xml', $xml);
+				}
+
+			}
+//			header('Location: /sitempa.xml');
+			header('Content-Type: text/xml');
+			echo $xml;
+//			readfile(dirname(Yii::app()->BasePath).DIRECTORY_SEPARATOR.'sitemap.xml');
+		}
+//		$this->redirect('/sitemap.xml');
+//		pr(Yii::getPathOfAlias('webroot'));
+	}
+
+	public function actionSitemaps()
+	{
+		$baseUrl='http://'.Yii::app()->params['domain'];
+		$expire=60;
+
+		$article=Yii::app()->cache->get('sitemaps::article');
+		if(empty($article)){
+			$article = Yii::app()->db->createCommand()
+		    ->select('id, uptime')
+		    ->from('tbl_article')
+		    ->where('status=1 AND pcount>0')
+		    ->order('uptime DESC')
+		    ->queryAll();
+		    Yii::app()->cache->set('sitemaps::article', $article, $expire);
+		}
+
+	    $xml=Yii::app()->cache->get('sitemaps::xml');
+	    if(empty($xml)){
+	    	$xml="<?xml version='1.0' encoding='UTF-8'?>"."\r\n".
+				'<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\r\n";
+
+
+				if(!empty($article)){
+					foreach($article as $a){
+						$xml_item="\t".'<sitemap>'."\r\n"
+								."\t\t".'<loc>'.$baseUrl.'/sitemap/'.$a['id'].'.xml'.'</loc>'."\r\n"
+								."\t\t".'<lastmod>'.date(DateTime::W3C, $a['uptime']).'</lastmod>'."\r\n"
+								."\t".'</sitemap>'."\r\n";
+						$xml.=$xml_item;
+					}
+				}
+
+			$xml.='</sitemapindex>';
+
+	    	Yii::app()->cache->set('sitemaps::xml', $xml, $expire*10);
+			if($baseUrl=='http://'.Yii::app()->params['domain']){
+				@file_put_contents(dirname(Yii::app()->BasePath).DIRECTORY_SEPARATOR.'sitemaps.xml', $xml);
+			}
+	    }
+	    header('Content-Type: text/xml');
+		echo $xml;
+	}
+
+    public function actionTag()
+	{
+		$criteria=new CDbCriteria;
+		$criteria->condition='`rcount`>0';
+		$criteria->order='`rcount` DESC, `ccount` DESC';
+		$data['dataProvider']=new CActiveDataProvider('Searchs',array(
+		    'criteria'=>$criteria,
+		    'pagination'=>array(
+		        'pageSize'=>100,
+		    ),
+		));
+		$this->render('tag',$data);
+	}
+
+	public function google_phone_ad(){
+		require_once('GAD.php');
+	}
+	    
     
 }

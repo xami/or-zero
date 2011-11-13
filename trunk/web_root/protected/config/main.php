@@ -54,14 +54,38 @@ return array(
                 '<controller:(article)>/<id:\d+>/<C_page:\d+>'=>array('site/article', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
 				'<controller:(article)>/<id:\d+>/index'=>array('site/article', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
 				'<controller:(article)>/<id:\d+>/?'=>array('site/article', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+                
+                '<controller:(article)>-<id:\d+>-<C_page:\d+>'=>array('site/article', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+                '<controller:(article)>-<id:\d+>-1'=>array('site/article', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+                '<controller:(article)>-<id:\d+>'=>array('site/article', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+
+
 
                 '<controller:(channel)>/<cid:\d+>/<Article_page:\d+>'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
-                '<controller:(channel)>/<cid:\d+>/index'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+                '<controller:(channel)>/<cid:\d+>/1'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
 				'<controller:(channel)>/<cid:\d+>/?'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
 
                 '<controller:(item)>/<tid:\d+>/<Article_page:\d+>'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
-                '<controller:(item)>/<tid:\d+>/index'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+                '<controller:(item)>/<tid:\d+>/1'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
                 '<controller:(item)>/<tid:\d+>/?'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+
+                //List
+                '<controller:list>-<A_sort:\w+>-<id:\d+>\.html'=>array('api/maps', 'caseSensitive'=>false),
+                '<controller:list>-<id:\d+>\.html'=>array('api/maps', 'caseSensitive'=>false),
+
+                //sitemap
+                '<controller:(orzero)>-author.html'=>array('api/ulink', 'urlSuffix'=>'/', 'caseSensitive'=>false),
+                '<controller:(link)>-<id:\d+>.html'=>array('api/alink', 'urlSuffix'=>'/', 'caseSensitive'=>false),
+                '<controller:(sitemap)>/<id:\d+>.xml'=>array('api/sitemap', 'urlSuffix'=>'/', 'caseSensitive'=>false),
+                '<controller:(sitemap)>'=>array('api/sitemap', 'urlSuffix'=>'.xml', 'caseSensitive'=>false),
+                '<controller:(sitemaps)>'=>array('api/sitemaps', 'urlSuffix'=>'.xml', 'caseSensitive'=>false),
+
+                //查找
+                '<controller:(search)>/*'=>array('api/searchs', 'urlSuffix'=>'/', 'caseSensitive'=>false),
+
+                //tag
+				'<controller:(tag)>/<Searchs_page:\d+>/'=>array('api/tag', 'urlSuffix'=>'/', 'caseSensitive'=>false),
+				'<controller:(tag)>/'=>array('api/tag', 'urlSuffix'=>'/', 'caseSensitive'=>false),
 
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
@@ -111,6 +135,8 @@ return array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
         'mcpass'=>'Pj8VArQ85XxJKw2t',
-        'domain'=>'mtianya.com',
+        'domain'=>$_SERVER['SERVER_NAME'],
+        'google_search_ad'=>'partner-pub-4726192443658314:4873446973',
+        'key'=>'{"idwriter":"60257136","key":"866084533","chk":"e3f484000ae7ec99e2249b076fb09001"}',
 	),
 );

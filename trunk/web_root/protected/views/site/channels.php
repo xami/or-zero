@@ -10,15 +10,15 @@
 Yii::app()->clientScript->registerLinkTag(
 'alternate',
 'application/rss+xml',
-'http://www.orzero.com/sitemap.xml');
+'http://'.Yii::app()->params['domain'].'/sitemap.xml');
 Yii::app()->clientScript->registerLinkTag(
 'alternate',
 'application/rss+xml',
-'http://www.orzero.com/rss.xml');
+'http://'.Yii::app()->params['domain'].'/rss.xml');
 Yii::app()->clientScript->registerLinkTag(
 'alternate',
 'application/rss+xml',
-'http://www.orzero.com/atom.xml');
+'http://'.Yii::app()->params['domain'].'/atom.xml');
 
 ?>
 <div id="ad_header_channel">

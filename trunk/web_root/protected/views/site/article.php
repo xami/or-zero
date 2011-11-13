@@ -3,20 +3,20 @@ $this->pageTitle=str_replace('天涯', Yii::app()->name, $article->title)
                 .((isset($_REQUEST['C_page']) && $_REQUEST['C_page']>0) ? '(第'.$_REQUEST['C_page'].'页)' : '['.Yii::app()->name.']');
 
 $this->breadcrumbs=array(
-	str_replace('天涯', Yii::app()->name, $article->channel->name)=>'/or/'.$article->channel->id.'/',
-	str_replace('天涯', Yii::app()->name, $article->item->name)=>'/ero/'.$article->item->id.'/',
-	str_replace('天涯', Yii::app()->name, $article->title)=>'/orzero/'.$article->id.'/',
+	str_replace('天涯', Yii::app()->name, $article->channel->name)=>'/channel/'.$article->channel->id.'/',
+	str_replace('天涯', Yii::app()->name, $article->item->name)=>'/item/'.$article->item->id.'/',
+	str_replace('天涯', Yii::app()->name, $article->title)=>'/link-'.$article->id.'.html',
 );
 ?>
 
 <h2>
 [作者:<?php echo CHtml::link($article->un,
-'/search?cx=partner-pub-4726192443658314:lofclyqlq8w&cof=FORID:11&ie=UTF-8&q='.$article->un.'&author='.$article->un, 
+'/search?cx='.Yii::app()->params['google_search_ad'].'&cof=FORID:11&ie=UTF-8&q='.$article->un.'&author='.$article->un,
 array('target'=>'_blank',
 'author'=> CHtml::encode($article->un),
 'title'=>CHtml::encode($article->un),
 'rev'=>'contents')); ?>]&nbsp;
-[整理:<?php echo CHtml::link(Yii::app()->name, '/orzero-'.$article->id.'-index.html',
+[整理:<?php echo CHtml::link(Yii::app()->name, '/article-'.$article->id.'.html',
 array('title'=>'或零整理,'.CHtml::encode($article->title),
 'author'=>Yii::app()->name,
 'title'=>CHtml::encode($article->title).'我的天涯,天涯整理,天涯脱水整理,天涯易读整理,天涯只看楼主,天涯热帖',
@@ -28,7 +28,7 @@ if (is_numeric($article->item->key)) {
 } else {
 	$src='http://www.tianya.cn/publicforum/content/'.$article->item->key.'/1/'.$article->aid.'.shtml';
 }
-$ensrc='http://www.orzero.com/f/a?href='.rawurlencode(MCrypy::encrypt('a='.base64_encode($src).'&t='.$article->title, Yii::app()->params['mcpass'], 128));
+$ensrc='http://'.Yii::app()->params['domain'].'/api/a?href='.rawurlencode(base64_encode($src)).'&t='.rawurlencode(base64_encode($article->title));
 echo CHtml::link('源帖',$ensrc,array('target'=>'_blank','title'=>CHtml::encode($article->title)));
 ?>]</h2>
 
@@ -65,7 +65,7 @@ function SetMark(aid,cid,uid,title){
     }
     marks[aid]={'cid':cid, 'uid':uid, 'title':title};
 //    _trace(marks, 'alert');
-    $.cookie('marks', $.toJSON( marks ));
+    $.cookie('marks', $.toJSON( marks ), { expires: 7, path: '/' });
     init();
 //    _trace($.evalJSON($.cookie("marks")), 'alert');
 }
@@ -90,7 +90,8 @@ function init(){
             }else{
                 l='[顶楼]';
             }
-            h += '<div id="cmk_'+aid+'"><a href="'+'/index.php/site/article?id='+aid+'#p'+cmarks[aid].cid+'">'+cmarks[aid].title+l+'</a>&nbsp;'
+            var page=(cmarks[aid].cid/10|0)+1;
+            h += '<div id="cmk_'+aid+'"><a href="'+'/article/'+aid+'/'+page+'.html#p'+cmarks[aid].cid+'">'+cmarks[aid].title+l+'</a>&nbsp;'
               +  '<span style="color: red;padding:2px;font-size: 18px;cursor:pointer;" onclick="DelMark('+aid+');">x</span><br />';
         }
     }
@@ -114,4 +115,10 @@ echo $packer->pack();
 <?php
 $cs=Yii::app()->clientScript;
 $cs->registerScript('it',"init();");
+
+$this->widget('application.components.AjaxBuild', array(
+	'type' => 'article',
+	'fid'=>$article->id,
+));
+
 ?>
