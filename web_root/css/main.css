@@ -227,3 +227,14 @@ div.search-form
 {
 	background: #80CFFF;
 }
+
+.bt_e{
+    margin: 4px;
+}
+.bt_c{
+    font-weight: bold;
+}
+.bt_d{
+    float: left;
+    margin: 4px;
+}

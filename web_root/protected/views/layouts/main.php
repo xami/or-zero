@@ -22,15 +22,31 @@
 <div class="container" id="page">
 
 	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?>
+<div class="search" style="float: right;font-size: 20px;"><form action="/search" name="t">
+<input type="hidden" name="cx" value="<?php echo Yii::app()->params['google_search_ad'];?>" />
+<input type="hidden" name="cof" value="FORID:11" />
+<input type="hidden" name="ie" value="UTF-8" />
+<input type="radio" name="un" value="or" />作者
+<input type="radio" name="un" value="zero" />标题
+<input type="text" maxlength="80" size="40" name="q" />
+<input type="submit" value="站内搜索" />
+</form> </div></div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('label'=>'首页', 'url'=>'http://'.Yii::app()->params['domain'].'/'),
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+                
+                array('label'=>'最新整理', 'url'=>'http://'.Yii::app()->params['domain'].'/list-1.html'),
+                array('label'=>'最近更新', 'url'=>'http://'.Yii::app()->params['domain'].'/list-uptime-1.html'),
+                array('label'=>'访问最多', 'url'=>'http://'.Yii::app()->params['domain'].'/list-hot-1.html'),
+                array('label'=>'整理最多', 'url'=>'http://'.Yii::app()->params['domain'].'/list-pcount-1.html'),
+                array('label'=>'作者列表', 'url'=>'http://'.Yii::app()->params['domain'].'/orzero-author.html'),
+
+//				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+//				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
 		)); ?>
 	</div><!-- mainmenu -->
@@ -45,7 +61,31 @@
 	<div id="footer">
 		Copyright &copy; <?php echo date('Y'); ?> By Mtianya.
 		All Rights Reserved.<br/>
-		<?php echo Tianya::powered(); ?>
+		<?php echo Tianya::powered(); ?>&nbsp;-&nbsp;
+        <a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/sitemap.xml<?php if(isset($this->aid)) echo $this->aid.'.xml';?>">siemap.xml</a>&nbsp;-&nbsp;
+		<a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/sitemaps.xml">sitempas.xml</a>&nbsp;-&nbsp;
+
+        <form action="http://<?php echo Yii::app()->params['domain']; ?>/search" id="cse-search-box">
+          <div>
+            <input type="hidden" name="cx" value="partner-pub-4726192443658314:4873446973" />
+            <input type="hidden" name="cof" value="FORID:10" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="text" name="q" size="55" />
+            <input type="submit" name="sa" value="&#x641c;&#x7d22;" />
+          </div>
+        </form>
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+        <script type="text/javascript">google.load("elements", "1", {packages: "transliteration"});</script>
+        <script type="text/javascript" src="http://www.google.com/cse/t13n?form=cse-search-box&t13n_langs=en"></script>
+
+        <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cse-search-box&amp;lang=zh-Hans"></script>
+
+        <script type="text/javascript" src="http://www.google.com/cse/query_renderer.js"></script>
+        <div id="queries"></div>
+        <script src="http://www.google.com/cse/api/partner-pub-4726192443658314/cse/4873446973/queries/js?oe=UTF-8&amp;callback=(new+PopularQueryRenderer(document.getElementById(%22queries%22))).render"></script>
+
+        
+
 	</div><!-- footer -->
 
 </div><!-- page -->

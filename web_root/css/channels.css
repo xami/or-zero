@@ -1,26 +1,30 @@
 .channels_content .dl_left{
 border-top: 1px solid #EEEEEE;
-height: 64px;
+height: 75px;
 float: left;
 overflow: hidden;
 margin: 0;
 padding: 0;
-width: 48%;
+width: 49%;
 }
 .channels_content .dl_right{
 border-top: 1px solid #EEEEEE;
-height: 64px;
+height: 75px;
 float: right;
 overflow: hidden;
 margin: 0;
 padding: 0;
-width: 48%;
+width: 49%;
 }
 .channels_content dl dd{
-    padding-bottom: 10px;
+    line-height: 22px;
+    margin-left: 6px;
+}
+.channels_content dl dd a{
+    padding: 4px 0;
 }
 .channels_content dl dt{
-margin-bottom: 3px;
+margin: 2px 0;
 }
 .channels_content dl dt a.title {
     color: #333333;

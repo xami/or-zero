@@ -3,28 +3,27 @@
 if(!empty($channel)){
     $this->breadcrumbs=array(
     	str_replace('天涯', Yii::app()->name, $channel->name)=>'/channel/'.$channel->id.'/',
-//        str_replace('天涯', Yii::app()->name, $item->name)=>'/channel/'.$item->id.'/',
     );
 }
 if(!empty($item)){
     $this->breadcrumbs=array(
     	str_replace('天涯', Yii::app()->name, $channel->name)=>'/channel/'.$channel->id.'/',
-        str_replace('天涯', Yii::app()->name, $item->name)=>'/channel/'.$item->id.'/',
+        str_replace('天涯', Yii::app()->name, $item->name)=>'/item/'.$item->id.'/',
     );
 }
 
 Yii::app()->clientScript->registerLinkTag(
 'alternate',
 'application/rss+xml',
-'http://www.orzero.com/sitemap.xml');
+'http://'.Yii::app()->params['domain'].'/sitemap.xml');
 Yii::app()->clientScript->registerLinkTag(
 'alternate',
 'application/rss+xml',
-'http://www.orzero.com/rss.xml');
+'http://'.Yii::app()->params['domain'].'/rss.xml');
 Yii::app()->clientScript->registerLinkTag(
 'alternate',
 'application/rss+xml',
-'http://www.orzero.com/atom.xml');
+'http://'.Yii::app()->params['domain'].'/atom.xml');
 
 ?>
 <div id="ad_header_channel">
