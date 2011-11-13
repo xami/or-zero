@@ -35,6 +35,10 @@ class AjaxBuild extends CController
             $reRunAjax = 'function reRunAjax(src){'.
 					'if(src.length>10){jQuery.ajax({"data":{"id":'.$data->id.', "src":src}});}}'.
 					'jQuery.ajax({"data":{"id":'.$data->id.', "src":""}});';
+        }else if($this->type=='channel'){
+            $reRunAjax = 'function reRunAjax(loop){loop=parseInt(loop);'.
+					'if(loop>0){jQuery.ajax({"data":{"id":loop}});}}'.
+					'jQuery.ajax({"data":{"id":'.$data->id.'}});';
         }
 
 		

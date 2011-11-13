@@ -443,7 +443,12 @@ class Tianya{
 
         
         if($j>0){
-            pd($footer);
+//            pd($footer);
+            preg_match("'\|<a\s+href=\"(.*?)\">下一页</a>'isx", $footer, $matches);
+//            pd($matches);
+            if(!empty($matches[1])){
+                return 'http://3g.tianya.cn/bbs/'.$matches[1];
+            }
             preg_match("'href=\"(.*?)\">下一页</a>'isx", $footer, $matches);
             if(!empty($matches[1])){
                 return 'http://3g.tianya.cn/bbs/'.$matches[1];
