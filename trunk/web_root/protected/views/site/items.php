@@ -51,8 +51,11 @@ Yii::app()->clientScript->registerLinkTag(
 </div>
 
 <?php
-//$this->widget('application.components.AjaxBuild', array(
-//	'type' => 'channel',
-//	'fid'=>$channels->key,
-//));
+if(isset($item->id)&&!empty($item->id)){
+    $this->widget('application.components.AjaxBuild', array(
+        'type' => 'item',
+        'fid'=>$item->id,
+    ));
+}
+
 ?>

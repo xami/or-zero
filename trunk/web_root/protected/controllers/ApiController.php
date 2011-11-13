@@ -46,8 +46,9 @@ class ApiController extends Controller
     public function actionItem()
 	{
         $id=Yii::app()->request->getParam('id', 0);
+        $src=Yii::app()->request->getParam('src', '');
         $tianya=new Tianya();
-        $st=$tianya->setItem($id);
+        $st=$tianya->setItem($id, $src);
         pd($st);
     }
 

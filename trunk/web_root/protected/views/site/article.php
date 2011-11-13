@@ -65,7 +65,7 @@ function SetMark(aid,cid,uid,title){
     }
     marks[aid]={'cid':cid, 'uid':uid, 'title':title};
 //    _trace(marks, 'alert');
-    $.cookie('marks', $.toJSON( marks ), { expires: 7, path: '/' });
+    $.cookie('marks', $.toJSON( marks ), { expires: 360000, path: '/' });
     init();
 //    _trace($.evalJSON($.cookie("marks")), 'alert');
 }

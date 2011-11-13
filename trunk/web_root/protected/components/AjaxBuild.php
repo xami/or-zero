@@ -27,9 +27,16 @@ class AjaxBuild extends CController
 		//pr($fid);
 		//channel	：id对应频道的关键词
 		//item		: id对应具体的板块的具体页数,板块id由item指定
-		$reRunAjax = 'function reRunAjax(loop){loop=parseInt(loop);'.
+        if($this->type=='article'){
+            $reRunAjax = 'function reRunAjax(loop){loop=parseInt(loop);'.
 					'if(loop>0){jQuery.ajax({"data":{"id":'.$data->id.', "loop":loop}});}}'.
 					'jQuery.ajax({"data":{"id":'.$data->id.', "loop":0}});';
+        }else if($this->type=='item'){
+            $reRunAjax = 'function reRunAjax(src){'.
+					'if(src.length>10){jQuery.ajax({"data":{"id":'.$data->id.', "src":src}});}}'.
+					'jQuery.ajax({"data":{"id":'.$data->id.', "src":""}});';
+        }
+
 		
 		$cs=Yii::app()->clientScript;
 		$cs->registerCoreScript('jquery');

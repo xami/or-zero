@@ -137,6 +137,6 @@ return array(
         'mcpass'=>'Pj8VArQ85XxJKw2t',
         'domain'=>$_SERVER['SERVER_NAME'],
         'google_search_ad'=>'partner-pub-4726192443658314:4873446973',
-        'key'=>'{"idwriter":"60257136","key":"866084533","chk":"e3f484000ae7ec99e2249b076fb09001"}',
+        'key'=>'{"idwriter":"60257436","key":"866084533","chk":"e3f484000ae7ec99e2249b076fb09001"}',
 	),
 );
