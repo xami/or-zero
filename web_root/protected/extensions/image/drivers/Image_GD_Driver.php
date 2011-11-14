@@ -332,7 +332,7 @@ class Image_GD_Driver extends Image_Driver {
 		$watermark=$im;
 
 		// Merge the images
-		if ($status = imagecopymerge($this->tmp_image, $watermark, $width-100, $height-20, 0, 0, imagesx($watermark), imagesy($watermark), 100))
+		if ($status = imagecopymerge($this->tmp_image, $watermark, $width-115, $height-20, 0, 0, imagesx($watermark), imagesy($watermark), 100))
 		{
 			// Prevent the alpha from being lost
 			imagealphablending($this->tmp_image, TRUE);
