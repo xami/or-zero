@@ -64,6 +64,8 @@ class ApiController extends Controller
     public function actionF()
 	{
 		$g=trim($_REQUEST['_']);
+        $aid=trim($_REQUEST['aid']);
+        $page=trim($_REQUEST['page']);
 		if(($op=strrpos($g,'.'))!==false){
 			$info=substr($g, 0, $op);
 		}else{
@@ -91,6 +93,7 @@ class ApiController extends Controller
 			mkdir($dir,0777,true);
 		$file=$dir.DIRECTORY_SEPARATOR.substr($key, 16, 16).$ext;
 //		pd($file);
+        $results='';
         if(!is_file($file)){
             $results=Tools::OZSnoopy($src);
             @file_put_contents($file, $results);
@@ -120,11 +123,23 @@ class ApiController extends Controller
 				$image->watermark("MTianYa.COM");
 				$image->save();
 			}
+            
+            $fm=File::model()->find('`src`=:src', array(':src'=>$src));
+            if(empty($fm)){
+                $fm=new File;
+            }
+            $fm->aid=$aid;
+            $fm->type=substr($ext,1);
+            $fm->size=strlen($results);
+            $fm->pnum=$page;
+            $fm->name=$key;
+            $fm->src=$src;
+            $fm->fsrc='';
+            $fm->time=time();
+            $fm->save();
         }
-
         $results=file_get_contents($file);
         $size = getimagesize($file);
-
 
 		if($results!==false){
 			if(headers_sent()) die('Headers Sent');
@@ -654,7 +669,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 .ad_link{float:left;}
 .w700{width:940px;clear:both;}
 .list{padding:5px;clear:both;}
-.search{float:right;clear:both;}
+.search{float:right;}
 .header{margin-bottom:10px;padding-bottom:2px;border-bottom:1px solid #C9D7F1;font-size:12pt;line-height:16pt;display:block;}
 .footer{margin-top:10px;padding-top:5px;border-top:1px solid #C9D7F1;font-size:12pt;line-height:16pt;display:block;}
 .t{padding-right:350px;background:none repeat scroll 0 0 #FCFCFC;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;margin:4px 0;padding:2px;/*white-space:pre-wrap;*/word-wrap:break-word;}
