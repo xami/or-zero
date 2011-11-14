@@ -114,6 +114,13 @@ echo $packer->pack();
 </script>
 <?php
 $cs=Yii::app()->clientScript;
+//$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.lazyload.js');
+$cs->registerScript('lazyload',"
+$(\"img\").lazyload({
+placeholder  : \"/images/grey.gif\",
+});
+",CClientScript::POS_READY  );
+
 $cs->registerScript('it',"init();");
 
 $this->widget('application.components.AjaxBuild', array(

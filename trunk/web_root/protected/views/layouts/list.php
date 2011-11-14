@@ -13,6 +13,7 @@
     <script type="text/javascript" src="/js/jquery.layout-latest.js"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/jquery.json-2.3.js"></script>
+    <script type="text/javascript" src="/js/jquery.lazyload.js"></script>
 <script type="text/javascript">
     <?php
 $js_lay=<<<EOF
