@@ -162,3 +162,13 @@
     });
     
 })(jQuery);
+
+$(function() {
+	$("img").lazyload({
+		placeholder : "/images/loading-m.gif",
+		event : "sporty"
+	});
+});
+$(window).bind("load", function() {
+	var timeout = setTimeout(function() {$("img").trigger("sporty")}, 1000);
+});

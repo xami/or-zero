@@ -695,7 +695,7 @@ class Tianya{
 	    return $match;
 	}
 
-    public static function filterPost($in='',$desc=''){
+    public static function filterPost($in='',$aid,$page){
         if(empty($in)){
             return false;
         }
@@ -705,6 +705,8 @@ class Tianya{
 //		$packed = $packer->pack();
 
         self::$dm=mb_substr(strip_tags($in),0,512);
+        self::$aid=intval($aid);
+        self::$page=intval($page);
 //        self::$dm=strip_tags($in);
         $in=preg_replace_callback('/<img\s+src="(.*?)"\/><a\s+href="(.*?)">(.*?)<\/a>/i',array('self','mk_link'),$in);
         $in=preg_replace_callback('/(<a\s+.*?href=\s*([\"\']?))([^\'^\"]*?)((?(2)\\2)[^>^\/]*?>)(.*?)(<\/a>)/isx',array('self','mk_herf'),$in);
@@ -727,8 +729,12 @@ class Tianya{
 		return $matches[1].$src.$matches[2].' target="_blank">'.$matches[5].$matches[6];
 	}
 
+    public static $aid=0;
+    public static $page=0;
 	public static function mk_link($matches)
 	{
+        $aid=self::$aid;
+        $page=self::$page;
 		if($matches[3]=='(原图)'){
 			if(($op=strrpos($matches[1],'.'))===false){
 				$ext1='';
@@ -740,8 +746,8 @@ class Tianya{
 			}
 			$ext2=substr($matches[2], $op);
 
-			$img_s='/index.php/api/f?_='.rawurlencode(MCrypy::encrypt($matches[1], Yii::app()->params['mcpass'], 128)).$ext1;
-			$img_b='/index.php/api/f?_='.rawurlencode(MCrypy::encrypt($matches[2], Yii::app()->params['mcpass'], 128)).$ext2;
+			$img_s='/index.php/api/f?aid='.intval($aid).'&page='.intval($page).'&_='.rawurlencode(MCrypy::encrypt($matches[1], Yii::app()->params['mcpass'], 128)).$ext1;
+			$img_b='/index.php/api/f?aid='.intval($aid).'&page='.intval($page).'&_='.rawurlencode(MCrypy::encrypt($matches[2], Yii::app()->params['mcpass'], 128)).$ext2;
 
 			return '<a class="oz" style="max-width:600px;max-height:400px;" href="'.$img_b.'" target="_blank"><img src="'.$img_b.'" /></a>';
 		}else{
