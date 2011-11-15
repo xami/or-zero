@@ -1,3 +1,9 @@
+<style type="text/css">
+.list-view .pager {
+    clear: both;
+}
+</style>
+
 <?php
 $page=isset($_REQUEST['Searchs_page']) ? intval($_REQUEST['Searchs_page']) : 1;
 $page= ($page>0) ? $page : 1;
