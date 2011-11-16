@@ -45,10 +45,10 @@ Yii::app()->clientScript->registerLinkTag(
 <div style="float: right;clear: both;margin-top: 2px;">
 <script type="text/javascript"><!--
 google_ad_client = "pub-4726192443658314";
-/* 468x60, 创建于 11-3-3 */
-google_ad_slot = "7613266296";
-google_ad_width = 468;
-google_ad_height = 60;
+/* 728x90, 或零 */
+google_ad_slot = "2961714380";
+google_ad_width = 728;
+google_ad_height = 90;
 //-->
 </script>
 <script type="text/javascript"
