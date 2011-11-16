@@ -34,6 +34,21 @@ Yii::app()->clientScript->registerLinkTag(
 </div>
 
 <div class="channels_content">
+
+<div>
+<script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 728x90, 或零 */
+google_ad_slot = "2961714380";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
 <?php
 $baseUrl=YII::app()->request->hostInfo;
 if($cid==0){
@@ -66,6 +81,7 @@ foreach($channels as $channel){
     $i++;
 }
 ?>
+
 </div>
 
 <div id="ad_footer">
@@ -83,7 +99,7 @@ $this->widget('application.components.AjaxBuild', array(
 	'fid'=>$channel->id,
 ));
 ?>
-
+<div>
 <script type="text/javascript"><!--
 google_ad_client = "pub-4726192443658314";
 /* 728x90, 或零 */
@@ -95,3 +111,4 @@ google_ad_height = 90;
 <script type="text/javascript"
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
+</div>

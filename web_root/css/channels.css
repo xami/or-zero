@@ -5,7 +5,7 @@ float: left;
 overflow: hidden;
 margin: 2px;
 padding: 0;
-width: 49%;
+width: 360px;
 }
 .channels_content .dl_right{
 border-bottom: 1px solid #EEEEEE;
@@ -14,7 +14,7 @@ float: right;
 overflow: hidden;
 margin: 2px;
 padding: 0;
-width: 49%;
+width: 360px;
 }
 .channels_content dl dd{
     line-height: 22px;
