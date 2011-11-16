@@ -64,6 +64,8 @@
 		<?php echo Tianya::powered(); ?>&nbsp;-&nbsp;
         <a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/sitemap.xml<?php if(isset($this->aid)) echo $this->aid.'.xml';?>">siemap.xml</a>&nbsp;-&nbsp;
 		<a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/sitemaps.xml">sitempas.xml</a>&nbsp;-&nbsp;
+        <a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/rss.xml">RSS</a>&nbsp;-&nbsp;
+        <a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/atom.xml">ATOM</a>
 
         <form action="http://<?php echo Yii::app()->params['domain']; ?>/search" id="cse-search-box">
           <div>

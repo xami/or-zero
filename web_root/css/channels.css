@@ -1,18 +1,18 @@
 .channels_content .dl_left{
-border-top: 1px solid #EEEEEE;
-height: 75px;
+border-bottom: 1px solid #EEEEEE;
+height: 70px;
 float: left;
 overflow: hidden;
-margin: 0;
+margin: 2px;
 padding: 0;
 width: 49%;
 }
 .channels_content .dl_right{
-border-top: 1px solid #EEEEEE;
-height: 75px;
+border-bottom: 1px solid #EEEEEE;
+height: 70px;
 float: right;
 overflow: hidden;
-margin: 0;
+margin: 2px;
 padding: 0;
 width: 49%;
 }
@@ -24,12 +24,18 @@ width: 49%;
     padding: 4px 0;
 }
 .channels_content dl dt{
-margin: 2px 0;
+    background-color: #75b0d0;
+    margin: 2px 0;
+    padding: 0 4px;
 }
 .channels_content dl dt a.title {
     color: #333333;
     font-size: 14px;
     font-weight: bold;
     line-height: 160%;
+}
+.channels_content dl dt a.more {
+    margin-top: 2px;
+    color: #333333;
 }
 
