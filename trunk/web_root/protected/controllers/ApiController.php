@@ -289,7 +289,7 @@ sl.setAttribute("value","http://'.Yii::app()->params['domain'].'");
             return false;
         }
 
-        if(!empty($feed)){
+        if(empty($feed)){
             Yii::import('application.vendors.*');
             require_once('Zend/Feed.php');
             require_once('Zend/Feed/Rss.php');
