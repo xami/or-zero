@@ -12,6 +12,7 @@ function pd($data=array(), $end='', $stop=true)
 	if($stop) die;
 }
 
+
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 
@@ -59,11 +60,12 @@ return array(
                 '<controller:(article)>-<id:\d+>-1'=>array('site/article', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
                 '<controller:(article)>-<id:\d+>'=>array('site/article', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
 
-
-
                 '<controller:(channel)>/<cid:\d+>/<Article_page:\d+>'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
                 '<controller:(channel)>/<cid:\d+>/1'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
 				'<controller:(channel)>/<cid:\d+>/?'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+
+                '<controller:(more)>/<id:\d+>/'=>array('site/channel', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
+                '<controller:(more)>/<id:\d+>'=>array('site/channel', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
 
                 '<controller:(item)>/<tid:\d+>/<Article_page:\d+>'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
                 '<controller:(item)>/<tid:\d+>/1'=>array('site/item', 'urlSuffix'=>'.html', 'caseSensitive'=>false),
@@ -90,6 +92,9 @@ return array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+
+                //feed:rss,atom
+                '<controller:(rss|atom|RSS|ATOM)>'=>array('api/feed', 'urlSuffix'=>'.xml', 'caseSensitive'=>false),
 			),
             'showScriptName'=>false,
 		),

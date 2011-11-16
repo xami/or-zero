@@ -1,4 +1,7 @@
-<?php 
+<?php
+Yii::app()->clientScript->registerMetaTag(htmlentities($article->title).'M天涯,mtiany,M天涯阅读,M天涯小说,M天涯在线,M天涯文学,M天涯旅游,M天涯情感,M天涯自拍,M天涯写真,M天涯汽车,M天涯娱乐,M天涯八卦,M天涯新闻,M天涯历史,M天涯贴图,M天涯交友,M天涯鬼故事,M天涯闲话,M天涯杂谈', 'keywords');
+Yii::app()->clientScript->registerMetaTag(htmlentities($article->title).'|'.htmlentities($article->item->name).'|'.htmlentities($article->channel->name).'天涯热帖同步整理,提供天涯只看楼主功能,天涯热帖脱水,M天涯,免费百宝箱,http://mtianya.com/', 'description');
+
 $this->pageTitle=str_replace('天涯', Yii::app()->name, $article->title)
                 .((isset($_REQUEST['C_page']) && $_REQUEST['C_page']>0) ? '(第'.$_REQUEST['C_page'].'页)' : '['.Yii::app()->name.']');
 
@@ -40,7 +43,28 @@ $this->widget('zii.widgets.CListView', array(
     'viewData'=>array('article'=>$article),
 ));
 ?>
-
+<div style="float: right;clear: both;"><script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 336x280, 创建于 11-3-10 */
+google_ad_slot = "4619865687";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+<div style="float: right;"><script type="text/javascript"><!--
+google_ad_client = "pub-4726192443658314";
+/* 336x280, 创建于 11-3-10 */
+google_ad_slot = "4619865687";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
 <?php
 //$this->widget('application.components.AjaxBuild', array(
 //	'type' => 'article',

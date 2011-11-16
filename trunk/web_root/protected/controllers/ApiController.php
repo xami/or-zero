@@ -278,6 +278,89 @@ sl.setAttribute("value","http://'.Yii::app()->params['domain'].'");
 
 	}
 
+    public function actionFeed()
+	{
+        $type=strtolower(Yii::app()->request->getParam('controller', ''));
+        if($type=='rss'){
+            $feed=Yii::app()->cache->get('feed/rss');
+        }else if($type=='atom'){
+            $feed=Yii::app()->cache->get('feed/atom');
+        }else{
+            return false;
+        }
+
+        if(!empty($feed)){
+            Yii::import('application.vendors.*');
+            require_once('Zend/Feed.php');
+            require_once('Zend/Feed/Rss.php');
+            require_once('Zend/Feed/Atom.php');
+
+            // retrieve the latest 20 posts
+            $articles=Article::model()->findAll(array(
+                'condition'=>'cto>1',
+                'order'=>'mktime DESC',
+                'limit'=>50,
+            ));
+
+            // convert to the format needed by Zend_Feed
+            $entries=array();
+            foreach($articles as $article)
+            {
+                OZMysqlite::setDbPath(
+                    Yii::getPathOfAlias(
+                        'application.data.tianya.'.$article->cid.'.'.$article->tid.'.'.$article->aid.'.db'
+                    )
+                );
+                OZMysqlite::getDb();
+                $top=C::model()->findByPk(1);
+                if(!empty($top)){
+                    if($type=='rss'){
+                        $entries[]=array(
+                            'title'=>$article->title,
+                            'link'=>'http://'.Yii::app()->params['domain'].'/article/'.$article->id.'/index.html',
+                            'description'=>html_entity_decode(htmlspecialchars(Tianya::filterPost($top->text,$article->id,1), ENT_NOQUOTES, 'UTF-8')),
+                            'lastUpdate'=>$article->mktime,
+                        );
+                    }else if($type=='atom'){
+                        $entries[]=array(
+                            'title'=>$article->title,
+                            'link'=>'http://'.Yii::app()->params['domain'].'/article/'.$article->id.'/index.html',
+                            'description'=>html_entity_decode(Tianya::filterPost($top->text,$article->id,1), ENT_NOQUOTES, 'UTF-8'),
+                            'lastUpdate'=>$article->mktime,
+                        );
+                    }
+                }
+            }
+            // generate and render RSS feed
+            //$feed->send();
+            header('Content-Type: text/xml');
+		    if($type='rss'){
+                $rss=Zend_Feed::importArray(array(
+                    'title'   => 'M天涯阅读订阅-RSS',
+                    'link'    => 'http://'.Yii::app()->params['domain'].'/',
+                    'charset' => 'UTF-8',
+                    'author' =>'http://'.Yii::app()->params['domain'].'',
+                    'entries' => $entries,
+                ), 'rss');
+                Yii::app()->cache->set('feed/rss', $rss->saveXML(), 600);
+                echo $rss->saveXML();
+            }else if($type='atom'){
+                $atom=Zend_Feed::importArray(array(
+                    'title'   => 'M天涯阅读订阅-ATOM',
+                    'link'    => 'http://'.Yii::app()->params['domain'].'/',
+                    'charset' => 'UTF-8',
+                    'author' =>'http://'.Yii::app()->params['domain'].'',
+                    'entries' => $entries,
+                ), 'atom');
+                Yii::app()->cache->set('feed/atom', $atom->saveXML(), 600);
+                echo $atom->saveXML();
+            }
+        }else{
+            header('Content-Type: text/xml');
+		    echo $feed;
+        }
+	}
+
 public function actionMaps()
 	{
 //		$this->google_phone_ad();
@@ -517,12 +600,22 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 		$html.='</div>';
 
 
+        $title='';
+        if(empty($_REQUEST['A_sort'])){
+            $title='最新整理';
+        }else if($_REQUEST['A_sort']=='uptime'){
+            $title='最近更新';
+        }else if($_REQUEST['A_sort']=='hot'){
+            $title='访问最多';
+        }else if($_REQUEST['A_sort']=='pcount'){
+            $title='整理最多';
+        }
 
 		echo
 '<!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>M天涯整理</title>
+<title>M天涯整理 - '.$title.'</title>
 <style>
 .main,form{padding:0;margin:0;}
 .nav{display:inline-block;}
@@ -658,7 +751,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 '<!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>作者列表</title>
+<title>M天涯 - 作者列表</title>
 <style>
 .main,form{padding:0;margin:0;}
 .nav{display:inline-block;}
