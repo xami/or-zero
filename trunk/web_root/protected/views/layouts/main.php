@@ -68,7 +68,15 @@
         <a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/atom.xml">ATOM</a><br />
         <a href="http://www.xxer.info" target="_blank">XXER</a>&nbsp;-&nbsp;
         <a href="http://www.orzero.com" target="_blank">或零</a>&nbsp;-&nbsp;
-        <a href="http://www.orzero.net" target="_blank">或零日志</a>
+        <a href="http://www.orzero.net" target="_blank">或零日志</a>&nbsp;-&nbsp;
+        
+        <a href="http://www.google.com/#sclient=psy&hl=en&q=site:mtianya.com" target="_blank">Google索引</a>&nbsp;-&nbsp;
+        <a href="http://www.sogou.com/web?query=site%3Amtianya.com" target="_blank">Sogou索引</a>&nbsp;-&nbsp;
+        <a href="http://www.soso.com/q?pid=s.idx&w=site%3Amtianya.com" target="_blank">Soso索引</a>&nbsp;-&nbsp;
+        <a href="http://www.youdao.com/search?q=site%3Amtianya.com" target="_blank">Youdao索引</a>&nbsp;-&nbsp;
+        <a href="http://cn.bing.com/search?q=site%3Amtianya.com" target="_blank">Bing索引</a>&nbsp;-&nbsp;
+        <a href="http://siteexplorer.search.yahoo.com/search?p=mtianya.com" target="_blank">Yahoo索引</a>&nbsp;-&nbsp;
+
 
         <form action="http://<?php echo Yii::app()->params['domain']; ?>/search" id="cse-search-box">
           <div>
