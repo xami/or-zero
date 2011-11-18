@@ -170,5 +170,5 @@ $(function() {
 	});
 });
 $(window).bind("load", function() {
-	var timeout = setTimeout(function() {$("img").trigger("sporty")}, 1000);
+	var timeout = setTimeout(function() {$("img").trigger("sporty")}, 200);
 });
