@@ -65,9 +65,9 @@
         <a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/sitemap.xml<?php if(isset($this->aid)) echo $this->aid.'.xml';?>">siemap.xml</a>&nbsp;-&nbsp;
 		<a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/sitemaps.xml">sitempas.xml</a>&nbsp;-&nbsp;
         <a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/rss.xml">RSS</a>&nbsp;-&nbsp;
-        <a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/atom.xml">ATOM</a><br />
+        <a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/atom.xml">ATOM</a>&nbsp;-&nbsp;
+        <a href="http://www.feediy.com" target="_blank">网站地图生成工具</a><br />
 
-        <a href="http://www.feediy.com" target="_blank">网站地图生成工具</a>&nbsp;-&nbsp;
         <a href="http://www.xxer.info" target="_blank">XXER</a>&nbsp;-&nbsp;
         <a href="http://www.orzero.com" target="_blank">或零</a>&nbsp;-&nbsp;
         <a href="http://www.orzero.net" target="_blank">或零日志</a>&nbsp;-&nbsp;
