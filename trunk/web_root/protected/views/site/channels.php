@@ -98,6 +98,7 @@ $this->widget('application.components.AjaxBuild', array(
 	'type' => 'channel',
 	'fid'=>$channel->id,
 ));
+
 ?>
 <div>
 <script type="text/javascript"><!--

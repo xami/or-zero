@@ -38,4 +38,11 @@ width: 360px;
     margin-top: 2px;
     color: #333333;
 }
-
+.lz{
+    font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
+    font-size: 0.8em;
+    border: 1px solid #C5DBEC;
+    color: #2E6E9E;
+    font-weight: bold;
+    outline: medium none;
+}
