@@ -111,10 +111,12 @@ function init(){
         if (cmarks[aid] != null && cmarks[aid] != "") {
             if(cmarks[aid].cid>0){
                 l='['+cmarks[aid].pos+'楼]';
+                var page=((cmarks[aid].cid-1)/10|0)+1;
             }else{
                 l='[顶楼]';
+                var page=1;
             }
-            var page=(cmarks[aid].cid/10|0)+1;
+
             h += '<div id="cmk_'+aid+'"><a href="'+'/article/'+aid+'/'+page+'.html#p'+cmarks[aid].pos+'">'+cmarks[aid].title+l+'</a>&nbsp;'
               +  '<span style="color: red;padding:2px;font-size: 18px;cursor:pointer;" onclick="DelMark('+aid+');">x</span><br />';
         }
