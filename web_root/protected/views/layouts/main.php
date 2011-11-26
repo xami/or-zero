@@ -23,6 +23,7 @@
 
 	<div id="header">
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?>
+            <span id="add_post" class="lz">只看楼主</span>
 <div class="search" style="float: right;font-size: 20px;"><form action="/search" name="t">
 <input type="hidden" name="cx" value="<?php echo Yii::app()->params['google_search_ad'];?>" />
 <input type="hidden" name="cof" value="FORID:11" />
@@ -118,5 +119,16 @@
   })();
 
 </script>
+<?php
+$this->widget('application.components.OZDo', array(
+'size'=>38,
+'htmlOptions'=>array('class'=>'do','id'=>'dol','style'=>'display:none;')
+));
+$cs = Yii::app()->getClientScript();
+$cs->registerScriptFile('/js/jquery-ui/js/jquery-ui-1.8.16.custom.min.js');
+$cs->registerCSSFile('/js/jquery-ui/css/redmond/jquery-ui-1.8.16.custom.css');
+$cs->registerScript('dialogdol', '$( "#dol" ).dialog({ title:"整理新帖", autoOpen: false, width: 480, position: "center", resizable: false });', CClientScript::POS_READY);
+$cs->registerScript('add_post', '$( "#add_post" ).click(function() {$( "#dol" ).dialog( "open" );return false;});', CClientScript::POS_READY);
+?>
 </body>
 </html>

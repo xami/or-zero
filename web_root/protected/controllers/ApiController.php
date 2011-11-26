@@ -361,7 +361,145 @@ sl.setAttribute("value","http://'.Yii::app()->params['domain'].'");
         }
 	}
 
-public function actionMaps()
+    public function actionDo()
+	{
+//		http%3A%2F%2F3g.tianya.cn%2Fbbs%2Fart.jsp%3Fitem%3Dtravel%26id%3D329241%26idwriter%3D0%26key%3D0%26chk%3D
+//		echo urlencode('http://3g.tianya.cn/bbs/art.jsp?item=travel&id=329241&idwriter=0&key=0&chk=');
+//		http://3g.tianya.cn/bbs/art.jsp%3Fitem%3Dfree%26id%3D2152303
+//		if (!Yii::app()->request->isAjaxRequest) {
+//			e(json_encode(array(
+//				'responseStatus'=>'500',
+//				'responseDetails'=>'禁止非Ajax方法调用',
+//				'responseData'=>null,
+//			)));
+//		}
+		$src=isset($_REQUEST['src']) ? urldecode(trim($_REQUEST['src'])) : '';
+		$type=isset($_REQUEST['type']) ? trim($_REQUEST['type']) : 'tianya';
+
+		if(!Tools::is_url($src)){
+			pd(json_encode(array(
+				'responseStatus'=>'500',
+				'responseDetails'=>'请提供正确的链接地址,并且需要在前面加http://',
+				'responseData'=>null,
+			)));
+		}
+
+		//目前只支持tianya
+		if(!in_array($type,array('tianya'))){
+			pd(json_encode(array(
+				'responseStatus'=>'500',
+				'responseDetails'=>'不支持此类型',
+				'responseData'=>null,
+			)));
+		}
+
+		OZCommon::$type=$type;
+		$C1=OZCommon::isTYPE($src);
+		$C1_ST=array_pop(array_keys($C1));
+
+
+		if($C1_ST!=200){
+			pd(json_encode(array(
+				'responseStatus'=>$C1_ST,
+				'responseDetails'=>$C1[$C1_ST],
+				'responseData'=>null,
+			)));
+		}
+
+		$article=Article::model()->find('aid=:aid AND tid=:tid AND cid=:cid', array(
+			':aid'=>$C1[200]['aid'],
+			':tid'=>$C1[200]['tid'],
+			':cid'=>$C1[200]['cid'],
+		));
+
+		if(empty($article)){
+			$article=new Article();
+			$C2=OZCommon::getTYPE($C1[200]['html']);
+			$now=time();
+
+			$article->cid=$C1[200]['cid'];
+			$article->tid=$C1[200]['tid'];
+			$article->aid=$C1[200]['aid'];
+
+			$article->title=$C2['title'];
+			$article->tag=$C2['tag'];
+			$article->key='';
+			$article->page=$C2['page'];
+			$article->un=$C2['un'];
+			$article->cto=0;
+			$article->pcount=0;
+			$article->mktime=$now;
+			$article->uptime=$now;
+			$article->src=$C1[200]['src'];
+			$article->status=1;
+			$article->reach=$C2['reach'];
+			$article->reply=$C2['reply'];
+			$article->hot=0;
+
+			if($article->page>50 && $article->reach>100000 && $article->reply>1000){
+				$article->save();
+			}
+		}else{
+			pd(json_encode(array(
+				'responseStatus'=>'220',
+				'responseDetails'=>'或零整理',
+				'responseData'=>array(
+					'link'=>'http://'.Yii::app()->params['domain'].'/article/'.$article->id.'/index.html',
+					'title'=>$article->title,
+					'un'=>$article->un,
+					'page'=>$article->page,
+					'reach'=>$article->reach,
+					'reply'=>$article->reply,
+					'aid'=>$article->id,
+					'tid'=>$article->item->id,
+					'cid'=>$article->channel->id,
+				),
+			)));
+		}
+//		pd($article);
+//		pr($C1);
+//		pr($C2);
+		if(isset($article->id) && $article->id>0){
+			pd(json_encode(array(
+				'responseStatus'=>'200',
+				'responseDetails'=>'或零整理',
+				'responseData'=>array(
+					'link'=>$this->host.'/orzero/'.$article->id.'/index.html',
+					'title'=>$article->title,
+					'un'=>$article->un,
+					'page'=>$article->page,
+					'reach'=>$article->reach,
+					'reply'=>$article->reply,
+					'aid'=>$article->id,
+					'tid'=>$article->item->id,
+					'cid'=>$article->channel->id,
+				),
+			)));
+		}else{
+			if($article->page<100)
+				$reson='原帖页数('.$article->page.')';
+			else if($article->reach<100)
+				$reson='原帖访问量('.$article->reach.')';
+			else if($article->reply<100)
+				$reson='原帖回复数('.$article->reply.')';
+			pd(json_encode(array(
+				'responseStatus'=>'301',
+				'responseDetails'=>'<span class="red">'.$reson.'不满足</span><span class="green">[整理条件]</span>,<span class="red">请更换其他的帖子或阅读原帖</span>',
+				'responseData'=>array(
+					'link'=>$src,
+					'title'=>$article->title,
+					'un'=>$article->un,
+					'page'=>$article->page,
+					'reach'=>$article->reach,
+					'reply'=>$article->reply,
+					'tid'=>$article->item->id,
+					'cid'=>$article->channel->id,
+				),
+			)));
+		}
+	}
+
+    public function actionMaps()
 	{
 //		$this->google_phone_ad();
 
