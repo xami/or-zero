@@ -23,6 +23,6 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     ?>
     <?php echo Tianya::filterPost($data->text, $article->id, ceil($data->id/10));?>
     <div rid="0" class="topic_potion">
-        <a title="做记号，下次从这里读" onclick="SetMark(<?php echo $article->id.', '.$data->pos.', '.'0'.', \''.str_replace('\'', '', $article->title).'\''; ?>);" href="#<?php echo $data->pos;?>">Mark</a>
+        <a title="做记号，下次从这里读" onclick="SetMark(<?php echo $article->id.', '.$data->id.', '.'0'.', \''.str_replace('\'', '', $article->title).'\''; ?>);" href="#<?php echo $data->pos;?>">Mark</a>
     </div>
 </div>
