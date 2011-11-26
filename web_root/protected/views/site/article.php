@@ -77,8 +77,8 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 <script type="text/javascript">
 <?php
 $js_mark=<<<EOF
-//var marks={};
-function SetMark(aid,cid,uid,title){
+var marks={};
+function SetMark(aid,cid,pos,uid,title){
     if ($.cookie("marks") != null && $.cookie("marks") != "") {
         marks=$.evalJSON($.cookie("marks"));
     }else{
@@ -87,7 +87,7 @@ function SetMark(aid,cid,uid,title){
     if(marks[aid]==undefined){
         marks[aid]={};
     }
-    marks[aid]={'cid':cid, 'uid':uid, 'title':title};
+    marks[aid]={'cid':cid, 'pos':pos, 'uid':uid, 'title':title};
 //    _trace(marks, 'alert');
     $.cookie('marks', $.toJSON( marks ), { expires: 360000, path: '/' });
     init();
@@ -110,12 +110,12 @@ function init(){
     for(aid in cmarks){
         if (cmarks[aid] != null && cmarks[aid] != "") {
             if(cmarks[aid].cid>0){
-                l='['+cmarks[aid].cid+'楼]';
+                l='['+cmarks[aid].pos+'楼]';
             }else{
                 l='[顶楼]';
             }
             var page=(cmarks[aid].cid/10|0)+1;
-            h += '<div id="cmk_'+aid+'"><a href="'+'/article/'+aid+'/'+page+'.html#p'+cmarks[aid].cid+'">'+cmarks[aid].title+l+'</a>&nbsp;'
+            h += '<div id="cmk_'+aid+'"><a href="'+'/article/'+aid+'/'+page+'.html#p'+cmarks[aid].pos+'">'+cmarks[aid].title+l+'</a>&nbsp;'
               +  '<span style="color: red;padding:2px;font-size: 18px;cursor:pointer;" onclick="DelMark('+aid+');">x</span><br />';
         }
     }
