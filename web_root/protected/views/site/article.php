@@ -1,6 +1,6 @@
 <?php
-Yii::app()->clientScript->registerMetaTag(htmlentities($article->title).'M天涯,mtiany,M天涯阅读,M天涯小说,M天涯在线,M天涯文学,M天涯旅游,M天涯情感,M天涯自拍,M天涯写真,M天涯汽车,M天涯娱乐,M天涯八卦,M天涯新闻,M天涯历史,M天涯贴图,M天涯交友,M天涯鬼故事,M天涯闲话,M天涯杂谈', 'keywords');
-Yii::app()->clientScript->registerMetaTag(htmlentities($article->title).'|'.htmlentities($article->item->name).'|'.htmlentities($article->channel->name).'天涯热帖同步整理,提供天涯只看楼主功能,天涯热帖脱水,M天涯,免费百宝箱,http://mtianya.com/', 'description');
+Yii::app()->clientScript->registerMetaTag($article->title.'M天涯,mtiany,M天涯阅读,M天涯小说,M天涯在线,M天涯文学,M天涯旅游,M天涯情感,M天涯自拍,M天涯写真,M天涯汽车,M天涯娱乐,M天涯八卦,M天涯新闻,M天涯历史,M天涯贴图,M天涯交友,M天涯鬼故事,M天涯闲话,M天涯杂谈', 'keywords');
+Yii::app()->clientScript->registerMetaTag($article->title.'|'.$article->item->name.'|'.$article->channel->name.'天涯热帖同步整理,提供天涯只看楼主功能,天涯热帖脱水,M天涯,免费百宝箱,http://mtianya.com/', 'description');
 
 $this->pageTitle=str_replace('天涯', Yii::app()->name, $article->title)
                 .((isset($_REQUEST['C_page']) && $_REQUEST['C_page']>0) ? '(第'.$_REQUEST['C_page'].'页)' : '['.Yii::app()->name.']');
