@@ -243,7 +243,7 @@ div.search-form
     font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
     font-size: 0.8em;
     border: 1px solid #C5DBEC;
-    color: #2E6E9E;
+    color: red;
     font-weight: bold;
     outline: medium none;
 }

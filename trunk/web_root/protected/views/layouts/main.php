@@ -23,7 +23,7 @@
 
 	<div id="header">
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?>
-            <span id="add_post" class="lz">只看楼主</span>
+            <span id="add_post" class="lz">提交新帖请点此（目前支持天涯论坛）</span>
 <div class="search" style="float: right;font-size: 20px;"><form action="/search" name="t">
 <input type="hidden" name="cx" value="<?php echo Yii::app()->params['google_search_ad'];?>" />
 <input type="hidden" name="cof" value="FORID:11" />
