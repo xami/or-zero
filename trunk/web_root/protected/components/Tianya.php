@@ -151,6 +151,12 @@ class Tianya{
                 $cut_src['path'].'?'.$static_query;
 
         $find=$this->getSrc($statci_src);
+
+        if($find == -5){
+            $article->status=-1;
+            $article->save();
+            return -13;
+        }
 //        pd($find);
         
         $next_page=$_P->findByPk($article->cto+1);
@@ -251,6 +257,13 @@ class Tianya{
             $html=$c['Result'];
         }
 
+        $fulltitle=Tools::cutContent($html, '<title>', '</title>');				//取得标题
+        if($fulltitle=='掌中天涯(beta)'){
+            if(Tools::cutContent($html, '<div class="p lk">', '<br/>')=='该贴不存在'){
+                return -5;
+            }
+        }
+
 		//校验页面是否下载完成
 		$nav=Tools::cutContent($html, '<div class="p3">', '</div>');
 
@@ -259,7 +272,7 @@ class Tianya{
 			return -2;
 		}
 
-		$fulltitle=Tools::cutContent($html, '<title>', '</title>');				//取得标题
+
 		if(strpos($fulltitle, '[')===0 && $cut=strpos($fulltitle, ']')!==false){
 			$tag=Tools::cutContent($fulltitle, '[', ']');
 			$title_cut=explode(']', $fulltitle);
