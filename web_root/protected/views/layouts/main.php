@@ -61,7 +61,7 @@
 
 	<div id="footer">
 		Copyright &copy; <?php echo date('Y'); ?> By Mtianya.
-		All Rights Reserved.<br/>
+		All Rights Reserved. 站长QQ : <span id="im"></span><br/>
 		<?php echo Tianya::powered(); ?>&nbsp;-&nbsp;
         <a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/sitemap.xml<?php if(isset($this->aid)) echo $this->aid.'.xml';?>">siemap.xml</a>&nbsp;-&nbsp;
 		<a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/sitemaps.xml">sitempas.xml</a>&nbsp;-&nbsp;
@@ -125,6 +125,7 @@ $cs->registerScriptFile('/js/jquery-ui/js/jquery-ui-1.8.16.custom.min.js');
 $cs->registerCSSFile('/js/jquery-ui/css/redmond/jquery-ui-1.8.16.custom.css');
 $cs->registerScript('dialogdol', '$( "#dol" ).dialog({ title:"整理新帖", autoOpen: false, width: 480, position: "center", resizable: false });', CClientScript::POS_READY);
 $cs->registerScript('add_post', '$( "#add_post" ).click(function() {$( "#dol" ).dialog( "open" );return false;});', CClientScript::POS_READY);
+$cs->registerScript('im', '$("#im").html("4 4&nbsp;8 1 1&nbsp;9 5");', CClientScript::POS_READY);
 ?>
 </body>
 </html>
