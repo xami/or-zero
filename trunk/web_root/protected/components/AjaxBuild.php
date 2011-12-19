@@ -4,7 +4,7 @@ class AjaxBuild extends CController
 	public $type;
 	public $fid;
 	
-	public function run() {
+	public function run($actionID='') {
 		$ajaxSetup = 'jQuery.ajaxSetup({'.
 			'type:\'POST\','.
 			'url:\''.CController::createUrl('api/'.$this->type).'\','.
