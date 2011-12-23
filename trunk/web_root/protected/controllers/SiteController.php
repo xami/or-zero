@@ -76,6 +76,7 @@ class SiteController extends Controller
 		$data=$tianya->getChannels($id);
         $data['cid']=$id;
 
+
 		$this->layout='//layouts/column2';
 		$this->render('channels', $data);
 	}
