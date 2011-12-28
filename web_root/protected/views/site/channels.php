@@ -62,13 +62,13 @@ foreach($channels as $channel){
     echo '  <dl class="'.$dl_class.'">';
     echo '      <dt><a class="title" href="'.$baseUrl.'/channel/'.$channel->id.'/">'.$channel->name.'</a>';
     if(!isset($_REQUEST['id'])||empty($_REQUEST['id'])){
-        echo '          <a class="right more" href="'.$baseUrl.'/more/'.$channel->id.'">更多&gt;&gt;</a>';
+        echo '          <a class="right more" href="'.$baseUrl.'/more/'.$channel->id.'/">更多&gt;&gt;</a>';
     }
     echo '</dt>';
     echo '      <dd class="item_sort">';
     $j=1;
     foreach($channel->items as $item){
-        echo '          <a href="'.$baseUrl.'/item/'.$item->id.'">'.$item->name.'</a>';
+        echo '          <a href="'.$baseUrl.'/item/'.$item->id.'/">'.$item->name.'</a>';
         if($cid==0){
             if($j++ > 10){
                 break;
