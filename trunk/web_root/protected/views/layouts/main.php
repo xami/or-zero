@@ -64,6 +64,7 @@
 		Copyright &copy; <?php echo date('Y'); ?> By Mtianya.
 		All Rights Reserved. 站长QQ : <span id="im"></span><br/>
 		<?php echo Tianya::powered(); ?>&nbsp;-&nbsp;
+        <a href="http://readbookmarker.com">READBOOKMARKER.COM</a>&nbsp;-&nbsp;
         <a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/sitemap.xml<?php if(isset($this->aid)) echo $this->aid.'.xml';?>">siemap.xml</a>&nbsp;-&nbsp;
 		<a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/sitemaps.xml">sitempas.xml</a>&nbsp;-&nbsp;
         <a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/rss.xml">RSS</a>&nbsp;-&nbsp;
