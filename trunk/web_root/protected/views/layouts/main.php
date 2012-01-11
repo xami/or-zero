@@ -77,6 +77,7 @@
         <a href="http://www.youdao.com/search?q=site%3Amtianya.com" target="_blank">Youdao索引</a>&nbsp;-&nbsp;
         <a href="http://cn.bing.com/search?q=site%3Amtianya.com" target="_blank">Bing索引</a>&nbsp;-&nbsp;
         <a href="http://siteexplorer.search.yahoo.com/search?p=mtianya.com" target="_blank">Yahoo索引</a>&nbsp;-&nbsp;
+        <script src="http://s96.cnzz.com/stat.php?id=3762766&web_id=3762766&online=1&show=line" language="JavaScript"></script>
 
 
         <form action="http://<?php echo Yii::app()->params['domain']; ?>/search" id="cse-search-box">
