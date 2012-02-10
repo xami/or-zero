@@ -34,8 +34,23 @@ if (is_numeric($article->item->key)) {
 $ensrc='http://'.Yii::app()->params['domain'].'/api/a?href='.rawurlencode(base64_encode($src)).'&t='.rawurlencode(base64_encode($article->title));
 echo CHtml::link('源帖',$ensrc,array('target'=>'_blank','title'=>CHtml::encode($article->title)));
 ?>]</h2>
+<script type="text/javascript"><!--
+  // XHTML should not attempt to parse these strings, declare them CDATA.
+  /* <![CDATA[ */
+  window.googleAfmcRequest = {
+    client: 'ca-mb-pub-4726192443658314',
+    format: '320x50_mb',
+    output: 'HTML',
+    slotname: '9776181584',
+  };
+  /* ]]> */
+//--></script>
+<script type="text/javascript"    src="http://pagead2.googlesyndication.com/pagead/show_afmc_ads.js"></script>
+
 
 <?php
+include_once(Yii::getPathOfAlias('application.extensions').DIRECTORY_SEPARATOR.'GoogleMobileAd.php');
+
 $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_article',
