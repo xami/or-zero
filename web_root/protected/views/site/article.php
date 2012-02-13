@@ -59,22 +59,11 @@ $this->widget('zii.widgets.CListView', array(
 ));
 ?>
 <div style="float: right;clear: both;"><script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 336x280, 创建于 11-3-10 */
-google_ad_slot = "4619865687";
-google_ad_width = 336;
-google_ad_height = 280;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script></div>
-<div style="float: right;"><script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 336x280, 创建于 11-3-10 */
-google_ad_slot = "4619865687";
-google_ad_width = 336;
-google_ad_height = 280;
+google_ad_client = "ca-pub-4726192443658314";
+/* 728x90-首页横幅 */
+google_ad_slot = "1018549157";
+google_ad_width = 728;
+google_ad_height = 90;
 //-->
 </script>
 <script type="text/javascript"
@@ -171,3 +160,55 @@ $this->widget('application.components.AjaxBuild', array(
 ));
 
 ?>
+
+<div id="lovexin12" style='left:2px;POSITION:absolute;TOP:120px;'><script type="text/javascript"><!--
+google_ad_client = "ca-pub-4726192443658314";
+/* 160x600-宽幅摩天大楼 */
+google_ad_slot = "0203809730";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+<div id="lovexin14" style='right:2px;POSITION:absolute;TOP:120px;'><script type="text/javascript"><!--
+google_ad_client = "ca-pub-4726192443658314";
+/* 160x600-宽幅摩天大楼 */
+google_ad_slot = "0203809730";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+
+<script language="JavaScript" type="text/javascript">
+var ad1=$("#lovexin12").html();
+var ad2=$("#lovexin14").html();
+
+lastScrollY=0;
+function heartBeat(){
+var diffY;
+if (document.documentElement && document.documentElement.scrollTop)
+diffY = document.documentElement.scrollTop;
+else if (document.body)
+diffY = document.body.scrollTop
+else
+{/*Netscape stuff*/}
+percent=.1*(diffY-lastScrollY);
+if(percent>0)percent=Math.ceil(percent);
+else percent=Math.floor(percent);
+document.getElementById("lovexin12").style.top=parseInt(document.getElementById
+("lovexin12").style.top)+percent+"px";
+document.getElementById("lovexin14").style.top=parseInt(document.getElementById
+("lovexin12").style.top)+percent+"px";
+lastScrollY=lastScrollY+percent;
+}
+suspendcode12="<DIV id=\"lovexin12\" style='left:2px;POSITION:absolute;TOP:120px;'>"+ad1+"</div>"
+suspendcode14="<DIV id=\"lovexin14\" style='right:2px;POSITION:absolute;TOP:120px;'>"+ad2+"</div>"
+document.write(suspendcode12);
+document.write(suspendcode14);
+window.setInterval("heartBeat()",1);
+</script>
