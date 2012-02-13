@@ -34,7 +34,7 @@ h2{font-size: 14px;}
 }
 
 /* give outer-panes their own colors */
-    .ui-layout-center	{ background: #CEE; }
+    .ui-layout-center	{ background: #CEE;margin: 0 auto; width: 960px; }
     .ui-layout-west	 	{ background: #CCF; }
     .ui-layout-east		{ background: #CFC; }
     .west-center, .west-south{ background: #F0F0F0; }

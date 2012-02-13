@@ -10,7 +10,7 @@
 
     <script type="text/javascript" src="/js/jquery-latest.js"></script>
     <script type="text/javascript" src="/js/jquery-ui-latest.js"></script>
-    <script type="text/javascript" src="/js/jquery.layout-latest.js"></script>
+<!--    <script type="text/javascript" src="/js/jquery.layout-latest.js"></script>-->
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/jquery.json-2.3.js"></script>
     <script type="text/javascript" src="/js/jquery.lazyload.js"></script>
@@ -45,8 +45,8 @@ $(document).ready(function() {
 });
 EOF;
     
-    $packer = new JavaScriptPacker($js_lay, 'Normal', true, false);
-    echo $packer->pack();
+//    $packer = new JavaScriptPacker($js_lay, 'Normal', true, false);
+//    echo $packer->pack();
     ?>
 </script>
 </head>
@@ -62,20 +62,20 @@ EOF;
     <?php echo $content; ?>
 </div>
 
-<div class="ui-layout-west">
-	<div class="west-center" id="wc">
-
-    </div>
-	<div class="west-south" id="ws">  West - South </div>
-</div>
-
-<div class="ui-layout-east">
-	<div class="east-center" id="ec">
-
-	</div>
-
-	<div class="east-south" id="es">  East - South </div>
-</div>
+<!--<div class="ui-layout-west">-->
+<!--	<div class="west-center" id="wc">-->
+<!---->
+<!--    </div>-->
+<!--	<div class="west-south" id="ws">  West - South </div>-->
+<!--</div>-->
+<!---->
+<!--<div class="ui-layout-east">-->
+<!--	<div class="east-center" id="ec">-->
+<!---->
+<!--	</div>-->
+<!---->
+<!--	<div class="east-south" id="es">  East - South </div>-->
+<!--</div>-->
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
