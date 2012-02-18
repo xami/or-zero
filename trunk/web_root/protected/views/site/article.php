@@ -35,17 +35,18 @@ $ensrc='http://'.Yii::app()->params['domain'].'/api/a?href='.rawurlencode(base64
 echo CHtml::link('源帖',$ensrc,array('target'=>'_blank','title'=>CHtml::encode($article->title)));
 ?>]</h2>
 <script type="text/javascript"><!--
-  // XHTML should not attempt to parse these strings, declare them CDATA.
-  /* <![CDATA[ */
-  window.googleAfmcRequest = {
+// XHTML should not attempt to parse these strings, declare them CDATA.
+/* <![CDATA[ */
+window.googleAfmcRequest = {
     client: 'ca-mb-pub-4726192443658314',
     format: '320x50_mb',
     output: 'HTML',
-    slotname: '9776181584',
-  };
-  /* ]]> */
+    slotname: '9776181584'
+};
+/* ]]> */
 //--></script>
 <script type="text/javascript"    src="http://pagead2.googlesyndication.com/pagead/show_afmc_ads.js"></script>
+
 
 
 <?php
@@ -161,6 +162,7 @@ $this->widget('application.components.AjaxBuild', array(
 
 ?>
 
+
 <div id="lovexin12" style='left:2px;POSITION:absolute;TOP:120px;'><script type="text/javascript"><!--
 google_ad_client = "ca-pub-4726192443658314";
 /* 160x600-宽幅摩天大楼 */
@@ -170,7 +172,7 @@ google_ad_height = 600;
 //-->
 </script>
 <script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script></div>
 <div id="lovexin14" style='right:2px;POSITION:absolute;TOP:120px;'><script type="text/javascript"><!--
 google_ad_client = "ca-pub-4726192443658314";
@@ -181,12 +183,22 @@ google_ad_height = 600;
 //-->
 </script>
 <script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script></div>
 
 <script language="JavaScript" type="text/javascript">
-var ad1=$("#lovexin12").html();
-var ad2=$("#lovexin14").html();
+var ad1="<script type=\"text\/javascript\"><!--\n"+
+"google_ad_client = \"ca-pub-4726192443658314\";\n"+
+"\/* 160x600-宽幅摩天大楼 *\/\n"+
+"google_ad_slot = \"0203809730\";\n"+
+"google_ad_width = 160;\n"+
+"google_ad_height = 600;\n"+
+"\/\/-->\n"+
+"<\/script>\n"+
+"<script type=\"text\/javascript\"\n"+
+"        src=\"http:\/\/pagead2.googlesyndication.com\/pagead\/show_ads.js\">\n"+
+"<\/script>";
+var ad2=ad1;
 
 lastScrollY=0;
 function heartBeat(){
