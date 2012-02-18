@@ -58,6 +58,15 @@ $this->widget('zii.widgets.CListView', array(
 	'ajaxUpdate'=>false,
     'viewData'=>array('article'=>$article),
 ));
+
+$google_ad_handle = @fopen(google_get_ad_url(), 'r');
+if ($google_ad_handle) {
+    while (!feof($google_ad_handle)) {
+        echo fread($google_ad_handle, 8192);
+    }
+    fclose($google_ad_handle);
+}
+
 ?>
 <div style="float: right;clear: both;"><script type="text/javascript"><!--
 google_ad_client = "ca-pub-4726192443658314";
