@@ -1,0 +1,48 @@
+#yw0 div.left{
+    float: left;
+    text-align: left;
+    width: 30%;
+    min-width: 350px;
+    overflow: hidden;
+}
+#yw0 div.right{
+    float: right;
+    text-align: right;
+    width: 70%;
+    min-width: 750px;
+    overflow: hidden;
+}
+#yw0 div.clear{clear: both;}
+#yw1 {
+    border: 1px solid #9AAFE5;
+    font-size: 14px;
+}
+span.des {
+    border: 1px solid #9AAFE5;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 2px 4px;
+}
+#yw2 a {
+    font-size: 14px;
+    font-weight: bold;
+}
+#yw0 form{
+    background: none repeat scroll 0 0 transparent;
+    border-width: thin 0 thick;
+    float: right;
+    margin: 0;
+    padding: 1em 3em 0 0;
+    text-shadow: 0 1px 0 #FFFFFF;
+    width: 680px;
+}
+#yw0 input{
+    width: auto;
+}
+
+.single #content h1.mg {
+    margin: 0 ;
+}
+.list-view .summary {
+    float: right;
+}

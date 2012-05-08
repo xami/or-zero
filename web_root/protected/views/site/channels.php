@@ -1,8 +1,8 @@
 <?php
 if(!isset($_REQUEST['id'])||empty($_REQUEST['id'])){
-    $this->pageTitle='M天涯,天涯热帖同步整理';
+    $this->pageTitle='我的天涯,天涯热帖同步整理';
 }else{
-    $this->pageTitle='M天涯-'.$channels[0]->name;
+    $this->pageTitle='我的天涯-'.$channels[0]->name;
 }
 
 //Yii::app()->clientScript->registerMetaTag(str_replace('天涯', '或零', $channels->name).',或零整理,orzero,或零阅读,或零小说,或零在线,或零玄幻,穿越,或零文学,或零旅游,或零情感,社会,股票,股市,房产,摄影,自拍,写真,汽车,时尚,娱乐,八卦,女人,男人,情人,小三,美女,帅哥,新闻,历史,贴图,交友,鬼故事,闲话,杂谈,七十后,八十后,九十后', 'keywords');

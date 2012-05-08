@@ -71,12 +71,12 @@
         <a href="<?php echo 'http://'.Yii::app()->params['domain'];?>/atom.xml">ATOM</a>&nbsp;-&nbsp;
         <a href="http://www.feediy.com" target="_blank">网站地图生成工具</a><br />
 
-        <a href="http://www.google.com/#sclient=psy&hl=en&q=site:mtianya.com" target="_blank">Google索引</a>&nbsp;-&nbsp;
-        <a href="http://www.sogou.com/web?query=site%3Amtianya.com" target="_blank">Sogou索引</a>&nbsp;-&nbsp;
-        <a href="http://www.soso.com/q?pid=s.idx&w=site%3Amtianya.com" target="_blank">Soso索引</a>&nbsp;-&nbsp;
-        <a href="http://www.youdao.com/search?q=site%3Amtianya.com" target="_blank">Youdao索引</a>&nbsp;-&nbsp;
-        <a href="http://cn.bing.com/search?q=site%3Amtianya.com" target="_blank">Bing索引</a>&nbsp;-&nbsp;
-        <a href="http://siteexplorer.search.yahoo.com/search?p=mtianya.com" target="_blank">Yahoo索引</a>&nbsp;-&nbsp;
+        <a href="http://www.google.com/#sclient=psy&hl=en&q=site:<?php echo $_SERVER['HTTP_HOST']; ?>" target="_blank">Google索引</a>&nbsp;-&nbsp;
+        <a href="http://www.sogou.com/web?query=site%3A<?php echo $_SERVER['HTTP_HOST']; ?>" target="_blank">Sogou索引</a>&nbsp;-&nbsp;
+        <a href="http://www.soso.com/q?pid=s.idx&w=site%3A<?php echo $_SERVER['HTTP_HOST']; ?>" target="_blank">Soso索引</a>&nbsp;-&nbsp;
+        <a href="http://www.youdao.com/search?q=site%3A<?php echo $_SERVER['HTTP_HOST']; ?>" target="_blank">Youdao索引</a>&nbsp;-&nbsp;
+        <a href="http://cn.bing.com/search?q=site%3A<?php echo $_SERVER['HTTP_HOST']; ?>" target="_blank">Bing索引</a>&nbsp;-&nbsp;
+        <a href="http://siteexplorer.search.yahoo.com/search?p=<?php echo $_SERVER['HTTP_HOST']; ?>" target="_blank">Yahoo索引</a>&nbsp;-&nbsp;
         <script src="http://s96.cnzz.com/stat.php?id=3762766&web_id=3762766&online=1&show=line" language="JavaScript"></script>
 
 
@@ -98,8 +98,6 @@
         <script type="text/javascript" src="http://www.google.com/cse/query_renderer.js"></script>
         <div id="queries"></div>
         <script src="http://www.google.com/cse/api/partner-pub-4726192443658314/cse/4873446973/queries/js?oe=UTF-8&amp;callback=(new+PopularQueryRenderer(document.getElementById(%22queries%22))).render"></script>
-
-        
 
 	</div><!-- footer -->
 

@@ -4,14 +4,14 @@ if(!empty($channel)){
     $this->breadcrumbs=array(
     	str_replace('天涯', Yii::app()->name, $channel->name)=>'/channel/'.$channel->id.'/',
     );
-    $this->pageTitle='M天涯-'.$channel->name;
+    $this->pageTitle='我的天涯-'.$channel->name;
 }
 if(!empty($item)){
     $this->breadcrumbs=array(
     	str_replace('天涯', Yii::app()->name, $channel->name)=>'/channel/'.$channel->id.'/',
         str_replace('天涯', Yii::app()->name, $item->name)=>'/item/'.$item->id.'/',
     );
-    $this->pageTitle='M天涯-'.$channel->name.'-'.$item->name;
+    $this->pageTitle='我的天涯-'.$channel->name.'-'.$item->name;
 }
 
 Yii::app()->clientScript->registerLinkTag(

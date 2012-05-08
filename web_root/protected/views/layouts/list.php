@@ -1,81 +1,52 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!doctype html>
+<!--[if IE 5]><html dir="ltr" lang="cn-ZH" class="ie5 no-js"><![endif]-->
+<!--[if IE 6]><html dir="ltr" lang="cn-ZH" class="ie6 no-js"><![endif]-->
+<!--[if IE 7]><html dir="ltr" lang="cn-ZH" class="ie7 no-js"><![endif]-->
+<!--[if IE 8]><html dir="ltr" lang="cn-ZH" class="ie8 no-js"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html dir="ltr" lang="cn-ZH" class="no-js"><!--<![endif]-->
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="language" content="en" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
-    <link type="text/css" rel="stylesheet" href="/css/layout-default-latest.css" />
-    <link rel="stylesheet" href="/css/article.css"  type="text/css" />
-
+    <link rel="stylesheet" type="text/css" href="/css/layout-default-latest.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <script type="text/javascript" src="/js/jquery-latest.js"></script>
     <script type="text/javascript" src="/js/jquery-ui-latest.js"></script>
-<!--    <script type="text/javascript" src="/js/jquery.layout-latest.js"></script>-->
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/jquery.json-2.3.js"></script>
     <script type="text/javascript" src="/js/jquery.lazyload.js"></script>
-<script type="text/javascript">
-    <?php
-$js_lay=<<<EOF
-var outerLayout, westLayout, eastLayout;
-$(document).ready(function() {
-    outerLayout = $('body').layout({
-            minSize:			100	// ALL panes
-        ,	west__size:			200
-        ,	east__size:			200
-        ,	useStateCookie:		true
-        ,	slidable:				false		// when closed, pane can 'slide open' over other panes - closes on mouse-out
-//            ,	closable:				false
-        ,	resizable:				false		// when open, pane can be resized
-    });
-    westLayout = $('div.ui-layout-west').layout({
-            minSize:				50	// ALL panes
-        ,	center__paneSelector:	".west-center"
-        ,	south__paneSelector:	".west-south"
-        ,	south__size:			300
-        ,	resizable:				false
-    });
-    eastLayout = $('div.ui-layout-east').layout({
-            minSize:				50	// ALL panes
-        ,	center__paneSelector:	".east-center"
-        ,	south__paneSelector:	".east-south"
-        ,	south__size:			80
-        ,	resizable:				false
-    });
-});
-EOF;
-    
-//    $packer = new JavaScriptPacker($js_lay, 'Normal', true, false);
-//    echo $packer->pack();
-    ?>
-</script>
 </head>
 
-<body>
-<div class="ui-layout-center" id="ulc">
-    <?php $this->widget('zii.widgets.CBreadcrumbs', array(
-		'links'=>$this->breadcrumbs,
-	)); ?><!-- breadcrumbs -->
-    <h1>
-        <a href="<?php echo Yii::app()->request->baseUrl; ?>"><?php echo CHtml::encode($this->pageTitle); ?></a>
-    </h1>
-    <?php echo $content; ?>
+<body class="single single-post postid-1959 single-format-standard singular">
+
+<div id="wrap">
+
+    <header id="head" class="cf">
+        <hgroup>
+            <h1>
+                <a href="<?php echo Yii::app()->request->baseUrl; ?>"><?php echo CHtml::encode($this->pageTitle); ?></a>
+            </h1>
+            <?php $this->widget('zii.widgets.CBreadcrumbs', array(
+                'links'=>$this->breadcrumbs,
+                'tagName'=>'h2',
+                'htmlOptions'=>array()
+            )); ?>
+        </hgroup>
+        <nav></nav>
+    </header>
+    <div id="body" class="cf">
+        <?php echo $content; ?>
+    </div>
+
+    <footer id="foot">
+        <?php echo Tianya::Footer(0);?>
+    </footer>
+
 </div>
 
-<!--<div class="ui-layout-west">-->
-<!--	<div class="west-center" id="wc">-->
-<!---->
-<!--    </div>-->
-<!--	<div class="west-south" id="ws">  West - South </div>-->
-<!--</div>-->
-<!---->
-<!--<div class="ui-layout-east">-->
-<!--	<div class="east-center" id="ec">-->
-<!---->
-<!--	</div>-->
-<!---->
-<!--	<div class="east-south" id="es">  East - South </div>-->
-<!--</div>-->
 <script type="text/javascript">
 
   var _gaq = _gaq || [];

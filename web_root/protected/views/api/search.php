@@ -1,5 +1,5 @@
 <?php
-$t=isset($_REQUEST['q']) ? trim($_REQUEST['q']) : 'M天涯';
+$t=isset($_REQUEST['q']) ? trim($_REQUEST['q']) : '我的天涯';
 $this->breadcrumbs=array(
 	$t=>array('api/searchs',
 		'cx'=>'partner-pub-4726192443658314:4873446973',

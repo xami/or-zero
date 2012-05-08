@@ -328,7 +328,7 @@ class Image_GD_Driver extends Image_Driver {
 		$textcolor = imagecolorallocate($im, 255, 255, 255);
 
 //        $font = imageloadfont(Yii::getPathOfAlias('application.data.tianya.font').DIRECTORY_SEPARATOR.'dandelion_in_the_spring.ttf');
-		imagestring($im, 14, 0, 0, "MTianYa.COM", $textcolor);
+		imagestring($im, 14, 0, 0, "Mtianya.com", $textcolor);
 		$watermark=$im;
 
 		// Merge the images

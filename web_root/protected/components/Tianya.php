@@ -67,6 +67,8 @@ class Tianya{
         return $data;
     }
 
+
+
     function setArticle($id){
         $id=intval($id);
         $article=Article::model()->find('`id`='.$id.' AND `status`=1');
@@ -708,22 +710,185 @@ class Tianya{
 	    return $match;
 	}
 
+    /*
+     * <div rid="0" class="topic_potion">
+        <a title="做记号，下次从这里读" onclick="SetMark(<?php echo $article->id.', '.$data->id.', '.$data->pos.', 0, \''.str_replace('\'', '', $article->title).'\''; ?>);" href="#<?php echo $data->pos;?>">Mark</a>
+       </div>
+     */
+    public static function ArticleMark($article_id, $data_id, $dat_pos, $article_title){
+
+    }
+
+    public static function link728x15(){
+        return
+            $ad=<<<EOF
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-4726192443658314";
+/* 728x15-链接单元 */
+google_ad_slot = "4456137852";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+EOF;
+    }
+
+    public static function link468x15(){
+        return
+$ad=<<<EOF
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-4726192443658314";
+/* 468x15-链接单元 */
+google_ad_slot = "1339611153";
+google_ad_width = 468;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+EOF;
+    }
+
+    public static function ad336x280(){
+        return
+            $ad=<<<EOF
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-4726192443658314";
+/* 336x280-大矩形 */
+google_ad_slot = "3354931463";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+EOF;
+    }
+
+    public static function ad250x250(){
+        return
+$ad=<<<EOF
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-4726192443658314";
+/* 250x250-正方形 */
+google_ad_slot = "4163535743";
+google_ad_width = 250;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+EOF;
+    }
+
+    public static function ad468x60(){
+        return
+            $ad=<<<EOF
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-4726192443658314";
+/* 468x60-横幅 */
+google_ad_slot = "8866488934";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+EOF;
+    }
+
+    public static function ad160x600(){
+        return
+            $ad=<<<EOF
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-4726192443658314";
+/* 160x600-宽幅摩天大楼 */
+google_ad_slot = "0203809730";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+EOF;
+    }
+
+    public static function ad728x90(){
+        return
+            $ad=<<<EOF
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-4726192443658314";
+/* 728x90-首页横幅 */
+google_ad_slot = "1018549157";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+EOF;
+    }
+
+    public static function Search(){
+        return $f=
+<<<EOF
+<form action="/search" id="cse-search-box">
+        <input type="hidden" name="cx" value="partner-pub-4726192443658314:4873446973" />
+        <input type="hidden" name="cof" value="FORID:10" />
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="text" name="q" size="34" />
+        <input type="submit" name="sa" value="整站搜索" />
+</form>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">google.load("elements", "1", {packages: "transliteration"});</script>
+<script type="text/javascript" src="http://www.google.com/cse/t13n?form=cse-search-box&t13n_langs=en"></script>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cse-search-box&amp;lang=zh-Hans"></script>
+<script type="text/javascript" src="http://www.google.com/cse/query_renderer.js"></script>
+<div id="queries"></div>
+<script src="http://www.google.com/cse/api/partner-pub-4726192443658314/cse/4873446973/queries/js?oe=UTF-8&amp;callback=(new+PopularQueryRenderer(document.getElementById(%22queries%22))).render"></script>
+EOF;
+    }
+
+    public static function Footer($aid){
+        $xml_src=isset($aid) ? $aid.'.xml' : 'sitemap.xml';
+        return '&copy; 2010 &ndash; '.date('Y').' '.$_SERVER['HTTP_HOST'].' all rights reseved.'.
+        '&nbsp;-&nbsp;<a href="'.Yii::app()->request->hostInfo.'/sitemaps.xml">Sitempas</a>&nbsp;-&nbsp;'.
+        '<a href="'. Yii::app()->request->hostInfo .'/'. $xml_src .'">Index</a>&nbsp;-&nbsp;'.
+        '<a href="'.Yii::app()->request->hostInfo.'/rss.xml">RSS</a>&nbsp;-&nbsp;'.
+        '<a href="'.Yii::app()->request->hostInfo.'/atom.xml">ATOM</a>&nbsp;-&nbsp;';
+    }
+     /*
+      * <div class="update_time">
+		<span class="floor"><?php echo $data->pos==0?'顶楼':'<em>#</em>'.$data->pos; ?></span>
+		<span>2011-10-18 00:59:51</span>
+		<a name="p<?php echo $data->pos;?>"></a>
+	</div>
+      */
+    public static function ArticleHead($data_pos){
+
+    }
+
     public static function filterPost($in='',$aid,$page){
         if(empty($in)){
             return false;
         }
 
-//        $js_jump="setTimeout(r,15000);function r(){if(document.domain!='www.orzero.com' && document.domain!='orzero.com'){document.location.href='".self::$link."';}}";
-//		$packer = new JavaScriptPacker($js_jump, 'Normal', true, false);
-//		$packed = $packer->pack();
-
         self::$dm=mb_substr(strip_tags($in),0,512);
         self::$aid=intval($aid);
         self::$page=intval($page);
-//        self::$dm=strip_tags($in);
         $in=preg_replace_callback('/<img\s+src="(.*?)"\/><a\s+href="(.*?)">(.*?)<\/a>/i',array('self','mk_link'),$in);
+        /*
         $in=preg_replace_callback('/(<a\s+.*?href=\s*([\"\']?))([^\'^\"]*?)((?(2)\\2)[^>^\/]*?>)(.*?)(<\/a>)/isx',array('self','mk_herf'),$in);
-        
+        */
 		return $in;
     }
 
@@ -735,10 +900,10 @@ class Tianya{
 		}
 		$t=strip_tags($matches[5]);
         $t=str_replace("\r\n", '', $t);
-		$src='/index.php/api/a?href='.rawurlencode(base64_encode($matches[3])).
-             '&t='.rawurlencode(base64_encode($t)).
-             '&f='.rawurlencode(base64_encode($_SERVER['REQUEST_URI'])).
-             '&c='.rawurlencode(base64_encode(self::$dm));
+		$src='/index.php/api/a?href='.urlencode($matches[3]).
+             '&t='.urlencode($t).
+             '&f='.urlencode($_SERVER['REQUEST_URI']).
+             '&c='.urlencode(self::$dm);
 		return $matches[1].$src.$matches[2].' target="_blank">'.$matches[5].$matches[6];
 	}
 
@@ -759,10 +924,10 @@ class Tianya{
 			}
 			$ext2=substr($matches[2], $op);
 
-			$img_s='/index.php/api/f?aid='.intval($aid).'&page='.intval($page).'&_='.rawurlencode(MCrypy::encrypt($matches[1], Yii::app()->params['mcpass'], 128)).$ext1;
-			$img_b='/index.php/api/f?aid='.intval($aid).'&page='.intval($page).'&_='.rawurlencode(MCrypy::encrypt($matches[2], Yii::app()->params['mcpass'], 128)).$ext2;
+			$img_s='http://api/index.php?r=api/img&w=925&ww=200&m='.urlencode(MCrypy::encrypt('Mtianya.com', Yii::app()->params['MCrypy'], 128)).'&src='.urlencode(MCrypy::encrypt($matches[2], Yii::app()->params['MCrypy'], 128));
+            $img_b='http://api/index.php?r=api/img&ww=200&m='.urlencode(MCrypy::encrypt('Mtianya.com', Yii::app()->params['MCrypy'], 128)).'&src='.urlencode(MCrypy::encrypt($matches[2], Yii::app()->params['MCrypy'], 128));
 
-			return '<a class="oz" style="max-width:600px;max-height:400px;" href="'.$img_b.'" target="_blank"><img src="'.$img_b.'" /></a>';
+			return '<a class="oz" style="max-width:600px;max-height:400px;" href="'.$img_b.'" target="_blank"><img src="'.$img_s.'" /></a>';
 		}else{
 			return $matches[0];
 		}
@@ -785,6 +950,21 @@ class Tianya{
 
     public static function powered()
 	{
-		return 'Powered by <a href="http://mtianya.com/" rel="external">mtianya.com</a>';
+		return 'Powered by <a href="http://'.$_SERVER['HTTP_HOST'].'" rel="external">'.$_SERVER['HTTP_HOST'].'</a>';
 	}
+
+    public static function callImage($source_src,$width=0){
+        if(empty($source_src))
+            return false;
+        if(!Tools::is_url($source_src))
+            return false;
+
+        $s = '&src='.urlencode(MCrypy::encrypt($source_src, Yii::app()->params['MCrypy'], 128));
+        $w='';
+        if(intval($width)>0){
+            $w = '&w='.intval($width);
+        }
+
+        return 'http://api.orzero.com/img/'.$w.'/'.$s;
+    }
 }
