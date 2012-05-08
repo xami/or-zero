@@ -20,7 +20,7 @@ function pd($data=array(), $end='', $stop=true)
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'M天涯',
+	'name'=>'我的天涯',
     'language'=>'zh_cn',
 
 	// preloading 'log' component
@@ -150,5 +150,6 @@ return array(
         'domain'=>$_SERVER['SERVER_NAME'],
         'google_search_ad'=>'partner-pub-4726192443658314:4873446973',
         'key'=>'{"idwriter":"60257436","key":"866084533","chk":"e3f484000ae7ec99e2249b076fb09001"}',
+        'MCrypy'=>'hAU]8Pz;IdwBhK@wU^|ey6j4=|M x)k~w_;pD#Gnl[i~=@4YswKszS|J![nOhVBX',
 	),
 );

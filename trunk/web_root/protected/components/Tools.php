@@ -144,4 +144,29 @@ class Tools
 
 	}
 
+    public static function createSearch($name, $is_article=true){
+        if($is_article)
+            return
+                CHtml::link(
+                    $name,
+                    '/search?cx='.Yii::app()->params['google_search_ad'].'&cof=FORID:11&ie=UTF-8&un=zero&q='.$name.'&author='.$name,
+                    array('target'=>'_blank',
+                        'author'=> CHtml::encode($name),
+                        'title'=>CHtml::encode($name),
+                        'rev'=>'contents'
+                    )
+                );
+        else
+            return
+                CHtml::link(
+                    $name,
+                    '/search?cx='.Yii::app()->params['google_search_ad'].'&cof=FORID:11&ie=UTF-8&un=or&q='.$name.'&author='.$name,
+                    array('target'=>'_blank',
+                        'author'=> CHtml::encode($name),
+                        'title'=>CHtml::encode($name),
+                        'rev'=>'contents'
+                    )
+                );
+    }
+
 }

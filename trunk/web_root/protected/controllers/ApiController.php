@@ -120,7 +120,7 @@ class ApiController extends Controller
 				}
 //				$waterfile=Yii::getPathOfAlias('application.data').DIRECTORY_SEPARATOR.'';
 				$image->resize($width, $height);
-				$image->watermark("MTianYa.COM");
+				$image->watermark("Mtianya.com");
 				$image->save();
 			}
             
@@ -162,18 +162,14 @@ class ApiController extends Controller
 
 	public function actionA()
 	{
+		$href    = urldecode(Yii::app()->request->getParam('href',''));
+		$title   = urldecode(Yii::app()->request->getParam('t',''));
+        $content = urldecode(Yii::app()->request->getParam('c',''));
+        $refer   = urldecode(Yii::app()->request->getParam('f',''));
 
-		$href=!empty($_REQUEST['href'])?html_entity_decode(rawurldecode(base64_decode($_REQUEST['href']))):'';
-		$title=!empty($_REQUEST['t'])?html_entity_decode(rawurldecode(base64_decode($_REQUEST['t']))):'';
-        $content=!empty($_REQUEST['c'])?html_entity_decode(rawurldecode(base64_decode($_REQUEST['c']))):'';
-        $refer=!empty($_REQUEST['f'])?html_entity_decode(rawurldecode(base64_decode($_REQUEST['f']))):'';
-//        pd($refer);
-
-		$validate=new CUrlValidator();
-		if($validate->validateValue($href)===false){
-			return false;
+		if(Tools::is_url($href)===false){
+//			return;
 		}
-
 		$js_reload="setTimeout(r,30000);function r(){location.reload();}";
 		$packer = new JavaScriptPacker($js_reload, 'Normal', true, false);
 		$packed = $packer->pack();
@@ -336,7 +332,7 @@ sl.setAttribute("value","http://'.Yii::app()->params['domain'].'");
             header('Content-Type: text/xml');
 		    if($type='rss'){
                 $rss=Zend_Feed::importArray(array(
-                    'title'   => 'M天涯阅读订阅-RSS',
+                    'title'   => '我的天涯阅读订阅-RSS',
                     'link'    => 'http://'.Yii::app()->params['domain'].'/',
                     'charset' => 'UTF-8',
                     'author' =>'http://'.Yii::app()->params['domain'].'',
@@ -346,7 +342,7 @@ sl.setAttribute("value","http://'.Yii::app()->params['domain'].'");
                 echo $rss->saveXML();
             }else if($type='atom'){
                 $atom=Zend_Feed::importArray(array(
-                    'title'   => 'M天涯阅读订阅-ATOM',
+                    'title'   => '我的天涯阅读订阅-ATOM',
                     'link'    => 'http://'.Yii::app()->params['domain'].'/',
                     'charset' => 'UTF-8',
                     'author' =>'http://'.Yii::app()->params['domain'].'',
@@ -563,12 +559,12 @@ sl.setAttribute("value","http://'.Yii::app()->params['domain'].'");
 		$articles=Article::model()->findAll($criteria);
 		$html='';
 
-		$html.='<div class="header"><div class="nav"><a class="home" href="http://'.Yii::app()->params['domain'].'" title="M天涯">返回首页</a>&nbsp;&raquo;&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-1.html" title="M天涯最新整理">最新整理</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-uptime-1.html" title="M天涯最近更新">最近更新</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-hot-1.html" title="M天涯访问最多">访问最多</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-pcount-1.html" title="M天涯整理最多">整理最多</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/orzero-author.html" title="M天涯作者列表">作者列表</a>&nbsp;||&nbsp;</div>'.
+		$html.='<div class="header"><div class="nav"><a class="home" href="http://'.Yii::app()->params['domain'].'" title="我的天涯">返回首页</a>&nbsp;&raquo;&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-1.html" title="我的天涯最新整理">最新整理</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-uptime-1.html" title="我的天涯最近更新">最近更新</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-hot-1.html" title="我的天涯访问最多">访问最多</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-pcount-1.html" title="我的天涯整理最多">整理最多</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/orzero-author.html" title="我的天涯作者列表">作者列表</a>&nbsp;||&nbsp;</div>'.
 '
 <div class="search">
 <form action="/search" name="t">
@@ -726,10 +722,10 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 		for($i=1;$i<=$max_page;$i++){
 			if($i==$_page){
 				$html.='<a href="http://'.Yii::app()->params['domain'].'/list-'.$sort.
-				$i.'.html" title="[M天涯整理第'.$i.'页]"><span class="current">第'.$i.'页</span></a>&nbsp;';
+				$i.'.html" title="[我的天涯整理第'.$i.'页]"><span class="current">第'.$i.'页</span></a>&nbsp;';
 			}else{
 				$html.='<a href="http://'.Yii::app()->params['domain'].'/list-'.$sort.
-				$i.'.html" title="[M天涯整理第'.$i.'页]">第'.$i.'页</a>&nbsp;';
+				$i.'.html" title="[我的天涯整理第'.$i.'页]">第'.$i.'页</a>&nbsp;';
 			}
 
 		}
@@ -753,7 +749,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 '<!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>M天涯整理 - '.$title.'</title>
+<title>我的天涯整理 - '.$title.'</title>
 <style>
 .main,form{padding:0;margin:0;}
 .nav{display:inline-block;}
@@ -812,12 +808,12 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 
 			$html='';
 			$html.='
-<div class="header"><div class="nav"><a class="home" href="http://'.Yii::app()->params['domain'].'" title="M天涯">返回首页</a>&nbsp;&raquo;&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-1.html" title="M天涯最新整理">最新整理</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-uptime-1.html" title="M天涯最近更新">最近更新</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-hot-1.html" title="M天涯访问最多">访问最多</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-pcount-1.html" title="M天涯整理最多">整理最多</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/orzero-author.html" title="M天涯作者列表">作者列表</a>&nbsp;||&nbsp;</div>'.
+<div class="header"><div class="nav"><a class="home" href="http://'.Yii::app()->params['domain'].'" title="我的天涯">返回首页</a>&nbsp;&raquo;&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-1.html" title="我的天涯最新整理">最新整理</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-uptime-1.html" title="我的天涯最近更新">最近更新</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-hot-1.html" title="我的天涯访问最多">访问最多</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-pcount-1.html" title="我的天涯整理最多">整理最多</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="http://'.Yii::app()->params['domain'].'/orzero-author.html" title="我的天涯作者列表">作者列表</a>&nbsp;||&nbsp;</div>'.
 '
 	<div class="search">
 	<form action="/search" name="t">
@@ -859,7 +855,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 <div class="ad">
 <script type="text/javascript"><!--
 google_ad_client = "pub-4726192443658314";
-/* 728x90, M天涯 */
+/* 728x90, 我的天涯 */
 google_ad_slot = "2961714380";
 google_ad_width = 728;
 google_ad_height = 90;
@@ -870,7 +866,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 <script type="text/javascript"><!--
 google_ad_client = "pub-4726192443658314";
-/* 728x90, M天涯 */
+/* 728x90, 我的天涯 */
 google_ad_slot = "2961714380";
 google_ad_width = 728;
 google_ad_height = 90;
@@ -889,7 +885,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 '<!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>M天涯 - 作者列表</title>
+<title>我的天涯 - 作者列表</title>
 <style>
 .main,form{padding:0;margin:0;}
 .nav{display:inline-block;}
@@ -966,12 +962,12 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 			$this->google_phone_ad();
 
 			$html='';
-			$html.='<div class="header"><div class="nav"><a class="home" href="'.$baseUrl.'" title="M天涯">返回首页</a>&nbsp;&raquo;&nbsp;||&nbsp;'.
-		'<a class="home" href="'.$baseUrl.'/list-1.html" title="M天涯最新整理">最新整理</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="'.$baseUrl.'/list-uptime-1.html" title="M天涯最近更新">最近更新</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="'.$baseUrl.'/list-hot-1.html" title="M天涯访问最多">访问最多</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="'.$baseUrl.'/list-pcount-1.html" title="M天涯整理最多">整理最多</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="'.$baseUrl.'/orzero-author.html" title="M天涯作者列表">作者列表</a>&nbsp;||&nbsp;</div>'.
+			$html.='<div class="header"><div class="nav"><a class="home" href="'.$baseUrl.'" title="我的天涯">返回首页</a>&nbsp;&raquo;&nbsp;||&nbsp;'.
+		'<a class="home" href="'.$baseUrl.'/list-1.html" title="我的天涯最新整理">最新整理</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="'.$baseUrl.'/list-uptime-1.html" title="我的天涯最近更新">最近更新</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="'.$baseUrl.'/list-hot-1.html" title="我的天涯访问最多">访问最多</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="'.$baseUrl.'/list-pcount-1.html" title="我的天涯整理最多">整理最多</a>&nbsp;||&nbsp;'.
+		'<a class="home" href="'.$baseUrl.'/orzero-author.html" title="我的天涯作者列表">作者列表</a>&nbsp;||&nbsp;</div>'.
 '
 <div class="search">
 <form action="/search" name="t">
@@ -1129,9 +1125,9 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 
     public function actionSearchs()
 	{
-		$q=isset($_REQUEST['q']) ? trim($_REQUEST['q']) : '';
+		$q=isset($_REQUEST['q']) ? trim($_REQUEST['q']) : '我的天涯';
 		$un=isset($_REQUEST['un']) ? trim($_REQUEST['un']) : 'zero';
-		$tag=isset($_REQUEST['tag']) ? trim($_REQUEST['tag']) : '';
+//		$tag=isset($_REQUEST['tag']) ? trim($_REQUEST['tag']) : '';
 
 		if(strlen($q)>0){
 			$criteria=new CDbCriteria;
@@ -1148,10 +1144,10 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 				$criteria->compare('title',$q,true);
 			}
 
-			if(strlen($tag)>0){
-				//$criteria->addSearchCondition('t.tag', $tag, true, 'OR');
-				$criteria->addSearchCondition('tag', $tag, true, 'OR');
-			}
+//			if(strlen($tag)>0){
+//				//$criteria->addSearchCondition('t.tag', $tag, true, 'OR');
+//				$criteria->addSearchCondition('tag', $tag, true, 'OR');
+//			}
 
 			$data['dataProvider']=new CActiveDataProvider('Article',array(
 			    'criteria'=>$criteria,
