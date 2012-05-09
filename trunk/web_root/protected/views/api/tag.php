@@ -12,11 +12,14 @@ $this->breadcrumbs=array(
 	'所有标签',
 );
 
+?>
+<div class="clear"></div>
 
+
+<?php
 //Yii::app()->clientScript->registerMetaTag(CHtml::encode($this->author), 'author');
 //Yii::app()->clientScript->registerMetaTag(CHtml::encode($this->keywords), 'keywords', 'keywords');
 //Yii::app()->clientScript->registerMetaTag(CHtml::encode($this->description), 'description');
-
 $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_tag',

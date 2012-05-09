@@ -185,4 +185,17 @@ span.des {
     padding: 0.5em 1.5em 0.5em 1.5em;
 }
 
+list-view{
+     clear: both;
+ }
+.bt_e{
+    margin: 4px;
+}
+.bt_c{
+    font-weight: bold;
+}
+.bt_d{
+    float: left;
+    margin: 4px;
+}
 

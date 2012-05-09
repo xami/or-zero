@@ -49,6 +49,7 @@
                     array('label'=>'访问最多', 'url'=>'http://'.Yii::app()->params['domain'].'/list-hot-1.html'),
                     array('label'=>'整理最多', 'url'=>'http://'.Yii::app()->params['domain'].'/list-pcount-1.html'),
                     array('label'=>'作者列表', 'url'=>'http://'.Yii::app()->params['domain'].'/orzero-author.html'),
+                    array('label'=>'文章标签', 'url'=>'http://'.Yii::app()->params['domain'].'/tags/'),
                 ),
             )); ?>
             </div><!-- mainmenu -->
