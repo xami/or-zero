@@ -145,7 +145,7 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'admin@mtianya.com',
         'mcpass'=>'Pj8VArQ85XxJKw2t',
         'domain'=>$_SERVER['SERVER_NAME'],
         'google_search_ad'=>'partner-pub-4726192443658314:4873446973',

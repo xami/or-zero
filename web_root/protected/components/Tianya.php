@@ -19,7 +19,7 @@ class Tianya{
     }
 
 
-    function getItems($cid=0, $tid=0, $page_size=10){
+    function getItems($cid=0, $tid=0, $page_size=20){
         $cid=intval($cid);
         $tid=intval($tid);
         $criteria=new CDbCriteria;
@@ -770,6 +770,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 EOF;
     }
 
+
     public static function ad250x250(){
         return
 $ad=<<<EOF
@@ -950,7 +951,7 @@ EOF;
 
     public static function powered()
 	{
-		return 'Powered by <a href="http://'.$_SERVER['HTTP_HOST'].'" rel="external">'.$_SERVER['HTTP_HOST'].'</a>';
+		return '<a href="http://'.$_SERVER['HTTP_HOST'].'" rel="external">'.$_SERVER['HTTP_HOST'].'</a>';
 	}
 
     public static function callImage($source_src,$width=0){

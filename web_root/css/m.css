@@ -1,3 +1,10 @@
+body {
+    background: url("../images/bg.png") repeat scroll 0 0 transparent;
+    font-family: Ubuntu,Helvetica,sans-serif;
+    padding: 0 10em 0 10em;
+}
+
+
 #yw0 div.left{
     float: left;
     text-align: left;
@@ -40,16 +47,22 @@ span.des {
     width: auto;
 }
 
-.single #content h1.mg {
+.main #content h1.mg {
     margin: 0 ;
 }
 .list-view .summary {
     float: right;
 }
 
+#mainmenu{
+    clear: left;
+}
 #mainmenu ul{
     display: inline-block;
-    padding: 0;
+    margin: 0.5em 0 0;
+    padding: 0.5em 1.5em 0.5em 0;
+    border: 1px solid #9AAFE5;
+    font-size: 14px;
 }
 #mainmenu ul li{
     display: inline-block;
@@ -57,12 +70,23 @@ span.des {
     margin-left: 20px;
 }
 #mainmenu ul li a{
+    font-size: 18px;
     font-weight: bold;
+}
+#header,#footer{
+    ackground: -moz-linear-gradient(#F2F2F2, #E5E5E5) repeat scroll 0 0 transparent;
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-width: thin 0 thick;
+    margin: 0 -1.5em 0;
+    padding: .5em 2em;
+    text-shadow: 0 1px 0 #FFFFFF;
 }
 
 #cse-search-box, .main_search{
-    background:none;
-    border:none;
+    background: none;
+    border: none;
+    clear: both;
     float: right;
     margin: 0;
     padding: 0;
@@ -82,6 +106,7 @@ span.des {
     text-shadow: 0 1px 1px #FFFFFF;
     width: 200px;
     font-weight: bold;
+    float: right;
 }
 .lz:hover{
     background-color: #ccd9e8;
@@ -105,16 +130,18 @@ span.des {
 #header h1,h2{
     margin:0 0 4px;
 }
-#header div.ad_top{
-    float: right;
-}
 #header h1,#header h2{
+    margin-right: 2em;
     float: left;
+}
+#header h2{
+    display: inlin-block;
+    margin-top: 1em;
 }
 
 #footer #cse-search-box{
     margin: 0;
-    padding: 0;
+    padding: 0 4em;
     float: right;
 }
 #open_snoti{
@@ -123,9 +150,39 @@ span.des {
 .clear{
     clear: both;
 }
-#content{
-    width: 100%;
+
+.channels_content dl dd{
+    line-height: 22px;
+    margin-left: 6px;
+}
+.channels_content dl dd a{
+    padding: 4px 0;
+}
+.channels_content dl dt{
+    background-color: #75b0d0;
+    margin: 2px 0;
+    padding: 0 6px;
+}
+.channels_content dl dt a.title {
+    color: #333333;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 160%;
+}
+.channels_content dl dt a.more {
+    margin-top: 2px;
+    float: right;
+    color: #333333;
+}
+.span-19{
+    clear: both;
 }
 
+ .view{
+    border: 1px solid #9AAFE5;
+    clear: both;
+    margin: 0.5em 0 0;
+    padding: 0.5em 1.5em 0.5em 1.5em;
+}
 
 

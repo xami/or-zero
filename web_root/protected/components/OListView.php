@@ -281,7 +281,7 @@ class OListView extends CBaseListView
     {
         if(!$this->enablePagination)
             return;
-        Yii::app()->getClientScript()->registerCSSFile('/css/o.css');
+//        Yii::app()->getClientScript()->registerCSSFile('/css/o.css');
 
         $pager=array();
         $pager['pages']=$this->dataProvider->getPagination();

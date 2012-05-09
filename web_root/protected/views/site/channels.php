@@ -26,28 +26,8 @@ Yii::app()->clientScript->registerLinkTag(
 'http://'.Yii::app()->params['domain'].'/atom.xml');
 
 ?>
-<div id="ad_header_channel">
-<div id="ad1">
-</div>
-<div id="ad2">
-</div>
-</div>
 
 <div class="channels_content">
-
-<div>
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 728x90, 或零 */
-google_ad_slot = "2961714380";
-google_ad_width = 728;
-google_ad_height = 90;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-</div>
 
 <?php
 $baseUrl=YII::app()->request->hostInfo;
@@ -58,8 +38,8 @@ if($cid==0){
 }
 $i=1;
 foreach($channels as $channel){
-    $dl_class=($i%2==1)?'dl_left':'dl_right';
-    echo '  <dl class="'.$dl_class.'">';
+//    $dl_class=($i%2==1)?'dl_left':'dl_right';
+    echo '  <dl class="dl_left">';
     echo '      <dt><a class="title" href="'.$baseUrl.'/channel/'.$channel->id.'/">'.$channel->name.'</a>';
     if(!isset($_REQUEST['id'])||empty($_REQUEST['id'])){
         echo '          <a class="right more" href="'.$baseUrl.'/more/'.$channel->id.'/">更多&gt;&gt;</a>';
@@ -84,15 +64,6 @@ foreach($channels as $channel){
 
 </div>
 
-<div id="ad_footer">
-<div id="ad1" style="width:180px;">
-
-</div>
-<div id="ad2">
-
-</div>
-</div>
-
 <?php
 $this->widget('application.components.AjaxBuild', array(
 	'type' => 'channel',
@@ -100,16 +71,3 @@ $this->widget('application.components.AjaxBuild', array(
 ));
 
 ?>
-<div>
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 728x90, 或零 */
-google_ad_slot = "2961714380";
-google_ad_width = 728;
-google_ad_height = 90;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-</div>
