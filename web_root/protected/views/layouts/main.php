@@ -106,6 +106,8 @@
         <script src="http://www.google.com/cse/api/partner-pub-4726192443658314/cse/4873446973/queries/js?oe=UTF-8&amp;callback=(new+PopularQueryRenderer(document.getElementById(%22queries%22))).render"></script>
 
 	</div><!-- footer -->
+<div id='AdLayer1' style='position: absolute;visibility:hidden;z-index:1'><?php echo Tianya::ad160x600();?></div>
+<div id='AdLayer2' style='position:absolute;visibility:hidden;z-index:1'><?php echo Tianya::ad160x600();?></div>
 
 </div><!-- page -->
 <script type="text/javascript">
@@ -121,43 +123,38 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-
-  var ad1="<script type=\"text\/javascript\"><!--\n"+
-      "google_ad_client = \"ca-pub-4726192443658314\";\n"+
-      "\/* 160x600-宽幅摩天大楼 *\/\n"+
-      "google_ad_slot = \"0203809730\";\n"+
-      "google_ad_width = 160;\n"+
-      "google_ad_height = 600;\n"+
-      "\/\/-->\n"+
-      "<\/script>\n"+
-      "<script type=\"text\/javascript\"\n"+
-      "        src=\"http:\/\/pagead2.googlesyndication.com\/pagead\/show_ads.js\">\n"+
-      "<\/script>";
-  var ad2=ad1;
-
-  lastScrollY=0;
-  function heartBeat(){
-      var diffY;
-      if (document.documentElement && document.documentElement.scrollTop)
-          diffY = document.documentElement.scrollTop;
-      else if (document.body)
-          diffY = document.body.scrollTop
-      else
-      {/*Netscape stuff*/}
-      percent=.1*(diffY-lastScrollY);
-      if(percent>0)percent=Math.ceil(percent);
-      else percent=Math.floor(percent);
-      if(document.getElementById("lovexin12") != null)
-        document.getElementById("lovexin12").style.top=parseInt(document.getElementById("lovexin12").style.top)+percent+"px";
-      if(document.getElementById("lovexin14") != null)
-        document.getElementById("lovexin14").style.top=parseInt(document.getElementById("lovexin12").style.top)+percent+"px";
-      lastScrollY=lastScrollY+percent;
+  <?php
+      $js_reload=<<<EOF
+  var m_layer1,m_layer2;
+  function initMove() {
+      m_layer1=document.getElementById("AdLayer1");
+      m_layer2=document.getElementById("AdLayer2");
+      m_layer1.style.top = "-200px";
+      m_layer1.style.visibility = 'visible'
+      m_layer2.style.top = "-200px";
+      m_layer2.style.visibility = 'visible'
+      MoveLayers();
+      window.onscroll=MoveLayers;
   }
-  suspendcode12="<div id=\"lovexin12\" style='left:2px;POSITION:absolute;TOP:120px;'>"+ad1+"</div>"
-  suspendcode14="<div id=\"lovexin14\" style='right:2px;POSITION:absolute;TOP:120px;'>"+ad2+"</div>"
-  document.write(suspendcode12);
-  document.write(suspendcode14);
-  window.setInterval("heartBeat()",1);
+  function MoveLayers() {
+      var x = 5; // 左右边距
+      var y = 100; // 顶距
+      var st=document.documentElement.scrollTop;
+      var cw=document.documentElement.clientWidth;
+      var y = st + y;
+      m_layer1.style.top = y+"px";
+      m_layer1.style.left = x+"px";
+      m_layer2.style.top = y+"px";
+      m_layer2.style.left = cw-m_layer2.clientWidth-x+"px";
+  }
+  window.setTimeout("initMove()",600);
+EOF;
+
+  $packer = new JavaScriptPacker($js_reload, 'Normal', true, false); echo $js_reload;
+//  echo $packed = $packer->pack();
+  ?>
+
+
 
 </script>
 <?php
