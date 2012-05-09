@@ -276,11 +276,12 @@ sl.setAttribute("value","http://'.Yii::app()->params['domain'].'");
 
     public function actionFeed()
 	{
+        $host=Yii::app()->params['domain'];
         $type=strtolower(Yii::app()->request->getParam('controller', ''));
         if($type=='rss'){
-            $feed=Yii::app()->cache->get('feed/rss');
+            $feed=Yii::app()->cache->get($host.'feed/rss');
         }else if($type=='atom'){
-            $feed=Yii::app()->cache->get('feed/atom');
+            $feed=Yii::app()->cache->get($host.'feed/atom');
         }else{
             return false;
         }
@@ -338,7 +339,7 @@ sl.setAttribute("value","http://'.Yii::app()->params['domain'].'");
                     'author' =>'http://'.Yii::app()->params['domain'].'',
                     'entries' => $entries,
                 ), 'rss');
-                Yii::app()->cache->set('feed/rss', $rss->saveXML(), 600);
+                Yii::app()->cache->set($host.'feed/rss', $rss->saveXML(), 600);
                 echo $rss->saveXML();
             }else if($type='atom'){
                 $atom=Zend_Feed::importArray(array(
@@ -348,7 +349,7 @@ sl.setAttribute("value","http://'.Yii::app()->params['domain'].'");
                     'author' =>'http://'.Yii::app()->params['domain'].'',
                     'entries' => $entries,
                 ), 'atom');
-                Yii::app()->cache->set('feed/atom', $atom->saveXML(), 600);
+                Yii::app()->cache->set($host.'feed/atom', $atom->saveXML(), 600);
                 echo $atom->saveXML();
             }
         }else{
@@ -942,6 +943,7 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 
 	public function actionSitemap()
 	{
+        $host=Yii::app()->params['domain'];
 		$id=isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
 
 //		$criteria=new CDbCriteria;
@@ -950,7 +952,7 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 		$baseUrl=Yii::app()->params['domain'];
 
 		if($id>0){
-			$article=Yii::app()->cache->get('xml::article'.$id);
+			$article=Yii::app()->cache->get($host.'xml::article'.$id);
 			if(empty($article)){
 //				$criteria->condition='status=1 AND id='.$id;
 //				$article=Article::model()->find($criteria);
@@ -960,7 +962,7 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 				    ->where('status=1 AND id=:id', array(':id'=>$id))
 				    ->order('mktime DESC')
 				    ->queryRow();
-				Yii::app()->cache->set('xml::article'.$id, $article, $expire);
+				Yii::app()->cache->set($host.'xml::article'.$id, $article, $expire);
 			}
 
 			$xml="<?xml version='1.0' encoding='UTF-8'?>"."\r\n".
@@ -997,10 +999,10 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 			echo $xml;
 		}else{
 
-			$xml=Yii::app()->cache->get('xml::index');
+			$xml=Yii::app()->cache->get($host.'xml::index');
 			if(empty($xml)){
 
-				$article=Yii::app()->cache->get('xml::article');
+				$article=Yii::app()->cache->get($host.'xml::article');
 				if(empty($article)){
 	//				$criteria->condition='status=1';
 	//				$criteria->order='mktime DESC';
@@ -1011,10 +1013,10 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 					    ->where('status=1')
 					    ->order('mktime DESC')
 					    ->queryAll();
-					Yii::app()->cache->set('xml::article', $article, $expire);
+					Yii::app()->cache->set($host.'xml::article', $article, $expire);
 				}
 
-				$item=Yii::app()->cache->get('xml::item');
+				$item=Yii::app()->cache->get($host.'xml::item');
 				if(empty($item)){
 	//				$criteria->condition='status=1';
 	//				$criteria->order='count DESC';
@@ -1024,10 +1026,10 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 					    ->from('tbl_item')
 					    ->where('status=1')
 					    ->queryAll();
-					Yii::app()->cache->set('xml::item', $item, $expire*10);
+					Yii::app()->cache->set($host.'xml::item', $item, $expire*10);
 				}
 
-				$channel=Yii::app()->cache->get('xml::channel');
+				$channel=Yii::app()->cache->get($host.'xml::channel');
 				if(empty($channel)){
 	//				$criteria->condition='status=1';
 	//				$criteria->order='count DESC';
@@ -1037,7 +1039,7 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 					    ->from('tbl_channel')
 					    ->where('status=1')
 					    ->queryAll();
-					Yii::app()->cache->set('xml::channel', $channel, $expire*100);
+					Yii::app()->cache->set($host.'xml::channel', $channel, $expire*100);
 				}
 
 
@@ -1093,7 +1095,7 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 
 				$xml.='</urlset>';
 
-				Yii::app()->cache->set('xml::index', $xml, $expire);
+				Yii::app()->cache->set($host.'xml::index', $xml, $expire);
 				if($baseUrl=='http://'.Yii::app()->params['domain']){
 					@file_put_contents(dirname(Yii::app()->BasePath).DIRECTORY_SEPARATOR.'sitemap.xml', $xml);
 				}
@@ -1110,10 +1112,11 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 
 	public function actionSitemaps()
 	{
+        $host=Yii::app()->params['domain'];
 		$baseUrl='http://'.Yii::app()->params['domain'];
 		$expire=60;
 
-		$article=Yii::app()->cache->get('sitemaps::article');
+		$article=Yii::app()->cache->get($host.'sitemaps::article');
 		if(empty($article)){
 			$article = Yii::app()->db->createCommand()
 		    ->select('id, uptime')
@@ -1121,10 +1124,10 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 		    ->where('status=1 AND pcount>0')
 		    ->order('uptime DESC')
 		    ->queryAll();
-		    Yii::app()->cache->set('sitemaps::article', $article, $expire);
+		    Yii::app()->cache->set($host.'sitemaps::article', $article, $expire);
 		}
 
-	    $xml=Yii::app()->cache->get('sitemaps::xml');
+	    $xml=Yii::app()->cache->get($host.'sitemaps::xml');
 	    if(empty($xml)){
 	    	$xml="<?xml version='1.0' encoding='UTF-8'?>"."\r\n".
 				'<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\r\n";
@@ -1142,7 +1145,7 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 
 			$xml.='</sitemapindex>';
 
-	    	Yii::app()->cache->set('sitemaps::xml', $xml, $expire*10);
+	    	Yii::app()->cache->set($host.'sitemaps::xml', $xml, $expire*10);
 			if($baseUrl=='http://'.Yii::app()->params['domain']){
 				@file_put_contents(dirname(Yii::app()->BasePath).DIRECTORY_SEPARATOR.'sitemaps.xml', $xml);
 			}
