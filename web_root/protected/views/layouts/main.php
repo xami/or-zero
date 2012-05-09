@@ -35,7 +35,6 @@
                 <?php $this->widget('zii.widgets.CMenu',array(
                 'items'=>array(
                     array('label'=>'首页', 'url'=>'http://'.Yii::app()->params['domain'].'/'),
-                    array('label'=>'联系站长', 'url'=>array('/site/contact')),
                     array('label'=>'最新整理', 'url'=>'http://'.Yii::app()->params['domain'].'/list-1.html'),
                     array('label'=>'最近更新', 'url'=>'http://'.Yii::app()->params['domain'].'/list-uptime-1.html'),
                     array('label'=>'访问最多', 'url'=>'http://'.Yii::app()->params['domain'].'/list-hot-1.html'),
@@ -64,7 +63,7 @@
 
 	<div id="footer">
 		&copy; <?php echo date('Y'); ?> <?php echo Tianya::powered(); ?>&nbsp;&nbsp;
-		站长QQ : <span id="im"></span>
+        <a href="/site/contact">联系站长</a>&nbsp;&nbsp;站长QQ : <span id="im"></span>
         <form action="http://<?php echo Yii::app()->params['domain']; ?>/search" id="cse-search-box">
             <input type="hidden" name="cx" value="partner-pub-4726192443658314:4873446973" />
             <input type="hidden" name="cof" value="FORID:10" />
