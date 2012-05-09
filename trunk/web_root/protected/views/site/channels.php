@@ -40,7 +40,7 @@ $i=1;
 foreach($channels as $channel){
 //    $dl_class=($i%2==1)?'dl_left':'dl_right';
     echo '  <dl class="dl_left">';
-    echo '      <dt><a class="title" href="'.$baseUrl.'/channel/'.$channel->id.'/">'.$channel->name.'</a>';
+    echo '      <dt><a class="title" href="'.$baseUrl.'/channel/'.$channel->id.'/">'.$channel->name.'('.$channel->count.')</a>';
     if(!isset($_REQUEST['id'])||empty($_REQUEST['id'])){
         echo '          <a class="right more" href="'.$baseUrl.'/more/'.$channel->id.'/">更多&gt;&gt;</a>';
     }
@@ -48,12 +48,12 @@ foreach($channels as $channel){
     echo '      <dd class="item_sort">';
     $j=1;
     foreach($channel->items as $item){
-        echo '          <a href="'.$baseUrl.'/item/'.$item->id.'/">'.$item->name.'</a>';
-        if($cid==0){
-            if($j++ > 10){
-                break;
-            }
-        }
+        echo '          <a href="'.$baseUrl.'/item/'.$item->id.'/">'.$item->name.'('.$item->count.')</a>';
+//        if($cid==0){
+//            if($j++ > 10){
+//                break;
+//            }
+//        }
     }
     
     echo '      </dd>';

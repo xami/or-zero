@@ -8,5 +8,5 @@
 .search{float:right;clear:both;}
 .header{margin-bottom:10px;padding-bottom:2px;border-bottom:1px solid #C9D7F1;font-size:12pt;line-height:16pt;display:block;}
 .footer{margin-top:10px;padding-top:5px;border-top:1px solid #C9D7F1;font-size:12pt;line-height:16pt;display:block;}
-.t{padding-right:350px;background:none repeat scroll 0 0 #FCFCFC;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;margin:4px 0;padding:2px;/*white-space:pre-wrap;*/word-wrap:break-word;}
-.f{padding-right:350px;background:none repeat scroll 0 0 #F4F5F7;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;margin:4px 0;padding:2px;/*white-space:pre-wrap;*/word-wrap:break-word;}
+.t{padding-right:350px;background:none repeat scroll 0 0 #FCFCFC;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;padding:2px 8px;word-wrap:break-word;}
+.f{padding-right:350px;background:none repeat scroll 0 0 #F4F5F7;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;padding:2px 8px;word-wrap:break-word;}
