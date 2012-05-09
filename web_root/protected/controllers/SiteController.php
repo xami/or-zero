@@ -153,6 +153,8 @@ class SiteController extends Controller
 		));
         $data['article']=$article;
 
+        $GLOBALS['aid']=$id;
+
         $this->layout='//layouts/column4';
         $this->render('article', $data);
 	}

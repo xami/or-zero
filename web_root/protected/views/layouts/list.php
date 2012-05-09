@@ -43,7 +43,7 @@
     </div>
 
     <footer id="foot">
-        <?php echo Tianya::Footer(0);?>
+        <?php echo Tianya::Footer($GLOBALS['aid']);?>
     </footer>
 
 </div>
