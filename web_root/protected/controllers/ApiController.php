@@ -1162,7 +1162,7 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 		$data['dataProvider']=new CActiveDataProvider('Searchs',array(
 		    'criteria'=>$criteria,
 		    'pagination'=>array(
-		        'pageSize'=>100,
+		        'pageSize'=>200,
 		    ),
 		));
 		$this->render('tag',$data);
