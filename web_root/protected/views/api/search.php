@@ -46,32 +46,7 @@ $baseUrl='/search?cx='.Yii::app()->params['google_search_ad'].'&cof=FORID:11&ie=
 $html=false;
 $html=Yii::app()->cache->get('search::recente');
 if($html===false){
-	$html='
-<div>
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 336x280, 创建于 11-3-10 */
-google_ad_slot = "4619865687";
-google_ad_width = 336;
-google_ad_height = 280;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 336x280, 创建于 11-3-10 */
-google_ad_slot = "4619865687";
-google_ad_width = 336;
-google_ad_height = 280;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-<div style="clear:both;"></div>
-	';
+	$html='<div style="clear:both;"></div>';
 	//最近搜索
 	$criteria=new CDbCriteria;
 	$criteria->order='`uptime` DESC, `rcount` DESC';

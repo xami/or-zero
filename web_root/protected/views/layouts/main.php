@@ -27,7 +27,7 @@
                 }
                 echo '(总贴数:'.$A_count.')';
                 ?></h1>
-            <span id="key" class="fz">脱水整理,只看楼主,欢迎推荐给朋友</span>
+            <span id="key" class="fz">脱水整理,只看楼主,欢迎推荐给您的朋友</span>
             <span id="add_post" class="lz">提交新帖到我的天涯</span>
 
             <form action="/search" name="t" class="main_search">
