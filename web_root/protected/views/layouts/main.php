@@ -18,7 +18,16 @@
 <div class="container" id="page">
 	<div id="header" class="cf">
         <hgroup>
-            <h1><?php echo CHtml::encode(Yii::app()->name); ?></h1>
+            <h1><?php echo CHtml::encode(Yii::app()->name);
+                $A_count=Yii::app()->cache->get('all_article_count');
+                if(empty($A_count)){
+                    $article=Article::model()->with(array('item','channel'))->find('`channel`.`status`=1 AND `item`.`status`= 1 AND `t`.`status`=1');
+                    $A_count=$article->count();
+                    Yii::app()->cache->set('all_article_count', $A_count, 600);
+                }
+                echo '(总贴数:'.$A_count.')';
+                ?></h1>
+            <span id="key" class="fz">脱水整理,只看楼主,欢迎推荐给朋友</span>
             <span id="add_post" class="lz">提交新帖到我的天涯</span>
 
             <form action="/search" name="t" class="main_search">
