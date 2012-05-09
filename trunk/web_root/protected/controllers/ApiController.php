@@ -557,121 +557,18 @@ sl.setAttribute("value","http://'.Yii::app()->params['domain'].'");
 		endswitch;
 
 		$articles=Article::model()->findAll($criteria);
-		$html='';
 
-		$html.='<div class="header"><div class="nav"><a class="home" href="http://'.Yii::app()->params['domain'].'" title="我的天涯">返回首页</a>&nbsp;&raquo;&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-1.html" title="我的天涯最新整理">最新整理</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-uptime-1.html" title="我的天涯最近更新">最近更新</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-hot-1.html" title="我的天涯访问最多">访问最多</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-pcount-1.html" title="我的天涯整理最多">整理最多</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/orzero-author.html" title="我的天涯作者列表">作者列表</a>&nbsp;||&nbsp;</div>'.
-'
-<div class="search">
-<form action="/search" name="t">
-<input type="hidden" name="cx" value="'.Yii::app()->params['google_search_ad'].'" />
-<input type="hidden" name="cof" value="FORID:11" />
-<input type="hidden" name="ie" value="UTF-8" />
-<input type="radio" name="un" value="or" />作者
-<input type="radio" name="un" value="zero" />标题
-<input type="text" maxlength="100" size="50" name="q" />
-<input type="submit" value="站内搜索" />
-</form>
-'.
-$this->google_phone_ad()
-.'
-</div>
-</div>
-	<div class="ad_link">
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 728x15, orzero.com 11-4-5 */
-google_ad_slot = "6609878802";
-google_ad_width = 728;
-google_ad_height = 15;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-<br />
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 728x15, orzero.com 11-4-5 */
-google_ad_slot = "6609878802";
-google_ad_width = 728;
-google_ad_height = 15;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-<br />
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 728x15, orzero.com 11-4-5 */
-google_ad_slot = "6609878802";
-google_ad_width = 728;
-google_ad_height = 15;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-	</div>
-	<div class="ad">
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 468x60, 创建于 11-3-3 */
-google_ad_slot = "7613266296";
-google_ad_width = 468;
-google_ad_height = 60;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-	</div>
-';
-
-		$html.='<div class="list">
-	<div class="ad">
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 160x600, 创建于 10-5-2 */
-google_ad_slot = "6942291543";
-google_ad_width = 160;
-google_ad_height = 600;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-	</div>
-';
+		$list='<div class="list">';
 		$pre=true;
 		if(!empty($articles)){
 			$j=1;
 			foreach($articles as $article){
 				$title=htmlspecialchars($article->title);
 				if($j==14){
-					$html.='
-	<div class="ad">
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 336x280, 创建于 11-3-10 */
-google_ad_slot = "4619865687";
-google_ad_width = 336;
-google_ad_height = 280;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-	</div>
-					';
+                    $list.='';
 				}
 				$class=$pre?' class="t"':' class="f"';
-				$html.='<div'.$class.'><a href="http://'.Yii::app()->params['domain'].'/article/'.$article->id.
+                $list.='<div'.$class.'><a href="http://'.Yii::app()->params['domain'].'/article/'.$article->id.
 				'/index.html" target="_blank" title="'.$title.'">'.$title.
 				'</a>&nbsp;[作者:<a href="http://'.Yii::app()->params['domain'].'/search?cx='.Yii::app()->params['google_search_ad'].'&cof=FORID:11&ie=UTF-8&un=or&q='.$article->un.'">'.$article->un.'</a>]'.
 				'&nbsp;[阅读:'.$article->hot.'次]'.
@@ -686,52 +583,49 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 					$page=ceil($article->pcount/10);
 				}
 
-				$html.='<div class="w700">';
+                $list.='<div class="w700">';
 				for($i=1;$i<=$page;$i++){
-					$html.='<a href="http://'.Yii::app()->params['domain'].'/article/'.$article->id.
+                    $list.='<a href="http://'.Yii::app()->params['domain'].'/article/'.$article->id.
 					'/'.$i.'.html" target="_blank" title="[第'.$i.'页]'.$title.'">'.$i.'</a>&nbsp;';
-//					if(($i%50)==0){
-//						$html.='<br />';
-//					}
 					if($i>90){
-						$html.='......&nbsp;';
-						$html.='<a href="http://'.Yii::app()->params['domain'].'/article/'.$article->id.
+                        $list.='......&nbsp;';
+                        $list.='<a href="http://'.Yii::app()->params['domain'].'/article/'.$article->id.
 						'/'.($page-1).'.html" target="_blank" title="[第'.($page-1).'页]'.$title.'">'.($page-1).'</a>&nbsp;';
-						$html.='<a href="http://'.Yii::app()->params['domain'].'/article/'.$article->id.
+                        $list.='<a href="http://'.Yii::app()->params['domain'].'/article/'.$article->id.
 						'/'.$page.'.html" target="_blank" title="[第'.$page.'页]'.$title.'">'.$page.'</a>&nbsp;';
 						break;
 					}
 				}
-				$html.='&nbsp;<a href="http://'.Yii::app()->params['domain'].'/sitemap/'.$article->id.'.xml">索引</a>&nbsp;'.
+                $list.='&nbsp;<a href="http://'.Yii::app()->params['domain'].'/sitemap/'.$article->id.'.xml">索引</a>&nbsp;'.
 				'<a href="http://'.Yii::app()->params['domain'].'/link-'.$article->id.'.html">直达</a>&nbsp;';
-				$html.='</div>';
+                $list.='</div>';
 
 				//$html.='[热度:'.$article->hot.']';
-				$html.='</div>';
+                $list.='</div>';
 
 				$j++;
 			}
 		}
-		$html.='</div>';
+		$list.='</div>';
 
 		if(strlen($sort)>0){
 			$sort=$sort.'-';
 		}
 
-		$html.='<div class="footer">';
+		$footer='<div class="footer">';
 		for($i=1;$i<=$max_page;$i++){
 			if($i==$_page){
-				$html.='<a href="http://'.Yii::app()->params['domain'].'/list-'.$sort.
+                $footer.='<a href="http://'.Yii::app()->params['domain'].'/list-'.$sort.
 				$i.'.html" title="[我的天涯整理第'.$i.'页]"><span class="current">第'.$i.'页</span></a>&nbsp;';
 			}else{
-				$html.='<a href="http://'.Yii::app()->params['domain'].'/list-'.$sort.
+                $footer.='<a href="http://'.Yii::app()->params['domain'].'/list-'.$sort.
 				$i.'.html" title="[我的天涯整理第'.$i.'页]">第'.$i.'页</a>&nbsp;';
 			}
 
 		}
-		$html.='&nbsp;&nbsp;<a href="http://'.Yii::app()->params['domain'].'/sitemap.xml" target="_blank" style="color:green">网站地图</a>';
-		$html.='&nbsp;&nbsp;<a href="http://'.Yii::app()->params['domain'].'/sitemaps.xml" target="_blank" style="color:green">文章地图</a>';
-		$html.='</div>';
+        $footer.='&nbsp;&nbsp;<a href="http://'.Yii::app()->params['domain'].'/sitemap.xml" target="_blank" style="color:green">网站地图</a>';
+        $footer.='&nbsp;&nbsp;<a href="http://'.Yii::app()->params['domain'].'/sitemaps.xml" target="_blank" style="color:green">文章地图</a>';
+        $footer.='</div>';
 
 
         $title='';
@@ -745,57 +639,15 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
             $title='整理最多';
         }
 
-		echo
-'<!DOCTYPE html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>我的天涯整理 - '.$title.'</title>
-<style>
-.main,form{padding:0;margin:0;}
-.nav{display:inline-block;}
-.home{color:#000000;font-family:arial,sans-serif;font-size:14px;font-weight:bold;white-space:nowrap;}
-.current{color:red;font-weight:bold;}
-.ad{float:right;}
-.ad_link{float:left;}
-.w700{width:900px;}
-.list{padding:5px;clear:both;}
-.search{float:right;clear:both;}
-.header{margin-bottom:10px;padding-bottom:2px;border-bottom:1px solid #C9D7F1;font-size:12pt;line-height:16pt;display:block;}
-.footer{margin-top:10px;padding-top:5px;border-top:1px solid #C9D7F1;font-size:12pt;line-height:16pt;display:block;}
-.t{padding-right:350px;background:none repeat scroll 0 0 #FCFCFC;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;margin:4px 0;padding:2px;/*white-space:pre-wrap;*/word-wrap:break-word;}
-.f{padding-right:350px;background:none repeat scroll 0 0 #F4F5F7;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;margin:4px 0;padding:2px;/*white-space:pre-wrap;*/word-wrap:break-word;}
-</style>
-</head>
-<body>
-
-<div class="main">
-'.$html.$this->google_phone_ad().
-'</div>
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push([\'_setAccount\', \'UA-7387085-1\']);
-  _gaq.push([\'_setDomainName\', \'.'.Yii::app()->params['domain'].'\']);
-  _gaq.push([\'_trackPageview\']);
-  (function() {
-    var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
-    ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
-    var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
-<script type="text/javascript">
-var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%3F52ee3503e2a49b8134aa2f700075d417\' type=\'text/javascript\'%3E%3C/script%3E"));
-</script>
-</body>
-</html>';
+        $this->layout='//layouts/column2';
+        $this->render('list', array('title'=>$title, 'list'=>$list, 'footer'=>$footer));
 	}
 
     public function actionUlink()
 	{
 		$expire=900;
-//		$html=Yii::app()->cache->get('orzero::author');
+		$html=Yii::app()->cache->get('orzero::author');
 		if(empty($html)){
-
 				$as = Yii::app()->db->createCommand()
 					    ->select('distinct (un)')
 					    ->from('tbl_article')
@@ -804,143 +656,28 @@ document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%
 					    ->order('count(un) DESC')
 					    ->queryAll();
 
-				$this->google_phone_ad();
-
-			$html='';
-			$html.='
-<div class="header"><div class="nav"><a class="home" href="http://'.Yii::app()->params['domain'].'" title="我的天涯">返回首页</a>&nbsp;&raquo;&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-1.html" title="我的天涯最新整理">最新整理</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-uptime-1.html" title="我的天涯最近更新">最近更新</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-hot-1.html" title="我的天涯访问最多">访问最多</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/list-pcount-1.html" title="我的天涯整理最多">整理最多</a>&nbsp;||&nbsp;'.
-		'<a class="home" href="http://'.Yii::app()->params['domain'].'/orzero-author.html" title="我的天涯作者列表">作者列表</a>&nbsp;||&nbsp;</div>'.
-'
-	<div class="search">
-	<form action="/search" name="t">
-	<input type="hidden" name="cx" value="'.Yii::app()->params['google_search_ad'].'" />
-	<input type="hidden" name="cof" value="FORID:11" />
-	<input type="hidden" name="ie" value="UTF-8" />
-	<input type="radio" name="un" value="or" />作者
-	<input type="radio" name="un" value="zero" />标题
-	<input type="text" maxlength="100" size="50" name="q" />
-	<input type="submit" value="站内搜索" />
-	</form>
-	'.
-	$this->google_phone_ad()
-	.'
-	</div>
-</div>
-';
+            $html='';
 				$i=1;
 				foreach($as as $a){
-					$html.='<a href="/search?cx='.Yii::app()->params['google_search_ad'].'&cof=FORID%3A11&ie=UTF-8&un=or&q='.
+                    $html.='<a href="/search?cx='.Yii::app()->params['google_search_ad'].'&cof=FORID%3A11&ie=UTF-8&un=or&q='.
 					$a['un'].'">'.$a['un'].'</a>&nbsp;';
 
 						if(($i%2000)==0){
-							$html.='
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 728x15, orzero.com 11-4-5 */
-google_ad_slot = "6609878802";
-google_ad_width = 728;
-google_ad_height = 15;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>';
+                            $html.='';
 						}
 						if($i==700){
-							$html.='
-<div class="ad">
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 728x90, 我的天涯 */
-google_ad_slot = "2961714380";
-google_ad_width = 728;
-google_ad_height = 90;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 728x90, 我的天涯 */
-google_ad_slot = "2961714380";
-google_ad_width = 728;
-google_ad_height = 90;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-</div>';
+                            $html.='';
 						}
 
 						$i++;
 					}
 
-					$html=
-'<!DOCTYPE html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>我的天涯 - 作者列表</title>
-<style>
-.main,form{padding:0;margin:0;}
-.nav{display:inline-block;}
-.home{color:#000000;font-family:arial,sans-serif;font-size:14px;font-weight:bold;white-space:nowrap;}
-.current{color:red;font-weight:bold;}
-.ad{float:right;}
-.ad_h{float:left;}
-.ad_link{float:left;}
-.w700{width:940px;clear:both;}
-.list{padding:5px;clear:both;}
-.search{float:right;}
-.header{margin-bottom:10px;padding-bottom:2px;border-bottom:1px solid #C9D7F1;font-size:12pt;line-height:16pt;display:block;}
-.footer{margin-top:10px;padding-top:5px;border-top:1px solid #C9D7F1;font-size:12pt;line-height:16pt;display:block;}
-.t{padding-right:350px;background:none repeat scroll 0 0 #FCFCFC;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;margin:4px 0;padding:2px;/*white-space:pre-wrap;*/word-wrap:break-word;}
-.f{padding-right:350px;background:none repeat scroll 0 0 #F4F5F7;border-bottom:1px solid #EEEEEE;border-top:1px solid #EEEEEE;display:block;font-family:Menlo,Consolas,"Courier New",Courier,mono;margin:4px 0;padding:2px;/*white-space:pre-wrap;*/word-wrap:break-word;}
-</style>
-</head>
-<body>
-<div class="ad">
-<script type="text/javascript"><!--
-google_ad_client = "pub-4726192443658314";
-/* 160x600, 创建于 10-5-2 */
-google_ad_slot = "6942291543";
-google_ad_width = 160;
-google_ad_height = 600;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-</div>
-<div class="main">
-'.$this->google_phone_ad().$html.$this->google_phone_ad().
-'</div>
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push([\'_setAccount\', \'UA-7387085-1\']);
-  _gaq.push([\'_setDomainName\', \'.'.Yii::app()->params['domain'].'\']);
-  _gaq.push([\'_trackPageview\']);
-  (function() {
-    var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
-    ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
-    var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
-<script type="text/javascript">
-var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src=\'" + _bdhmProtocol + "hm.baidu.com/h.js%3F52ee3503e2a49b8134aa2f700075d417\' type=\'text/javascript\'%3E%3C/script%3E"));
-</script>
-</body>
-</html>';
 			Yii::app()->cache->set('orzero::author', $html, $expire);
 		}
 
-		echo $html;
+        $this->layout='//layouts/column2';
+        $this->render('list', array('title'=>'作者列表', 'list'=>$html, 'footer'=>''));
+
 	}
 
     public function actionAlink()

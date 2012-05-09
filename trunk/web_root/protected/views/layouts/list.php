@@ -18,11 +18,12 @@
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/jquery.json-2.3.js"></script>
     <script type="text/javascript" src="/js/jquery.lazyload.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/o.css" />
 </head>
 
-<body class="single single-post postid-1959 single-format-standard singular">
+<body class="single single-post single-format-standard singular">
 
-<div id="wrap">
+<div class="container" id="wrap">
 
     <header id="head" class="cf">
         <hgroup>

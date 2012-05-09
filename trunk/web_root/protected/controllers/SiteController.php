@@ -104,7 +104,7 @@ class SiteController extends Controller
 
     public function actionItem()
 	{
-        $page_size=Yii::app()->request->getParam('page_size', 10);
+        $page_size=Yii::app()->request->getParam('page_size', 20);
         $cid=Yii::app()->request->getParam('cid', 0);
         $tid=Yii::app()->request->getParam('tid', 0);
         

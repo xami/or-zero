@@ -57,7 +57,7 @@ class Channel extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'articles'=>array(self::HAS_MANY, 'Article', 'cid'),
-			'items'=>array(self::HAS_MANY, 'Item', 'cid', 'condition'=>'`items`.`status`=1', 'limit'=>7),
+			'items'=>array(self::HAS_MANY, 'Item', 'cid', 'condition'=>'`items`.`status`=1', 'limit'=>0),
 		);
 	}
 
