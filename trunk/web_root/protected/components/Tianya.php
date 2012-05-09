@@ -860,7 +860,7 @@ EOF;
     }
 
     public static function Footer($aid){
-        $xml_src=isset($aid) ? $aid.'.xml' : 'sitemap.xml';
+        $xml_src=isset($aid) ? 'sitemap/'.$aid.'.xml' : 'sitemap.xml';
         return '&copy; 2010 &ndash; '.date('Y').' '.$_SERVER['HTTP_HOST'].' all rights reseved.'.
         '&nbsp;-&nbsp;<a href="'.Yii::app()->request->hostInfo.'/sitemaps.xml">Sitempas</a>&nbsp;-&nbsp;'.
         '<a href="'. Yii::app()->request->hostInfo .'/'. $xml_src .'">Index</a>&nbsp;-&nbsp;'.
