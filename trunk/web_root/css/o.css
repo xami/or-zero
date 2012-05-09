@@ -17,11 +17,12 @@
     border: 1px solid #9AAFE5;
     font-size: 14px;
 }
-span.des {
+.des {
     border: 1px solid #9AAFE5;
     font-size: 14px;
     font-weight: bold;
     padding: 2px 4px;
+    margin-right: 2px;
 }
 #yw2 a {
     font-size: 14px;

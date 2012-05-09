@@ -48,6 +48,7 @@ class OListPager extends CBasePager
     {
         if($this->header===null)
             $this->header=Yii::t('tianya','Count:').'<span class="des">'.$this->getPageCount().Yii::t('tianya','Pages').'</span>'.
+                CHtml::link('直达', 'http://'.$_SERVER['HTTP_HOST'].'/link-'.$GLOBALS['aid'].'.html', array('class'=>'des')).'&nbsp;&nbsp;'.
                 '&nbsp;&nbsp;'.Yii::t('yii','Go to page: ');
         if(!isset($this->htmlOptions['id']))
             $this->htmlOptions['id']=$this->getId();
