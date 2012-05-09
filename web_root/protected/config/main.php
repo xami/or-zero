@@ -86,8 +86,8 @@ return array(
                 '<controller:(search)>/*'=>array('api/searchs', 'urlSuffix'=>'/', 'caseSensitive'=>false),
 
                 //tag
-				'<controller:(tag)>/<Searchs_page:\d+>/'=>array('api/tag', 'urlSuffix'=>'/', 'caseSensitive'=>false),
-				'<controller:(tag)>/'=>array('api/tag', 'urlSuffix'=>'/', 'caseSensitive'=>false),
+				'<controller:(tag|tags)>/<Searchs_page:\d+>/'=>array('api/tag', 'urlSuffix'=>'/', 'caseSensitive'=>false),
+				'<controller:(tag|tags)>/'=>array('api/tag', 'urlSuffix'=>'/', 'caseSensitive'=>false),
 
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
