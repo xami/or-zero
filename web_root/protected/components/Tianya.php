@@ -925,8 +925,8 @@ EOF;
 			}
 			$ext2=substr($matches[2], $op);
 
-			$img_s='http://api/index.php?r=api/img&w=925&ww=200&m='.urlencode(MCrypy::encrypt('Mtianya.com', Yii::app()->params['MCrypy'], 128)).'&src='.urlencode(MCrypy::encrypt($matches[2], Yii::app()->params['MCrypy'], 128));
-            $img_b='http://api/index.php?r=api/img&ww=200&m='.urlencode(MCrypy::encrypt('Mtianya.com', Yii::app()->params['MCrypy'], 128)).'&src='.urlencode(MCrypy::encrypt($matches[2], Yii::app()->params['MCrypy'], 128));
+			$img_s='http://api.orzero.com/index.php?r=api/img&w=925&ww=200&m='.urlencode(MCrypy::encrypt('Mtianya.com', Yii::app()->params['MCrypy'], 128)).'&src='.urlencode(MCrypy::encrypt($matches[2], Yii::app()->params['MCrypy'], 128));
+            $img_b='http://api.orzero.com/index.php?r=api/img&ww=200&m='.urlencode(MCrypy::encrypt('Mtianya.com', Yii::app()->params['MCrypy'], 128)).'&src='.urlencode(MCrypy::encrypt($matches[2], Yii::app()->params['MCrypy'], 128));
 
 			return '<a class="oz" style="max-width:600px;max-height:400px;" href="'.$img_b.'" target="_blank"><img src="'.$img_s.'" /></a>';
 		}else{
