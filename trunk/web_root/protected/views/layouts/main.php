@@ -28,7 +28,7 @@
                 echo '(总贴数:'.$A_count.')';
                 ?></h1>
             <span id="key" class="fz">脱水整理,只看楼主,欢迎推荐给您的朋友</span>
-            <span id="add_post" class="lz">原帖没有整理?<br /> 点此提交新帖到我的天涯</span>
+            <span id="add_post" class="lz">查找原帖,如果没有整理?<br /> 同时可以提交到我的天涯</span>
 
             <form action="/search" name="t" class="main_search">
                 <input type="hidden" name="cx" value="<?php echo Yii::app()->params['google_search_ad'];?>" />
