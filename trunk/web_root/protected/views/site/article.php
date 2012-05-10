@@ -48,6 +48,7 @@ $js_mark=file_get_contents(Yii::app()->request->hostInfo.'/js/mark.js');
 $packer = new JavaScriptPacker($js_mark, 'Normal', true, false);
 echo $packer->pack();
 ?>
+
 </script>
 
 <?php
