@@ -63,7 +63,9 @@ class ApiController extends Controller
 
     public function actionF()
 	{
-		$g=trim($_REQUEST['_']);
+        header("Location: ".$_SERVER['HTTP_HOST']);
+        die;
+        $g=trim($_REQUEST['_']);
         $aid=trim($_REQUEST['aid']);
         $page=trim($_REQUEST['page']);
 		if(($op=strrpos($g,'.'))!==false){
