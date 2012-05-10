@@ -266,7 +266,7 @@ sl.setAttribute("value","http://'.Yii::app()->params['domain'].'");
 "
 <a href='$href'>$title</a>
 <h2>
-<a href='$href'>$title<span style=\"color:red;\">[点此跳转]</span></a>&nbsp;&nbsp;
+<a href='$href' target=\"_blank\">$title<span style=\"color:red;\">[点此跳转]</span></a>&nbsp;&nbsp;
 <a href='$refer'><span style=\"color:green;\">[返回阅读]</span></a>
 </h2>
 </div>
