@@ -25,9 +25,8 @@
                     $A_count=$article->count();
                     Yii::app()->cache->set('all_article_count', $A_count, 600);
                 }
-                echo '(总贴数:'.$A_count.')';
                 ?></h1>
-            <span id="key" class="fz">脱水整理,只看楼主,欢迎推荐给您的朋友</span>
+            <span id="key" class="fz"><?php echo '(脱水整理贴数:'.$A_count.')';?>脱水整理,只看楼主,欢迎推荐给您的朋友</span>
             <span id="add_post" class="lz">查找原帖,如果没有整理?<br /> 同时可以提交到我的天涯</span>
 
             <form action="/search" name="t" class="main_search">
