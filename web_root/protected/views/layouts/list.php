@@ -17,7 +17,7 @@
     <script type="text/javascript" src="/js/jquery-ui-latest.js"></script>
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/jquery.json-2.3.js"></script>
-    <script type="text/javascript" src="/js/jquery.lazyload.js"></script>
+<!--    <script type="text/javascript" src="/js/jquery.lazyload.js"></script>-->
     <link rel="stylesheet" type="text/css" href="/css/o.css" />
 </head>
 
