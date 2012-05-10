@@ -26,7 +26,8 @@ if (is_numeric($article->item->key)) {
 } else {
 	$src='http://www.tianya.cn/publicforum/content/'.$article->item->key.'/1/'.$article->aid.'.shtml';
 }
-$en_src=Yii::app()->request->hostInfo.'/api/a?href='.urlencode($src).'&t='.urlencode($article->title);
+$en_src=Yii::app()->request->hostInfo.'/api/a?href='.urlencode($src).'&t='.urlencode($article->title).
+    '&f='.urlencode(Yii::app()->request->hostInfo.'/article/'.$article->aid.'/index.html');
 echo CHtml::link($src, $en_src, array('target'=>'_blank','title'=>CHtml::encode($article->title)));
 ?>
 </h1>
