@@ -22,9 +22,9 @@ array('title'=>'或零整理,'.CHtml::encode($article->title),
 ));?>&nbsp; &nbsp;
 源帖:<?php
 if (is_numeric($article->item->key)) {
-	$src=Yii::app()->request->hostInfo.'/techforum/content/'.$article->item->key.'/1/'.$article->aid.'.shtml';
+	$src='http://www.tianya.cn/techforum/content/'.$article->item->key.'/1/'.$article->aid.'.shtml';
 } else {
-	$src=Yii::app()->request->hostInfo.'/publicforum/content/'.$article->item->key.'/1/'.$article->aid.'.shtml';
+	$src='http://www.tianya.cn/publicforum/content/'.$article->item->key.'/1/'.$article->aid.'.shtml';
 }
 $en_src=Yii::app()->request->hostInfo.'/api/a?href='.urlencode($src).'&t='.urlencode($article->title);
 echo CHtml::link($src, $en_src, array('target'=>'_blank','title'=>CHtml::encode($article->title)));
