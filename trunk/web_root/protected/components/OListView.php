@@ -293,7 +293,7 @@ class OListView extends CBaseListView
             echo '<div class="clear"></div>'.Tianya::ad336x280().'</div>';
             echo '<div class="'.$this->pagerCssClass.' right">'.'<div class="clear"></div>';
             $this->widget('CLinkPager',$pager);
-            echo Tianya::ad728x90().'<div class="clear"></div>'.Tianya::Search().'</div>';
+            echo Tianya::ad468x60().'<div class="clear"></div>'.Tianya::Search().'</div>';
         }
         else
             $this->widget('CLinkPager',$pager);
