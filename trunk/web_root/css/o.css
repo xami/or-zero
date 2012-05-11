@@ -8,8 +8,8 @@
 #yw0 div.right{
     float: right;
     text-align: right;
-    width: 70%;
-    min-width: 750px;
+    width: 40%;
+    min-width: 500px;
     overflow: hidden;
 }
 #yw0 div.clear{clear: both;}
