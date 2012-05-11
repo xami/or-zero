@@ -80,6 +80,9 @@ span.des {
     text-shadow: 0 1px 0 #FFFFFF;
 }
 
+.ylg{
+    color: #00008b;
+}
 #cse-search-box, .main_search{
     background: none;
     border: none;
