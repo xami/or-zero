@@ -48,12 +48,12 @@ foreach($channels as $channel){
     echo '      <dd class="item_sort">';
     $j=1;
     foreach($channel->items as $item){
+        if($cid==0){
+            if($item->count==0){
+                continue;
+            }
+        }
         echo '          <a href="'.$baseUrl.'/item/'.$item->id.'/">'.$item->name.'('.$item->count.')</a>';
-//        if($cid==0){
-//            if($j++ > 10){
-//                break;
-//            }
-//        }
     }
     
     echo '      </dd>';
