@@ -84,9 +84,13 @@ span.des {
     background: none;
     border: none;
     clear: both;
-    float: right;
+    float: left;
     margin: 0;
     padding: 0;
+}
+#key{
+    float: left;
+    margin-top: 0.5em;
 }
 .lz{
     background-color: #D7E5F5;
