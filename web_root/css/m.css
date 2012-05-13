@@ -84,6 +84,11 @@ span.des {
     color: green;
     font-weight: bold;
 }
+#ckepop{
+    display: inline-block;
+    float: left;
+    margin: 4px 0 0 15px;
+}
 #cse-search-box, .main_search{
     background: none;
     border: none;
