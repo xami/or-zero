@@ -157,6 +157,7 @@ span.des {
 .channels_content dl dd{
     line-height: 22px;
     margin-left: 6px;
+    background-color: #ffffff;
 }
 .channels_content dl dd a{
     padding: 4px 0;
