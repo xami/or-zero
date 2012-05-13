@@ -1064,6 +1064,7 @@ form p,
         float: right;
         margin-right: -135px;
         margin-top: 0;
+        clear: both;
     }
 
     #head nav a {
