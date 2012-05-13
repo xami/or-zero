@@ -27,12 +27,13 @@
                 }
                 ?></h1>
             <span id="key" class="fz"><?php echo '[脱水整理:<span class="ylg">'.$A_count.'</span>贴]';?>&nbsp;&nbsp;天涯热帖脱水整理,只看楼主,欢迎推荐给您的朋友</span>
+            <?php $un=empty($_REQUEST['un']) ? '': trim($_REQUEST['un']); ?>
             <form action="/search" name="t" class="main_search">
                 <input type="hidden" name="cx" value="<?php echo Yii::app()->params['google_search_ad'];?>" />
                 <input type="hidden" name="cof" value="FORID:11" />
                 <input type="hidden" name="ie" value="UTF-8" />
-                <input type="radio" name="un" value="or" />作者
-                <input type="radio" name="un" value="zero" />标题
+                <input type="radio" name="un" value="or" <?php if($un=='or') echo 'checked="checked"'?>/>作者
+                <input type="radio" name="un" value="zero" <?php if($un=='zero') echo 'checked="checked"'?>/>标题
                 <input type="text" maxlength="80" size="36" name="q" />
                 <input type="submit" value="站内搜索" />
             </form>
