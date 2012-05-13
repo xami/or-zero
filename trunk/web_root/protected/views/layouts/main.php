@@ -51,7 +51,7 @@
                 ),
             )); ?>
             </div><!-- mainmenu -->
-            <div style="text-align: left;"><?php echo Tianya::ad728x90();?></div>
+            <div style="text-align: left;"><?php echo Tianya::link728x15();?></div>
             <?php if(isset($this->breadcrumbs)):?>
 
             <?php $this->widget('zii.widgets.CBreadcrumbs', array(
@@ -67,7 +67,7 @@
 
 	<?php echo $content; ?>
 <div class="clear"></div>
-<!--<div style="text-align: right;">--><?php //echo Tianya::ad728x90();?><!--</div>-->
+<div style="text-align: right;"><?php echo Tianya::ad728x90();?></div>
 
 	<div id="footer">
 		&copy; <?php echo date('Y'); ?> <?php echo Tianya::powered(); ?>&nbsp;&nbsp;
