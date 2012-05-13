@@ -11,6 +11,7 @@ $this->breadcrumbs=array(
 	str_replace('天涯', Yii::app()->name, $article->title)=>'/link-'.$article->id.'.html',
 );
 ?>
+
 <section id="content">
 <h1 class="mg">
 作者:<?php echo Tools::createSearch($article->un, false); ?>&nbsp; &nbsp;

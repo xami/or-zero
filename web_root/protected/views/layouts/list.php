@@ -37,6 +37,7 @@
             )); ?>
         </hgroup>
         <nav></nav>
+        <?php echo Tianya::link728x15();?>
     </header>
     <div id="body" class="cf">
         <?php echo $content; ?>
@@ -47,6 +48,9 @@
     </footer>
 
 </div>
+
+<div id='lovexin12' style='left:2px;POSITION:absolute;TOP:120px;z-index:1'><?php echo Tianya::ad160x600();?></div>
+<div id='lovexin14' style='right:2px;POSITION:absolute;TOP:120px;z-index:1'><?php echo Tianya::ad160x600();?></div>
 
 <script type="text/javascript">
 
@@ -60,6 +64,25 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+
+  lastScrollY=0;
+  function heartBeat(){
+      var diffY;
+      if (document.documentElement && document.documentElement.scrollTop)
+          diffY = document.documentElement.scrollTop;
+      else if (document.body)
+          diffY = document.body.scrollTop
+      else
+      {/*Netscape stuff*/}
+      percent=.1*(diffY-lastScrollY);
+      if(percent>0)percent=Math.ceil(percent);
+      else percent=Math.floor(percent);
+      document.getElementById("lovexin12").style.top=parseInt(document.getElementById("lovexin12").style.top)+percent+"px";
+      document.getElementById("lovexin14").style.top=parseInt(document.getElementById("lovexin14").style.top)+percent+"px";
+      lastScrollY=lastScrollY+percent;
+  }
+
+  window.setInterval("heartBeat()",1);
 
 </script>
 </body>

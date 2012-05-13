@@ -203,5 +203,6 @@ list-view{
 }
 .container{
     min-width: 740px;
+    padding-right: 10px;
 }
 

@@ -4,9 +4,9 @@
     </header>
     <div class="content">
     <?php
-        if($data->id%10 == 1) {
-            echo Tianya::ad728x90().'<div class="clear"></div>';
-        }
+//        if($data->id%10 == 1) {
+//            echo Tianya::link728x15().'<div class="clear"></div>';
+//        }
         echo Tianya::filterPost($data->text, $article->id, ceil($data->id/10));
 //        if($data->id%3 == 2) {
 //            echo '<div style="margin-left:25px">'.Tianya::link728x15().'</div>';
