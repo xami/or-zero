@@ -1,16 +1,19 @@
 #yw0 div.left{
     float: left;
     text-align: left;
-    width: 30%;
-    min-width: 350px;
+    width: 40%;
+    min-width: 480px;
     overflow: hidden;
 }
 #yw0 div.right{
     float: right;
     text-align: right;
     width: 40%;
-    min-width: 500px;
+    min-width: 480px;
     overflow: hidden;
+}
+#yw0 .list-view{
+    padding: 0 200px;
 }
 #yw0 div.clear{clear: both;}
 #yw1 {

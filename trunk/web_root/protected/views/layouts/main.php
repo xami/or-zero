@@ -66,8 +66,8 @@
 </div><!-- header -->
 
 	<?php echo $content; ?>
-<!--<div style="text-align: right;">--><?php //echo Tianya::ad728x90();?><!--</div>-->
 <div class="clear"></div>
+<!--<div style="text-align: right;">--><?php //echo Tianya::ad728x90();?><!--</div>-->
 
 	<div id="footer">
 		&copy; <?php echo date('Y'); ?> <?php echo Tianya::powered(); ?>&nbsp;&nbsp;
@@ -95,7 +95,7 @@
 
 
         <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-        <script type="text/javascript">google.load("elements", "1", {packages: "transliteration"});</script>
+<!--        <script type="text/javascript">google.load("elements", "1", {packages: "transliteration"});</script>-->
         <script type="text/javascript" src="http://www.google.com/cse/t13n?form=cse-search-box&t13n_langs=en"></script>
 
         <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cse-search-box&amp;lang=zh-Hans"></script>
@@ -105,8 +105,9 @@
         <script src="http://www.google.com/cse/api/partner-pub-4726192443658314/cse/4873446973/queries/js?oe=UTF-8&amp;callback=(new+PopularQueryRenderer(document.getElementById(%22queries%22))).render"></script>
 
 	</div><!-- footer -->
-<div id='AdLayer1' style='position: absolute;visibility:hidden;z-index:1'><?php echo Tianya::ad160x600();?></div>
-<div id='AdLayer2' style='position:absolute;visibility:hidden;z-index:1'><?php echo Tianya::ad160x600();?></div>
+<div id='lovexin12' style='left:2px;POSITION:absolute;TOP:120px;z-index:1'><?php echo Tianya::ad160x600();?></div>
+<div id='lovexin14' style='right:2px;POSITION:absolute;TOP:120px;z-index:1'><?php echo Tianya::ad160x600();?></div>
+<!--<div id='ad_h' style='visibility:hidden;display: none;'>--><?php //echo Tianya::ad160x600();?><!--</div>-->
 
 </div><!-- page -->
 <script type="text/javascript">
@@ -124,6 +125,7 @@
 
   <?php
       $js_reload=<<<EOF
+/*
   var m_layer1,m_layer2;
   function initMove() {
       m_layer1=document.getElementById("AdLayer1");
@@ -147,6 +149,32 @@
       m_layer2.style.left = cw-m_layer2.clientWidth-x+"px";
   }
   window.setTimeout("initMove()",600);
+  */
+
+//var ad=$("#ad_h").html();
+//s1="<div id=\"lovexin12\" style='left:2px;POSITION:absolute;TOP:120px;'>"+ad+"</div>"
+//s2="<div id=\"lovexin14\" style='right:2px;POSITION:absolute;TOP:120px;'>"+ad+"</div>"
+//document.write(s1);
+//document.write(s2);
+
+lastScrollY=0;
+function heartBeat(){
+    var diffY;
+    if (document.documentElement && document.documentElement.scrollTop)
+        diffY = document.documentElement.scrollTop;
+    else if (document.body)
+        diffY = document.body.scrollTop
+    else
+        {/*Netscape stuff*/}
+    percent=.1*(diffY-lastScrollY);
+    if(percent>0)percent=Math.ceil(percent);
+    else percent=Math.floor(percent);
+    document.getElementById("lovexin12").style.top=parseInt(document.getElementById("lovexin12").style.top)+percent+"px";
+    document.getElementById("lovexin14").style.top=parseInt(document.getElementById("lovexin14").style.top)+percent+"px";
+    lastScrollY=lastScrollY+percent;
+}
+
+window.setInterval("heartBeat()",1);
 EOF;
 
   $packer = new JavaScriptPacker($js_reload, 'Normal', true, false);

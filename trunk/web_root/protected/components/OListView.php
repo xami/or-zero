@@ -289,8 +289,9 @@ class OListView extends CBaseListView
         if($pager['pages']->getPageCount()>1)
         {
             echo '<div class="'.$this->pagerCssClass.' left">';
+            echo '<div class="clear"></div>'.Tianya::link468x15();
             $this->widget('OListPager',$pager);
-            echo '<div class="clear"></div>'.Tianya::ad336x280().'</div>';
+            echo '<div class="clear"></div>'.Tianya::link468x15().'</div>';
             echo '<div class="'.$this->pagerCssClass.' right">'.'<div class="clear"></div>';
             $this->widget('CLinkPager',$pager);
             echo Tianya::ad468x60().'<div class="clear"></div>'.Tianya::Search().'</div>';
