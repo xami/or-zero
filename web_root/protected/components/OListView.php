@@ -245,7 +245,7 @@ class OListView extends CBaseListView
             }
         }
         else
-            echo CHtml::tag('span', array('class'=>'empty'), '正在更新，请刷新......');
+            echo CHtml::tag('span', array('class'=>'empty'), '正在更新，请刷新......').Tianya::ad336x280().Tianya::ad336x280();
         echo CHtml::closeTag($this->itemsTagName);
     }
 
