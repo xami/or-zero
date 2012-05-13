@@ -37,7 +37,7 @@
             )); ?>
         </hgroup>
         <nav></nav>
-        <?php echo Tianya::link728x15();?>
+        <div class="clear"><?php echo Tianya::link728x15();?></div>
     </header>
     <div id="body" class="cf">
         <?php echo $content; ?>

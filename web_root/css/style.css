@@ -357,8 +357,8 @@ a:hover {
 #head h2 {
     font-size: 100%;
     font-weight: normal;
-    line-height: 2;
-    margin: 0 0 0.5em;
+    line-height: 1.5;
+    margin: 0;
 }
 
 #head a {
