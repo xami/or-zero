@@ -51,7 +51,7 @@
                 ),
             )); ?>
             </div><!-- mainmenu -->
-
+            <div style="text-align: left;"><?php echo Tianya::ad728x90();?></div>
             <?php if(isset($this->breadcrumbs)):?>
 
             <?php $this->widget('zii.widgets.CBreadcrumbs', array(
@@ -105,8 +105,8 @@
         <script src="http://www.google.com/cse/api/partner-pub-4726192443658314/cse/4873446973/queries/js?oe=UTF-8&amp;callback=(new+PopularQueryRenderer(document.getElementById(%22queries%22))).render"></script>
 
 	</div><!-- footer -->
-<div id='AdLayer1' style='position: absolute;visibility:hidden;z-index:1'><?php echo Tianya::ad160x600();?></div>
-<div id='AdLayer2' style='position:absolute;visibility:hidden;z-index:1'><?php echo Tianya::ad160x600();?></div>
+<!--<div id='AdLayer1' style='position: absolute;visibility:hidden;z-index:1'>--><?php //echo Tianya::ad160x600();?><!--</div>-->
+<!--<div id='AdLayer2' style='position:absolute;visibility:hidden;z-index:1'>--><?php //echo Tianya::ad160x600();?><!--</div>-->
 
 </div><!-- page -->
 <script type="text/javascript">
@@ -149,7 +149,8 @@
   window.setTimeout("initMove()",600);
 EOF;
 
-  $packer = new JavaScriptPacker($js_reload, 'Normal', true, false); echo $js_reload;
+//  $packer = new JavaScriptPacker($js_reload, 'Normal', true, false);
+//  echo $js_reload;
 //  echo $packed = $packer->pack();
   ?>
 
