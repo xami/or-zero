@@ -26,7 +26,7 @@
                     Yii::app()->cache->set('all_article_count', $A_count, 600);
                 }
                 ?></h1>
-            <span id="key" class="fz"><?php echo '[脱水整理:<span class="ylg">'.$A_count.'</span>贴]';?>&nbsp;&nbsp;天涯热帖脱水整理,只看楼主,欢迎推荐给您的朋友</span>
+            <span id="key" class="fz"><?php echo '[&nbsp;总贴数:<span class="ylg">'.$A_count.'</span>&nbsp;]';?>&nbsp;&nbsp;天涯热帖脱水整理,自动同步更新,天涯只看楼主,尽在我的天涯。欢迎推荐给您的好友！</span>
             <?php $un=empty($_REQUEST['un']) ? '': trim($_REQUEST['un']); ?>
             <form action="/search" name="t" class="main_search">
                 <input type="hidden" name="cx" value="<?php echo Yii::app()->params['google_search_ad'];?>" />
@@ -37,6 +37,7 @@
                 <input type="text" maxlength="80" size="36" name="q" />
                 <input type="submit" value="站内搜索" />
             </form>
+            <?php echo Tianya::share(); ?>
             <span id="add_post" class="lz">查找原帖,如果没有整理?<br /> 同时可以提交到我的天涯</span>
 
             <div id="mainmenu">

@@ -1062,7 +1062,8 @@ form p,
 
     #head nav {
         float: right;
-        margin-top: 2em;
+        margin-right: -135px;
+        margin-top: 0;
     }
 
     #head nav a {

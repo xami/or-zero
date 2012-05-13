@@ -36,8 +36,8 @@
                 'htmlOptions'=>array()
             )); ?>
         </hgroup>
-        <nav></nav>
-        <div class="clear"><?php echo Tianya::link728x15();?></div>
+        <nav><?php echo Tianya::share();?></nav>
+        <div class="left"><?php echo Tianya::link728x15();?></div>
     </header>
     <div id="body" class="cf">
         <?php echo $content; ?>

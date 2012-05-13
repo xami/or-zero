@@ -81,7 +81,8 @@ span.des {
 }
 
 .ylg{
-    color: #00008b;
+    color: green;
+    font-weight: bold;
 }
 #cse-search-box, .main_search{
     background: none;
