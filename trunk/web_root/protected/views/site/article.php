@@ -12,7 +12,6 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<section id="content">
 <h1 class="mg">
 作者:<?php echo Tools::createSearch($article->un, false); ?>&nbsp; &nbsp;
 整理:<?php echo CHtml::link(Yii::app()->name, '/article-'.$article->id.'.html',
@@ -49,7 +48,6 @@ $js_mark=file_get_contents(Yii::app()->request->hostInfo.'/js/mark.js');
 $packer = new JavaScriptPacker($js_mark, 'Normal', true, false);
 echo $packer->pack();
 ?>
-
 </script>
 
 <?php

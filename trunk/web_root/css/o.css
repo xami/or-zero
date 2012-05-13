@@ -15,6 +15,9 @@
 #yw0 .list-view{
     padding: 0 200px;
 }
+article header{
+    min-width: 140px;
+}
 #yw0 div.clear{clear: both;}
 #yw1 {
     border: 1px solid #9AAFE5;
