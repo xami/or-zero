@@ -137,5 +137,10 @@ article header{
 article img {
     max-width: 860px;
 }
-
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
 
